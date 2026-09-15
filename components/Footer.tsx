@@ -35,16 +35,6 @@ export default function Footer() {
         />
       </div>
 
-      {/* Destello rojo de marca (mingcute:flash-fill en el diseño mobile) */}
-      <Image
-        src="/media/ui/flash.svg"
-        alt=""
-        width={371}
-        height={468}
-        aria-hidden
-        className="pointer-events-none absolute -bottom-24 left-1/2 w-[320px] -translate-x-1/2 opacity-[0.18] lg:left-auto lg:right-[6%] lg:w-[260px] lg:translate-x-0"
-      />
-
       <div className="shell relative flex flex-col items-center gap-[clamp(28px,2.5vw,48px)] text-center lg:flex-row lg:items-end lg:justify-between lg:text-left">
         <Reveal className="flex flex-col items-center gap-[clamp(20px,1.875vw,36px)] lg:items-start">
           {/**

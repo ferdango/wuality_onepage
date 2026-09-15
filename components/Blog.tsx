@@ -15,7 +15,7 @@ export default function Blog() {
       <div className="shell mt-[clamp(24px,3.3vw,64px)]">
         <Carousel
           ariaLabel="Artículos y episodios de Wuality"
-          slideClassName="w-[76%] sm:w-[48%] lg:w-[21%]"
+          slideClassName="w-[76%] sm:w-[48%] lg:w-[320px]"
           gap="gap-4 lg:gap-6"
         >
           {blog.items.map((item, i) =>
@@ -28,7 +28,7 @@ export default function Blog() {
                   src={item.image}
                   alt={item.title}
                   fill
-                  sizes="(max-width: 1024px) 76vw, 25vw"
+                  sizes="(max-width: 1024px) 76vw, 320px"
                   className="object-cover transition-transform duration-700 ease-wuality group-hover:scale-105"
                 />
                 <span className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-black/30" />
@@ -58,7 +58,7 @@ export default function Blog() {
                     src={item.image}
                     alt={item.title}
                     fill
-                    sizes="(max-width: 1024px) 76vw, 25vw"
+                    sizes="(max-width: 1024px) 76vw, 320px"
                     className="object-cover transition-transform duration-700 ease-wuality group-hover:scale-105"
                   />
                 </div>

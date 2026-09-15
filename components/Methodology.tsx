@@ -41,7 +41,7 @@ export default function Methodology() {
       <div className="relative mx-auto hidden aspect-[1920/860] w-full max-w-[1920px] lg:block">
         <div className="absolute left-1/2 top-1/2 h-[86%] w-[40%] -translate-x-1/2 -translate-y-1/2">
           <Image
-            src="/media/ui/method-diagram.svg"
+            src="/media/ui/method-cycle.svg"
             alt="Ciclo de trabajo iterativo de Wuality"
             fill
             sizes="40vw"
@@ -68,7 +68,7 @@ export default function Methodology() {
       <div className="lg:hidden">
         <div className="relative mx-auto aspect-square w-[82%] max-w-[420px]">
           <Image
-            src="/media/ui/method-diagram.svg"
+            src="/media/ui/method-cycle.svg"
             alt="Ciclo de trabajo iterativo de Wuality"
             fill
             sizes="82vw"

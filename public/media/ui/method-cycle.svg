@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="600" height="600" role="img">
+  <!--
+    Ciclo iterativo dibujado con el lenguaje de las láminas de marca: esferas de
+    degradado sobre fondo oscuro, sin contornos duros. Una esfera por pilar y en
+    el color de su tarjeta, colocadas en las diagonales para que cada una quede
+    apuntando a la suya. La órbita cierra el ciclo y las dos puntas marcan el
+    sentido de giro.
+  -->
+  <defs>
+    <radialGradient id="s-yellow" cx="50%" cy="64%" r="72%">
+      <stop offset="0%" stop-color="#fee08a" />
+      <stop offset="46%" stop-color="#fbbd1d" />
+      <stop offset="100%" stop-color="#4a3706" />
+    </radialGradient>
+    <radialGradient id="s-red" cx="50%" cy="64%" r="72%">
+      <stop offset="0%" stop-color="#ff8a95" />
+      <stop offset="46%" stop-color="#ff1a30" />
+      <stop offset="100%" stop-color="#4d0810" />
+    </radialGradient>
+    <radialGradient id="s-green" cx="50%" cy="64%" r="72%">
+      <stop offset="0%" stop-color="#a6f0cf" />
+      <stop offset="46%" stop-color="#4fe0a0" />
+      <stop offset="100%" stop-color="#12402e" />
+    </radialGradient>
+    <radialGradient id="s-blue" cx="50%" cy="64%" r="72%">
+      <stop offset="0%" stop-color="#9ed3ff" />
+      <stop offset="46%" stop-color="#2ea6ff" />
+      <stop offset="100%" stop-color="#0b3050" />
+    </radialGradient>
+    <linearGradient id="arc-top" gradientUnits="userSpaceOnUse" x1="121.1" y1="121.1" x2="478.9" y2="121.1">
+      <stop offset="0%" stop-color="#fbbd1d" />
+      <stop offset="100%" stop-color="#ff1a30" />
+    </linearGradient>
+    <linearGradient id="arc-right" gradientUnits="userSpaceOnUse" x1="478.9" y1="121.1" x2="478.9" y2="478.9">
+      <stop offset="0%" stop-color="#ff1a30" />
+      <stop offset="100%" stop-color="#4fe0a0" />
+    </linearGradient>
+    <linearGradient id="arc-bottom" gradientUnits="userSpaceOnUse" x1="478.9" y1="478.9" x2="121.1" y2="478.9">
+      <stop offset="0%" stop-color="#4fe0a0" />
+      <stop offset="100%" stop-color="#2ea6ff" />
+    </linearGradient>
+    <linearGradient id="arc-left" gradientUnits="userSpaceOnUse" x1="121.1" y1="478.9" x2="121.1" y2="121.1">
+      <stop offset="0%" stop-color="#2ea6ff" />
+      <stop offset="100%" stop-color="#fbbd1d" />
+    </linearGradient>
+
+    <filter id="halo" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="24" />
+    </filter>
+    <filter id="glow-ring" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="9" />
+    </filter>
+    <filter id="glow-tip" x="-140%" y="-140%" width="380%" height="380%">
+      <feGaussianBlur stdDeviation="6" />
+    </filter>
+  </defs>
+
+  <!-- Órbita: un trazo ancho y desenfocado que hace de resplandor y otro fino encima -->
+  <g fill="none" filter="url(#glow-ring)" opacity="0.3" stroke-width="16" stroke-linecap="round">
+    <path d="M121.1 121.1A253 253 0 0 1 478.9 121.1" stroke="url(#arc-top)" />
+    <path d="M478.9 121.1A253 253 0 0 1 478.9 478.9" stroke="url(#arc-right)" />
+    <path d="M478.9 478.9A253 253 0 0 1 121.1 478.9" stroke="url(#arc-bottom)" />
+    <path d="M121.1 478.9A253 253 0 0 1 121.1 121.1" stroke="url(#arc-left)" />
+  </g>
+  <g fill="none" opacity="0.72" stroke-width="2.5" stroke-linecap="round">
+    <path d="M121.1 121.1A253 253 0 0 1 478.9 121.1" stroke="url(#arc-top)" />
+    <path d="M478.9 121.1A253 253 0 0 1 478.9 478.9" stroke="url(#arc-right)" />
+    <path d="M478.9 478.9A253 253 0 0 1 121.1 478.9" stroke="url(#arc-bottom)" />
+    <path d="M121.1 478.9A253 253 0 0 1 121.1 121.1" stroke="url(#arc-left)" />
+  </g>
+
+  <!-- Sentido de giro -->
+  <g>
+    <path d="M289 30 L315 47 L289 64 Z" fill="#fd6b27" filter="url(#glow-tip)" opacity="0.7" />
+    <path d="M289 30 L315 47 L289 64 Z" fill="#fd6b27" />
+    <path d="M311 570 L285 553 L311 536 Z" fill="#3fc3d0" filter="url(#glow-tip)" opacity="0.7" />
+    <path d="M311 570 L285 553 L311 536 Z" fill="#3fc3d0" />
+  </g>
+
+  <!-- Un pilar por esquina, en el color de su tarjeta -->
+  <g>
+    <circle cx="121.1" cy="121.1" r="72" fill="#fbbd1d" opacity="0.45" filter="url(#halo)" />
+    <circle cx="121.1" cy="121.1" r="66" fill="url(#s-yellow)" />
+    <ellipse cx="121.1" cy="121.1" rx="25" ry="66" fill="none" stroke="#fff" stroke-opacity="0.1" stroke-width="1.2" />
+  </g>
+  <g>
+    <circle cx="478.9" cy="121.1" r="72" fill="#ff1a30" opacity="0.45" filter="url(#halo)" />
+    <circle cx="478.9" cy="121.1" r="66" fill="url(#s-red)" />
+    <ellipse cx="478.9" cy="121.1" rx="25" ry="66" fill="none" stroke="#fff" stroke-opacity="0.1" stroke-width="1.2" />
+  </g>
+  <g>
+    <circle cx="478.9" cy="478.9" r="72" fill="#4fe0a0" opacity="0.45" filter="url(#halo)" />
+    <circle cx="478.9" cy="478.9" r="66" fill="url(#s-green)" />
+    <ellipse cx="478.9" cy="478.9" rx="25" ry="66" fill="none" stroke="#fff" stroke-opacity="0.1" stroke-width="1.2" />
+  </g>
+  <g>
+    <circle cx="121.1" cy="478.9" r="72" fill="#2ea6ff" opacity="0.45" filter="url(#halo)" />
+    <circle cx="121.1" cy="478.9" r="66" fill="url(#s-blue)" />
+    <ellipse cx="121.1" cy="478.9" rx="25" ry="66" fill="none" stroke="#fff" stroke-opacity="0.1" stroke-width="1.2" />
+  </g>
+</svg>
