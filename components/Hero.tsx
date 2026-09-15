@@ -19,9 +19,14 @@ const RISE = 0.22;
  *
  * 1. Reposo: el teléfono asoma por abajo (su base queda un 30% de su altura
  *    fuera de pantalla) y sube entero al empezar a hacer scroll.
- * 2. Ya arriba, arranca la secuencia original sin cambios: el titular se va, el
- *    chasis se desvanece, la pantalla se expande a full-bleed y aparecen
- *    "Innovamos" (arriba izq.) y "Conectamos" (abajo der.).
+
+ * 2. Ya arriba, arranca la secuencia original: el chasis se desvanece, la
+ *    pantalla se expande a full-bleed y aparecen "Innovamos" (arriba izq.) y
+ *    "Conectamos" (abajo der.).
+ *
+ * El titular se desvanece durante la subida, no después: al tamaño actual el
+ * teléfono llega a ocupar su sitio, y si siguiera a plena opacidad quedaría
+ * tapado a medias.
  *
  * Nota de implementación: los valores ligados al scroll se publican como
  * variables CSS y los hijos las consumen con CSS plano. Enlazarlos directamente
@@ -62,8 +67,8 @@ export default function Hero() {
   // Los detalles del dispositivo se van antes que el marco, para que no se estiren.
   const chrome = useMotionTemplate`${useTransform(main, [0, 0.12], [1, 0])}`;
   const chip = useMotionTemplate`${useTransform(main, [0, 0.22], [1, 0])}`;
-  const headOpacity = useMotionTemplate`${useTransform(main, [0, 0.3], [1, 0])}`;
-  const headShift = useMotionTemplate`${useTransform(main, [0, 0.3], [0, -80])}`;
+  const headOpacity = useMotionTemplate`${useTransform(scrollYProgress, [0, RISE * 0.8], [1, 0])}`;
+  const headShift = useMotionTemplate`${useTransform(scrollYProgress, [0, RISE * 0.8], [0, -80])}`;
   const wordOpacity = useMotionTemplate`${useTransform(main, [0.55, 0.72], [0, 1])}`;
   const wordShift = useMotionTemplate`${useTransform(main, [0.55, 0.85], [12, 0])}`;
 
@@ -93,7 +98,12 @@ export default function Hero() {
       style={
         {
           // Proporciones reales de un iPhone (402 × 874 pt, radio 55, isla 125 × 36).
-          "--dev-h": "clamp(520px, min(41.6vw, 71.5svh), 806px)",
+          /**
+           * El `min` exterior es el que manda en pantallas bajas: por muy grande
+           * que lo pida el ancho, el teléfono nunca pasa del 82% del alto del
+           * viewport, que es lo que necesita para caber entero con su margen.
+           */
+          "--dev-h": "min(clamp(780px, 62.4vw, 1200px), 82svh)",
           "--dev-w": "calc(var(--dev-h) * 0.46)",
           "--bezel": "calc(var(--dev-w) * 0.026)",
           "--radius": "calc(var(--dev-w) * 0.137)",

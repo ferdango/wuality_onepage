@@ -93,7 +93,8 @@ export default function Models() {
               className="sticky mx-auto w-full max-w-[1232px] last:mb-0 mb-[clamp(24px,4vw,80px)]"
               style={
                 {
-                  top: `calc(var(--header-h) + ${i} * var(--stack-step))`,
+                  // 48px de aire bajo el header: pegada arriba se veía apretada.
+                  top: `calc(var(--header-h) + 48px + ${i} * var(--stack-step))`,
                   zIndex: i + 1,
                   // 0 mientras la tarjeta manda, 1 cuando ya está cubierta.
                   "--k": isLast ? "0" : `clamp(0, var(--stack-progress) * ${total} - ${i}, 1)`,

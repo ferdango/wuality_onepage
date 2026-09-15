@@ -6,7 +6,18 @@ import { useRef } from "react";
 import useDragScroll from "./ui/useDragScroll";
 import { clients } from "@/lib/content";
 
-function Tile({ logo, name, i }: { logo: string; name: string; i: number }) {
+function Tile({
+  logo,
+  name,
+  i,
+  dim,
+}: {
+  logo: string;
+  name: string;
+  i: number;
+  /** En desktop el logo está apagado y se enciende al pasar el cursor. */
+  dim: boolean;
+}) {
   const reduced = useReducedMotion();
   return (
     <motion.div
@@ -21,8 +32,12 @@ function Tile({ logo, name, i }: { logo: string; name: string; i: number }) {
           src={logo}
           alt={name}
           fill
-          sizes="(max-width: 1024px) 38vw, 20vw"
-          className="object-contain opacity-55 grayscale transition duration-500 group-hover:opacity-100 group-hover:grayscale-0"
+          sizes="(max-width: 1024px) 76vw, 20vw"
+          className={`object-contain transition duration-500 ${
+            dim
+              ? "opacity-55 grayscale group-hover:opacity-100 group-hover:grayscale-0"
+              : "opacity-100"
+          }`}
         />
       </div>
     </motion.div>
@@ -38,17 +53,21 @@ export default function Clients() {
       {/* Desktop: retícula 5×3 */}
       <div className="shell hidden grid-cols-5 gap-[clamp(6px,0.52vw,10px)] lg:grid">
         {clients.map((c, i) => (
-          <Tile key={c.name} logo={c.logo} name={c.name} i={i} />
+          <Tile key={c.name} logo={c.logo} name={c.name} i={i} dim />
         ))}
       </div>
 
-      {/* Mobile: 3 filas que sangran a los lados, como en el frame de 360 */}
+      {/**
+       * Mobile: 3 filas que sangran a los lados, como en el frame de 360. Las
+       * tarjetas son mucho más anchas que en desktop para que los logos se lean,
+       * y van a plena opacidad porque en táctil no hay hover que las encienda.
+       */}
       <div
         ref={railRef}
-        className="no-scrollbar grid auto-cols-[38%] cursor-grab grid-flow-col grid-rows-3 gap-2 overflow-x-auto px-[var(--gutter)] active:cursor-grabbing lg:hidden"
+        className="no-scrollbar grid auto-cols-[76%] cursor-grab grid-flow-col grid-rows-3 gap-3 overflow-x-auto px-[var(--gutter)] active:cursor-grabbing lg:hidden"
       >
         {clients.map((c, i) => (
-          <Tile key={c.name} logo={c.logo} name={c.name} i={i} />
+          <Tile key={c.name} logo={c.logo} name={c.name} i={i} dim={false} />
         ))}
       </div>
     </section>

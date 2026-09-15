@@ -76,7 +76,7 @@ propósito: en algunas máquinas la familia resuelve a su variante oblicua.
 | Títulos | El punto rojo rebota en bucle como una pelota, con achatamiento al tocar suelo (`.dotted::after`) |
 | Idioma | Dropdown "Idioma y región" con las tres opciones del diseño, cierre por clic fuera y Escape |
 | Menú | Overlay a pantalla completa, entrada escalonada, hover blanco/gris, cierre con Escape y bloqueo de scroll |
-| Hero | Titular que entra palabra por palabra. El iPhone arranca con su base un 30% fuera de pantalla y sube entero; ya arriba, se expande a full-bleed —perdiendo marco, isla dinámica y botones— y revela "Innovamos" / "Conectamos" desde lados opuestos |
+| Hero | Titular que entra palabra por palabra y se desvanece mientras el iPhone sube. El teléfono arranca con su base un 30% fuera de pantalla y sube entero; ya arriba, se expande a full-bleed —perdiendo marco, isla dinámica y botones— y revela "Innovamos" / "Conectamos" desde lados opuestos |
 | Lo que hacemos | Lista sincronizada con la imagen (hover/clic/foco), botón circular animado con `layoutId`; en mobile, carrusel con dots y CTA |
 | Nuestros proyectos | Carrusel con swipe, arrastre, teclado y dots. Avanza solo cada 5s y el detalle de abajo sigue al proyecto en curso; al hacer clic, además, lleva la vista hasta él |
 | Todos los carruseles | Bucle infinito con avance automático, que se pausa al pasar el cursor, al enfocar, al tocar o si la pestaña no está visible. Arrastre con mouse vía `useDragScroll`: desactiva el snap durante el gesto, lo restaura al soltar y suprime el click posterior para que soltar sobre una tarjeta no la active |
@@ -84,7 +84,7 @@ propósito: en algunas máquinas la familia resuelve a su variante oblicua.
 | Partners | Carrusel con autoplay que se pausa al interactuar o si la pestaña no está visible |
 | Metodología | El diagrama se dibuja con el scroll: los contornos se trazan de izquierda a derecha siguiendo el ciclo y detrás entra el relleno. Tarjetas escalonadas; en mobile, carrusel |
 | Reviews | Carrusel de testimonios con stack de avatares; el emoji de la tarjeta activa da un pulso al entrar |
-| Clientes | Retícula 5×3 con hover que enciende el logo; en mobile, 3 filas con sangrado lateral |
+| Clientes | Retícula 5×3 con hover que enciende el logo; en mobile, 3 filas con sangrado lateral, tarjetas al doble de ancho y logos a plena opacidad (en táctil no hay hover que los encienda) |
 | Two models | Las dos líneas entran desde lados opuestos con el scroll, al tamaño del Figma (220px sobre el lienzo de 1920) |
 | Modelos | Las dos tarjetas se apilan al bajar: cada una queda fija un poco más abajo que la anterior y la de atrás se encoge y se oscurece |
 | FAQ | Acordeón de apertura única con icono +/− y altura animada |
@@ -102,6 +102,11 @@ proporciones reales del dispositivo (402 × 874 pt, radio 55, isla 125 × 36),
 parametrizadas en `components/Hero.tsx` con las variables `--dev-h`, `--dev-w`,
 `--bezel`, `--radius` y `--btn-w`. Escala a cualquier tamaño sin perder nitidez
 y el chasis se desvanece cuando el video pasa a pantalla completa.
+
+Su altura lleva un tope del 82% del viewport (`min(clamp(...), 82svh)`): el
+ancho por sí solo pediría un teléfono que no cabe entero en pantallas bajas.
+Y el titular se desvanece durante la subida, no después, porque a este tamaño el
+teléfono llega a ocupar el sitio donde estaba.
 
 **Los valores ligados al scroll viajan como variables CSS.** Motion acelera por
 hardware los valores de `useScroll` aplicados a propiedades acelerables
