@@ -17,7 +17,9 @@ export default function Projects() {
         ariaLabel="Proyectos de Wuality"
         slideClassName="w-[86vw] sm:w-[50vw] lg:w-1/4"
         gap="gap-0"
-        autoPlayMs={5200}
+        autoPlayMs={5000}
+        // El detalle de abajo sigue al proyecto en curso, sin mover la página.
+        onActiveChange={(i) => select(i, { scroll: false })}
       >
         {projects.map((p, i) => {
           const isSelected = i === selected;

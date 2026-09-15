@@ -12,7 +12,12 @@ import {
 /** Id de la sección de detalle; es también el ancla de la nav ("About Wuality"). */
 export const PROJECT_DETAIL_ID = "about";
 
-type Selection = { selected: number; select: (index: number) => void };
+type SelectOptions = {
+  /** Llevar la vista al detalle. Falso cuando el cambio lo provoca el propio carrusel. */
+  scroll?: boolean;
+};
+
+type Selection = { selected: number; select: (index: number, options?: SelectOptions) => void };
 
 const Context = createContext<Selection | null>(null);
 
@@ -24,8 +29,9 @@ const Context = createContext<Selection | null>(null);
 export function ProjectSelectionProvider({ children }: { children: ReactNode }) {
   const [selected, setSelected] = useState(0);
 
-  const select = useCallback((index: number) => {
+  const select = useCallback((index: number, { scroll = true }: SelectOptions = {}) => {
     setSelected(index);
+    if (!scroll) return;
 
     /**
      * El clic enfoca la tarjeta y el navegador desplaza el riel horizontal para

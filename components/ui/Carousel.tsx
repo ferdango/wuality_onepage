@@ -23,6 +23,8 @@ type Props = {
   /** Milisegundos entre avances. 0 desactiva el avance automático. */
   autoPlayMs?: number;
   ariaLabel: string;
+  /** Se avisa cada vez que cambia el slide en curso (índice real, no el del DOM). */
+  onActiveChange?: (index: number) => void;
 };
 
 /** Copias del set de slides: una a cada lado para que el bucle nunca vea el borde. */
@@ -47,6 +49,7 @@ export default function Carousel({
   showDots = true,
   autoPlayMs = 4000,
   ariaLabel,
+  onActiveChange,
 }: Props) {
   const railRef = useRef<HTMLDivElement>(null);
   const slides = useMemo(() => Children.toArray(children), [children]);
@@ -153,6 +156,30 @@ export default function Carousel({
 
   // Avance automático: se pausa al interactuar o si la pestaña no está visible.
   const [paused, setPaused] = useState(false);
+  const resumeTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+
+  const pauseNow = useCallback(() => {
+    clearTimeout(resumeTimer.current);
+    setPaused(true);
+  }, []);
+
+  const resumeNow = useCallback(() => {
+    clearTimeout(resumeTimer.current);
+    setPaused(false);
+  }, []);
+
+  /**
+   * En táctil no hay `mouseleave` que reanude, así que un solo toque dejaría el
+   * carrusel parado para siempre. Se reanuda solo tras un respiro.
+   */
+  const resumeAfterTouch = useCallback((e: React.PointerEvent) => {
+    if (e.pointerType === "mouse") return;
+    clearTimeout(resumeTimer.current);
+    resumeTimer.current = setTimeout(() => setPaused(false), 4000);
+  }, []);
+
+  useEffect(() => () => clearTimeout(resumeTimer.current), []);
+
   useEffect(() => {
     if (!autoPlayMs || paused || count < 2) return;
     const id = setInterval(() => {
@@ -161,13 +188,23 @@ export default function Carousel({
     return () => clearInterval(id);
   }, [autoPlayMs, paused, next, count]);
 
+  // Aviso del slide en curso, para que quien use el carrusel pueda seguirlo.
+  const active = count ? domIndex % count : 0;
+  const notify = useRef(onActiveChange);
+  notify.current = onActiveChange;
+  useEffect(() => {
+    notify.current?.(active);
+  }, [active]);
+
   return (
     <div
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-      onFocusCapture={() => setPaused(true)}
-      onBlurCapture={() => setPaused(false)}
-      onPointerDown={() => setPaused(true)}
+      onMouseEnter={pauseNow}
+      onMouseLeave={resumeNow}
+      onFocusCapture={pauseNow}
+      onBlurCapture={resumeNow}
+      onPointerDown={pauseNow}
+      onPointerUp={resumeAfterTouch}
+      onPointerCancel={resumeAfterTouch}
     >
       <div
         ref={railRef}
@@ -199,7 +236,7 @@ export default function Carousel({
 
       {showDots && count > 1 && (
         <div className="mt-6 flex items-center justify-center md:mt-8">
-          <Dots count={count} index={domIndex % count} onSelect={goToDot} />
+          <Dots count={count} index={active} onSelect={goToDot} />
         </div>
       )}
     </div>

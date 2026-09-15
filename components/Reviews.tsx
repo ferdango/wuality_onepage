@@ -7,7 +7,11 @@ import { reviews } from "@/lib/content";
 
 export default function Reviews() {
   return (
-    <section id="reviews" className="bg-ink py-[calc(var(--section-y)*1.4)]">
+    <section
+      id="reviews"
+      // En móvil la sección ocupa 90vh, con el contenido centrado en ese alto.
+      className="flex min-h-[90svh] flex-col justify-center bg-ink py-[calc(var(--section-y)*1.4)] md:block md:min-h-0"
+    >
       <div className="shell flex flex-col items-center text-center">
         <Reveal>
           <h2 className="h-section dotted max-w-[16ch] text-bone">{reviews.title}</h2>

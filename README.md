@@ -78,7 +78,7 @@ propósito: en algunas máquinas la familia resuelve a su variante oblicua.
 | Menú | Overlay a pantalla completa, entrada escalonada, hover blanco/gris, cierre con Escape y bloqueo de scroll |
 | Hero | Titular que entra palabra por palabra. El iPhone arranca con su base un 30% fuera de pantalla y sube entero; ya arriba, se expande a full-bleed —perdiendo marco, isla dinámica y botones— y revela "Innovamos" / "Conectamos" desde lados opuestos |
 | Lo que hacemos | Lista sincronizada con la imagen (hover/clic/foco), botón circular animado con `layoutId`; en mobile, carrusel con dots y CTA |
-| Nuestros proyectos | Carrusel con swipe, arrastre, teclado y dots; cada tarjeta abre su caso en la sección de abajo |
+| Nuestros proyectos | Carrusel con swipe, arrastre, teclado y dots. Avanza solo cada 5s y el detalle de abajo sigue al proyecto en curso; al hacer clic, además, lleva la vista hasta él |
 | Todos los carruseles | Bucle infinito con avance automático, que se pausa al pasar el cursor, al enfocar, al tocar o si la pestaña no está visible. Arrastre con mouse vía `useDragScroll`: desactiva el snap durante el gesto, lo restaura al soltar y suprime el click posterior para que soltar sobre una tarjeta no la active |
 | Caso de estudio | Muestra el proyecto elegido arriba: al hacer clic en una tarjeta se ancla aquí y el contenido cambia con una transición. Acordeón de capítulos con altura animada |
 | Partners | Carrusel con autoplay que se pausa al interactuar o si la pestaña no está visible |
@@ -130,7 +130,13 @@ número real de slides.
 **El carrusel marca su slide activo.** El riel pone `data-active` en el slide en
 curso, así que el contenido puede reaccionar solo con CSS —el pulso del emoji en
 las reseñas es `.pop-on-active`— sin que el carrusel sepa nada de lo que lleva
-dentro.
+dentro. Para lo que necesita lógica está `onActiveChange`: es lo que mantiene el
+detalle de proyecto sincronizado con el carrusel.
+
+**Seleccionar un proyecto y desplazarse hasta él son dos cosas.** `select` acepta
+`{ scroll: false }` justamente para eso: el clic lleva la vista al detalle, pero
+el avance automático cada 5s solo cambia el contenido, sin arrastrar la página
+mientras el usuario está leyendo otra sección.
 
 **El diagrama se incrusta, no se sirve como imagen.** El export son ocho figuras
 rellenas sin trazo, y un `<img>` no deja tocar sus paths. `lib/svg.ts` lo lee de
