@@ -149,8 +149,14 @@ rellenas sin trazo, y un `<img>` no deja tocar sus paths. `lib/svg.ts` lo lee de
 componente lo inyecta para poder animarlo. El "dibujado" usa el contorno de cada
 figura como línea: `pathLength="1"` normaliza su longitud y basta con animar
 `stroke-dashoffset` de 1 a 0, sin inventar ninguna geometría. El orden sale de la
-primera coordenada X de cada path, así que no depende del layout y también es
-correcto en la copia que está oculta al montar.
+centro horizontal de cada figura, que es lo que sigue el recorrido del ciclo: la
+flecha verde arranca en el mismo x que las piezas del centro, así que ordenando
+por el borde izquierdo se colaba a mitad de la secuencia.
+
+Las ventanas de cada trazo van encadenadas —una empieza justo antes de que
+acabe la anterior— para que la línea avance sin pausas. Y el progreso va atado
+al scroll sin muelle de por medio: el scroll ya es continuo, y el muelle solo
+metía retardo entre el gesto y la línea.
 
 Un detalle que cuesta ver: el export trae ids fijos y el diagrama se monta dos
 veces (desktop y mobile), así que sin renombrarlos la copia visible referencia

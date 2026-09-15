@@ -154,16 +154,17 @@
    */
   .method-draw path {
     --progress: clamp(0, (var(--draw) - var(--start, 0)) * var(--speed, 1), 1);
-    /* La línea termina de trazarse antes de que empiece a entrar el relleno. */
-    --trace: clamp(0, var(--progress) * 1.55, 1);
+    /* El trazo ocupa su ventana entera: es lo que hace que la línea avance
+       sin pausas de un tramo al siguiente. */
+    --trace: var(--progress);
     stroke-width: 1.5;
     stroke-linecap: round;
     stroke-linejoin: round;
     stroke-dasharray: 1;
     stroke-dashoffset: calc(1 - var(--trace));
     /* El contorno guía se va con el relleno, para acabar en el arte original. */
-    stroke-opacity: clamp(0, (1 - var(--progress)) * 4, 0.85);
-    fill-opacity: clamp(0, (var(--progress) - 0.62) * 2.7, 1);
+    stroke-opacity: clamp(0, (1 - var(--progress)) * 6, 0.85);
+    fill-opacity: clamp(0, (var(--progress) - 0.7) * 3.4, 1);
     vector-effect: non-scaling-stroke;
   }
 

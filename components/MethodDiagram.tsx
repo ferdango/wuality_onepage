@@ -5,14 +5,17 @@ import {
   useMotionTemplate,
   useReducedMotion,
   useScroll,
-  useSpring,
   useTransform,
 } from "motion/react";
 import { useEffect, useId, useMemo, useRef } from "react";
 import type { InlineSvg } from "@/lib/svg";
 
-/** Cuánto se solapan los trazos entre sí. Cuanto más alto, más continuo el dibujado. */
-const OVERLAP = 3.4;
+/**
+ * Ancho de la ventana de cada trazo medido en pasos. En 1 los tramos van
+ * exactamente encadenados; algo por encima deja un pequeño solape para que el
+ * relevo entre uno y otro no se note.
+ */
+const OVERLAP = 1.6;
 
 /**
  * El diagrama se dibuja solo con el scroll: los trazos avanzan de izquierda a
@@ -55,10 +58,11 @@ export default function MethodDiagram({
     target: wrapRef,
     offset: ["start end", "end start"],
   });
-  // El muelle suaviza el vínculo con el scroll: el trazo fluye en vez de saltar.
-  const progress = useTransform(scrollYProgress, [0.1, 0.66], [0, 1]);
-  const smooth = useSpring(progress, { stiffness: 90, damping: 24, restDelta: 0.0005 });
-  const draw = useMotionTemplate`${smooth}`;
+  /**
+   * Sin muelle: el scroll ya es continuo, así que el trazo sale fluido por sí
+   * solo, y un muelle encima solo añade retardo entre el gesto y la línea.
+   */
+  const draw = useMotionTemplate`${useTransform(scrollYProgress, [0.15, 0.75], [0, 1])}`;
 
   useEffect(() => {
     const el = svgRef.current;
@@ -72,9 +76,19 @@ export default function MethodDiagram({
       const paths = Array.from(el.querySelectorAll("path"));
       if (!paths.length) return;
 
+      /**
+       * El orden lo da el centro horizontal de cada figura, no su borde
+       * izquierdo: la flecha verde arranca en el mismo x que las piezas del
+       * centro, y ordenando por el borde se colaba a mitad de la secuencia. Por
+       * su centro cae al final, que es donde termina el recorrido del ciclo.
+       * Tampoco depende del layout, así que vale para la copia oculta.
+       */
       let boxes: { node: SVGPathElement; x: number }[];
       try {
-        boxes = paths.map((node) => ({ node, x: node.getBBox().x }));
+        boxes = paths.map((node) => {
+          const box = node.getBBox();
+          return { node, x: box.x + box.width / 2 };
+        });
       } catch {
         return; // todavía sin layout
       }
@@ -84,8 +98,9 @@ export default function MethodDiagram({
 
       const ordered = boxes.sort((a, b) => a.x - b.x).map((b) => b.node);
       const total = ordered.length;
-      const window = Math.min(1, (1 / total) * OVERLAP);
-      const step = total > 1 ? (1 - window) / (total - 1) : 0;
+      // Encadenado exacto: el último trazo termina justo al completarse el recorrido.
+      const step = total > 1 ? 1 / (total - 1 + OVERLAP) : 1;
+      const window = step * OVERLAP;
 
       ordered.forEach((node, i) => {
         const fill = node.getAttribute("fill") ?? "";
