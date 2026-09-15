@@ -11,9 +11,25 @@ Implementación en código de la one-page de Wuality diseñada en Figma
 
 ```bash
 npm run dev    # http://localhost:3000
-npm run build
-npm start
+npm run build  # exporta el sitio estático a ./out
 ```
+
+## Publicación
+
+El sitio está en <https://ferdango.github.io/wuality_onepage/>. Cada push a
+`main` dispara `.github/workflows/deploy.yml`, que exporta y publica en GitHub
+Pages; no hay que hacer nada más.
+
+Pages es hosting estático, y eso condiciona dos cosas:
+
+- **El sitio no cuelga de la raíz del dominio.** El basePath entra por
+  `NEXT_PUBLIC_BASE_PATH`, que solo define el workflow, así que `npm run dev`
+  sigue atendiendo en `/`. Ojo: con las imágenes sin optimizar, `next/image`
+  antepone el basePath a sus propios assets pero **no** al `src`. Por eso todo
+  pasa por `components/ui/Img.tsx` en vez de importar `next/image` directamente
+  — si añades una imagen, usa ese envoltorio.
+- **Los archivos de `public/media` se sirven tal cual**, sin redimensionar. Están
+  guardados ya a tamaño web; si incorporas un asset nuevo, redúcelo antes.
 
 ## Estructura
 
