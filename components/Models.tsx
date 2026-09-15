@@ -113,7 +113,7 @@ export default function Models() {
                 }
               >
                 <div
-                  className="flex flex-col justify-between gap-[clamp(20px,2.1vw,40px)] p-[clamp(20px,2.1vw,40px)] lg:aspect-[616/380] lg:p-[clamp(24px,2.5vw,48px)]"
+                  className="flex flex-col justify-between gap-[clamp(20px,2.1vw,40px)] px-[clamp(20px,2.1vw,40px)] py-[clamp(36px,3.75vw,72px)] lg:aspect-[616/380] lg:px-[clamp(24px,2.5vw,48px)]"
                   style={{ backgroundColor: card.bg }}
                 >
                   <div>

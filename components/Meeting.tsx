@@ -97,16 +97,9 @@ export default function Meeting() {
               <button
                 type="button"
                 onClick={() => setStep("form")}
-                aria-label="Continuar con la reunión"
-                className="group flex items-center justify-center rounded-[32px] border border-[#616083] bg-surface py-4 transition-colors duration-300 hover:border-blue hover:bg-blue/10"
+                className="flex items-center justify-center rounded-[32px] border border-[#616083] bg-surface py-5 text-[var(--fs-xs)] font-bold text-bone transition-colors duration-300 hover:border-blue hover:bg-blue/10 hover:text-blue"
               >
-                <Image
-                  src="/media/ui/arrow-left.svg"
-                  alt=""
-                  width={36}
-                  height={36}
-                  className="size-9 rotate-180 transition-transform duration-500 ease-wuality group-hover:translate-x-1"
-                />
+                Continuar
               </button>
             </motion.div>
           )}

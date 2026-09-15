@@ -84,11 +84,11 @@ propósito: en algunas máquinas la familia resuelve a su variante oblicua.
 | Partners | Carrusel con autoplay que se pausa al interactuar o si la pestaña no está visible |
 | Metodología | El diagrama se dibuja con el scroll: los contornos se trazan de izquierda a derecha siguiendo el ciclo y detrás entra el relleno. Tarjetas escalonadas; en mobile, carrusel |
 | Reviews | Carrusel de testimonios con stack de avatares; el emoji de la tarjeta activa da un pulso al entrar |
-| Clientes | Retícula 5×3 con hover que enciende el logo; en mobile, 3 filas con sangrado lateral, tarjetas al doble de ancho y logos a plena opacidad (en táctil no hay hover que los encienda) |
+| Clientes | Retícula de 2 columnas en móvil y 5 en desktop, sin scroll lateral. Los logos van en escala de grises y recuperan su color al pasar el cursor o al mantener pulsado |
 | Two models | Las dos líneas entran desde lados opuestos con el scroll, al tamaño del Figma (220px sobre el lienzo de 1920) |
 | Modelos | Las dos tarjetas se apilan al bajar: cada una queda fija un poco más abajo que la anterior y la de atrás se encoge y se oscurece |
 | FAQ | Acordeón de apertura única con icono +/− y altura animada |
-| Agenda una reunión | Flujo de 2 pasos: elección de plataforma (Meet/Zoom) → formulario con validación y estado de confirmación |
+| Agenda una reunión | Flujo de 2 pasos: elección de plataforma (Meet/Zoom) → "Continuar" → formulario con validación y estado de confirmación |
 | Blog | Carrusel con tarjetas de nota y de video |
 | Flotantes | El botón de WhatsApp enlaza directo al chat de `+51 966 461 384` (número en `lib/content.ts`); el globo del diseño aparece al pasar el cursor, solo donde hay hover real. Botón de cookies con banner; la decisión se guarda en `localStorage` |
 

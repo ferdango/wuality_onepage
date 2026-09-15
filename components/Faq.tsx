@@ -28,7 +28,7 @@ export default function Faq() {
                   <span className="text-[var(--fs-h4)] font-bold leading-snug text-bone">
                     {item.q}
                   </span>
-                  <span className="relative grid size-[clamp(28px,2.5vw,48px)] shrink-0 place-items-center">
+                  <span className="relative grid size-4 shrink-0 place-items-center">
                     <Image
                       src={isOpen ? "/media/ui/faq-minus.svg" : "/media/ui/faq-plus.svg"}
                       alt=""
