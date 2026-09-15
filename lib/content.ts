@@ -183,10 +183,12 @@ export const methodology = [
   },
   {
     tag: "Kayzen",
-    tagColor: "#0f9d7a",
+    // Magenta y no verde: la paleta de figuras de la marca no tiene verde, y el
+    // nodo del diagrama tiene que coincidir con el color de su tarjeta.
+    tagColor: "#a33099",
     tagText: "#ffffff",
     title: "Mejora continua",
-    titleColor: "#4fe0a0",
+    titleColor: "#d85fc9",
     body: "El mundo digital evoluciona, y tu producto también debería mantenerse a la vanguardia.",
     pos: { bottom: "8%", right: "3%" },
   },

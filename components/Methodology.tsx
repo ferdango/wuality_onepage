@@ -39,7 +39,9 @@ export default function Methodology() {
 
       {/* Desktop: diagrama con tarjetas flotando alrededor */}
       <div className="relative mx-auto hidden aspect-[1920/860] w-full max-w-[1920px] lg:block">
-        <div className="absolute left-1/2 top-1/2 h-[86%] w-[40%] -translate-x-1/2 -translate-y-1/2">
+        {/* Cuadrado: si la caja no lo fuera, `object-contain` dejaría franjas y las
+            figuras dejarían de caer sobre la órbita. */}
+        <div className="absolute left-1/2 top-1/2 aspect-square h-[86%] -translate-x-1/2 -translate-y-1/2">
           <MethodCycle sizes="40vw" />
         </div>
 

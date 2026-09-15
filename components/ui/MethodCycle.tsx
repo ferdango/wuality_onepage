@@ -13,6 +13,21 @@ function wrapDegrees(deg: number) {
   return ((((deg + 180) % 360) + 360) % 360) - 180;
 }
 
+/**
+ * Un nodo por pilar, en la diagonal que apunta a su tarjeta y con la figura del
+ * entregable de su color. El 20,2 / 79,8 sale de la propia órbita: su radio es
+ * 253 sobre un lienzo de 600, así que los extremos de las diagonales caen ahí.
+ *
+ * La marca no tiene figura verde —su paleta es rojo, magenta, azul y amarillo—,
+ * de ahí que "Mejora continua" pase a magenta también en su tarjeta.
+ */
+const NODES = [
+  { fig: "esfera-amarilla", x: 20.2, y: 20.2, w: 23 },
+  { fig: "esfera-roja", x: 79.8, y: 20.2, w: 23 },
+  { fig: "cinta-magenta", x: 79.8, y: 79.8, w: 26 },
+  { fig: "gota-azul", x: 20.2, y: 79.8, w: 25 },
+];
+
 /** Cuánto se frena la inercia en cada fotograma, y a partir de qué velocidad se da por parada. */
 const FRICTION = 0.955;
 const STOP_BELOW = 0.02;
@@ -164,13 +179,25 @@ export default function MethodCycle({ sizes }: { sizes: string }) {
       className="absolute inset-0 cursor-grab touch-pan-y select-none rounded-full outline-none active:cursor-grabbing focus-visible:ring-2 focus-visible:ring-bone/40"
     >
       <Image
-        src="/media/ui/method-cycle.svg"
+        src="/media/ui/method-orbit.svg"
         alt=""
         fill
         sizes={sizes}
         draggable={false}
         className="pointer-events-none object-contain"
       />
+      {NODES.map((n) => (
+        <Image
+          key={n.fig}
+          src={`/media/brand/figuras/${n.fig}.png`}
+          alt=""
+          width={380}
+          height={380}
+          draggable={false}
+          className="pointer-events-none absolute max-w-none"
+          style={{ left: `${n.x}%`, top: `${n.y}%`, width: `${n.w}%`, height: "auto", translate: "-50% -50%" }}
+        />
+      ))}
     </div>
   );
 }
