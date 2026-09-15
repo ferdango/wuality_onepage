@@ -53,7 +53,13 @@ export default function Methodology() {
             transition={{ duration: 0.65, delay: 0.15 + i * 0.12, ease: [0.22, 1, 0.36, 1] }}
             className="absolute w-[clamp(220px,17vw,326px)]"
           >
-            <MethodCard card={card} />
+            {/* Cada una con su propio ritmo y desfase: en bloque parecería un ascensor. */}
+            <div
+              className="method-float"
+              style={{ animationDelay: `${i * 0.85}s`, animationDuration: `${5.6 + i * 0.7}s` }}
+            >
+              <MethodCard card={card} />
+            </div>
           </motion.div>
         ))}
       </div>

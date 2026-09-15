@@ -219,3 +219,35 @@
     transform: scale(1) rotate(0deg);
   }
 }
+
+/**
+ * Flotación continua de las tarjetas de metodología. Sólo de 1280px en
+ * adelante: por debajo las tarjetas van en carrusel o demasiado apretadas
+ * contra el diagrama, y el vaivén estorbaría más que otra cosa.
+ *
+ * Se anima la propiedad `translate`, no `transform`: la entrada de cada tarjeta
+ * la controla Motion escribiendo `transform` en el elemento de fuera, así que
+ * usando propiedades distintas las dos animaciones conviven sin pisarse.
+ */
+@keyframes method-float {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -14px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .method-float {
+    animation: method-float 6s ease-in-out infinite;
+    will-change: translate;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .method-float {
+    animation: none;
+  }
+}

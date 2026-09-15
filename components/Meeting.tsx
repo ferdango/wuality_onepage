@@ -44,16 +44,41 @@ export default function Meeting() {
   return (
     <section
       id="contacto"
-      className="flex min-h-[90svh] flex-col justify-center bg-ink py-[calc(var(--section-y)*1.4)]"
+      className="relative flex min-h-[90svh] flex-col justify-center overflow-hidden bg-ink py-[calc(var(--section-y)*1.4)]"
     >
-      <div className="shell flex flex-col items-center text-center">
+      {/**
+       * Sólo en móvil: en 90svh de alto el formulario deja mucho aire arriba y
+       * abajo, así que se rellena con las dos cintas del entregable —la cálida
+       * arriba, la fría abajo—, encajadas en las esquinas y sangrando fuera de
+       * pantalla. Van sobre negro, así que con `screen` el fondo desaparece y
+       * sólo se suma el degradado. En tablet y desktop no aparecen: ahí el
+       * bloque va holgado y el aire es parte del diseño.
+       */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 md:hidden">
+        <Image
+          src="/media/brand/figura-calida.jpg"
+          alt=""
+          width={900}
+          height={900}
+          className="absolute -left-[28%] -top-[16%] w-[86%] max-w-none opacity-60 mix-blend-screen"
+        />
+        <Image
+          src="/media/brand/figura-fria.jpg"
+          alt=""
+          width={900}
+          height={900}
+          className="absolute -right-[30%] -bottom-[18%] w-[92%] max-w-none opacity-60 mix-blend-screen"
+        />
+      </div>
+
+      <div className="shell relative flex flex-col items-center text-center">
         <SectionTitle>{meeting.title}</SectionTitle>
         <p className="mt-[clamp(12px,1.25vw,24px)] max-w-[52ch] text-[length:var(--fs-sm)] text-ash">
           {meeting.subtitle}
         </p>
       </div>
 
-      <div className="shell mx-auto mt-[clamp(24px,2.5vw,48px)] w-full max-w-[560px] overflow-hidden">
+      <div className="shell relative mx-auto mt-[clamp(24px,2.5vw,48px)] w-full max-w-[560px] overflow-hidden">
         <AnimatePresence mode="wait" initial={false}>
           {step === "platform" && (
             <motion.div
