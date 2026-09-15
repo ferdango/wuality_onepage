@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Figtree } from "next/font/google";
+import { Chau_Philomene_One, Figtree } from "next/font/google";
 import "./globals.css";
 
 /**
@@ -12,6 +12,14 @@ const wuality = Figtree({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800"],
   variable: "--font-wuality",
+  display: "swap",
+});
+
+/** "only one effect" usa esta tipografía en el Figma; sí está en Google Fonts. */
+const chau = Chau_Philomene_One({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-chau-raw",
   display: "swap",
 });
 
@@ -37,7 +45,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="es" className={wuality.variable}>
+    <html lang="es" className={`${wuality.variable} ${chau.variable}`}>
       <body>{children}</body>
     </html>
   );

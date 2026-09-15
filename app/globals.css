@@ -16,6 +16,7 @@
   --color-forest: #12604a;
 
   --font-sans: var(--font-wuality);
+  --font-chau: var(--font-chau-raw), ui-sans-serif, sans-serif;
 
   --ease-wuality: cubic-bezier(0.22, 1, 0.36, 1);
 }

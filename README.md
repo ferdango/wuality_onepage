@@ -58,6 +58,11 @@ El diseño usa **Charlie Display** (licencia Atlassian, sin webfont pública). L
 carga **Figtree** vía `next/font`, que es la sustituta de proporciones más cercanas
 y garantiza el mismo render en todos los equipos.
 
+La línea "only one effect" usa **Chau Philomene One**, que sí está en Google Fonts
+y se carga tal cual. Su métrica difiere un poco de la del archivo, así que el
+tamaño del claim se acota además al ancho disponible (`--claim` en `Models.tsx`):
+en desktop da los 220px del Figma y en móvil llena el ancho sin recortarse.
+
 Para usar la original: deja los `.woff2` en `public/fonts/`, descomenta el bloque
 `@font-face` al final de `app/globals.css` y antepón `"Charlie Display"` en la
 `font-family` de `body`. No se referencia la fuente instalada del sistema a
@@ -79,7 +84,8 @@ propósito: en algunas máquinas la familia resuelve a su variante oblicua.
 | Metodología | Diagrama con tarjetas que entran escalonadas; en mobile, carrusel |
 | Reviews | Carrusel de testimonios con stack de avatares |
 | Clientes | Retícula 5×3 con hover que enciende el logo; en mobile, 3 filas con sangrado lateral |
-| Two models | Las dos líneas entran desde lados opuestos con el scroll |
+| Two models | Las dos líneas entran desde lados opuestos con el scroll, al tamaño del Figma (220px sobre el lienzo de 1920) |
+| Modelos | Las dos tarjetas se apilan al bajar: cada una queda fija un poco más abajo que la anterior y la de atrás se encoge y se oscurece |
 | FAQ | Acordeón de apertura única con icono +/− y altura animada |
 | Agenda una reunión | Flujo de 2 pasos: elección de plataforma (Meet/Zoom) → formulario con validación y estado de confirmación |
 | Blog | Carrusel con tarjetas de nota y de video |
@@ -136,5 +142,8 @@ Cosas que el Figma deja como placeholder y conviene reemplazar antes de publicar
   están completas (4 proyectos, 5 partners). Con ese contenido no hay nada que
   desplazar y los controles quedan ocultos en desktop; en mobile y tablet sí
   aparecen. Añadir un proyecto o un partner más los activa en todos los tamaños.
+- **Modelos en móvil**: el Figma los muestra como carrusel con dots. Aquí se
+  apilan igual que en desktop, por pedido explícito; si prefieres el carrusel del
+  diseño, es volver a la versión anterior del componente.
 - **Tablet**: el Figma solo define 1920 y 360. El rango 768–1023 se derivó de forma
   responsive a partir de ambos.
