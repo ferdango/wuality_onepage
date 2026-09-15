@@ -70,7 +70,7 @@ export default function MenuOverlay({
                 initial={{ opacity: 0, y: 34 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.55, delay: 0.08 + i * 0.07, ease: [0.22, 1, 0.36, 1] }}
-                className={`text-[clamp(2rem,3.75vw,4.5rem)] font-bold leading-[1.35] transition-colors duration-300 ${
+                className={`text-[clamp(2rem,5vw,4.5rem)] font-bold leading-[1.35] transition-colors duration-300 ${
                   hovered === i ? "text-bone" : "text-muted"
                 }`}
               >

@@ -23,8 +23,8 @@ export default function Footer() {
           </div>
 
           <div className="max-w-[529px]">
-            <p className="text-[var(--fs-body)] font-bold tracking-[0.06em] text-bone">{footer.name}</p>
-            <p className="mt-4 text-[var(--fs-sm)] tracking-[0.06em] text-ash">
+            <p className="text-[length:var(--fs-body)] font-bold tracking-[0.06em] text-bone">{footer.name}</p>
+            <p className="mt-4 text-[length:var(--fs-sm)] tracking-[0.06em] text-ash">
               <span className="hidden lg:inline">
                 {footer.claim.map((c, i) => (
                   <span key={i} style={c.color ? { color: c.color } : undefined}>
@@ -61,8 +61,8 @@ export default function Footer() {
       </div>
 
       <div className="shell relative mt-[clamp(28px,2.1vw,40px)] flex flex-col-reverse items-center gap-4 text-center lg:flex-row lg:justify-between lg:text-left">
-        <p className="text-[var(--fs-xs)] text-muted">{footer.legal}</p>
-        <div className="flex flex-wrap items-center justify-center gap-[clamp(16px,1.46vw,28px)] text-[var(--fs-xs)]">
+        <p className="text-[length:var(--fs-xs)] text-muted">{footer.legal}</p>
+        <div className="flex flex-wrap items-center justify-center gap-[clamp(16px,1.46vw,28px)] text-[length:var(--fs-xs)]">
           <a href={`mailto:${footer.email}`} className="text-bone transition-opacity duration-300 hover:opacity-70">
             {footer.email}
           </a>

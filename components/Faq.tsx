@@ -25,7 +25,7 @@ export default function Faq() {
                   aria-expanded={isOpen}
                   className="group flex w-full items-center justify-between gap-6 py-[clamp(18px,2.9vw,56px)] text-left"
                 >
-                  <span className="text-[var(--fs-h4)] font-bold leading-snug text-bone">
+                  <span className="text-[length:var(--fs-h4)] font-bold leading-snug text-bone">
                     {item.q}
                   </span>
                   <span className="relative grid size-4 shrink-0 place-items-center">
@@ -52,14 +52,14 @@ export default function Faq() {
                     className="overflow-hidden"
                   >
                     <div className="pb-[clamp(24px,3.3vw,64px)] pr-0 lg:pr-[clamp(24px,3.3vw,64px)]">
-                      <p className="text-[var(--fs-lead)] leading-relaxed text-ash">{item.a}</p>
+                      <p className="text-[length:var(--fs-lead)] leading-relaxed text-ash">{item.a}</p>
 
                       {i === 0 && (
                         <div className="mt-[clamp(20px,2.1vw,40px)] flex flex-wrap items-center gap-5">
-                          <span className="text-[var(--fs-body)] text-ash">{faq.cta.label}</span>
+                          <span className="text-[length:var(--fs-body)] text-ash">{faq.cta.label}</span>
                           <a
                             href="#contacto"
-                            className="rounded-xl bg-blue/15 px-6 py-3 text-[var(--fs-xs)] font-bold text-blue transition-colors duration-300 hover:bg-blue/25"
+                            className="rounded-xl bg-blue/15 px-6 py-3 text-[length:var(--fs-xs)] font-bold text-blue transition-colors duration-300 hover:bg-blue/25"
                           >
                             {faq.cta.button}
                           </a>

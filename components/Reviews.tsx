@@ -18,7 +18,7 @@ export default function Reviews() {
         </Reveal>
 
         <Reveal delay={0.08}>
-          <p className="mt-[clamp(12px,1.05vw,20px)] max-w-[62ch] text-[var(--fs-sm)] leading-relaxed text-ash">
+          <p className="mt-[clamp(12px,1.05vw,20px)] max-w-[62ch] text-[length:var(--fs-sm)] leading-relaxed text-ash">
             {reviews.subtitle}
           </p>
         </Reveal>
@@ -37,7 +37,7 @@ export default function Reviews() {
                 />
               ))}
             </div>
-            <span className="text-[var(--fs-sm)] text-ash">{reviews.count}</span>
+            <span className="text-[length:var(--fs-sm)] text-ash">{reviews.count}</span>
           </div>
         </Reveal>
       </div>
@@ -63,8 +63,8 @@ export default function Reviews() {
                     className="size-[clamp(32px,2.3vw,44px)] rounded-full object-cover"
                   />
                   <span>
-                    <span className="block text-[var(--fs-xs)] font-bold text-yellow">{r.name}</span>
-                    <span className="block text-[var(--fs-xs)] text-ash">{r.role}</span>
+                    <span className="block text-[length:var(--fs-xs)] font-bold text-yellow">{r.name}</span>
+                    <span className="block text-[length:var(--fs-xs)] text-ash">{r.role}</span>
                   </span>
                 </div>
                 <Image
@@ -76,11 +76,11 @@ export default function Reviews() {
                 />
               </header>
 
-              <p className="mt-[clamp(12px,1.05vw,20px)] flex-1 text-[var(--fs-xs)] leading-relaxed text-ash">
+              <p className="mt-[clamp(12px,1.05vw,20px)] flex-1 text-[length:var(--fs-xs)] leading-relaxed text-ash">
                 {r.quote}
               </p>
 
-              <time className="mt-[clamp(12px,1.05vw,20px)] block text-[clamp(11px,0.73vw,14px)] font-semibold text-bone">
+              <time className="mt-[clamp(12px,1.05vw,20px)] block text-[clamp(11px,0.9733vw,14px)] font-semibold text-bone">
                 {r.date}
               </time>
             </article>

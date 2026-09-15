@@ -139,21 +139,27 @@ export default function Models() {
                 }
               >
                 <div
-                  className="flex flex-col justify-between gap-[clamp(20px,2.1vw,40px)] px-[clamp(20px,2.1vw,40px)] py-[clamp(36px,3.75vw,72px)] lg:aspect-[616/380] lg:px-[clamp(24px,2.5vw,48px)]"
+                  /**
+                   * El Figma da a la tarjeta la proporción 616x380, pero con el
+                   * texto a su tamaño real y la tarjeta acotada a 1024px ya no
+                   * cabe: el panel de color se salía por debajo de la foto. La
+                   * altura la marca ahora el texto y la imagen la acompaña.
+                   */
+                  className="flex flex-col justify-between gap-[clamp(20px,2.1vw,40px)] px-[clamp(20px,2.1vw,40px)] py-[clamp(36px,3.75vw,72px)] lg:min-h-[clamp(300px,26.4vw,380px)] lg:px-[clamp(24px,2.5vw,48px)]"
                   style={{ backgroundColor: card.bg }}
                 >
                   <div>
-                    <h3 className="text-[clamp(1.5rem,2.5vw,3rem)] font-bold leading-tight text-white">
+                    <h3 className="text-[clamp(1.5rem,3.3333vw,3rem)] font-bold leading-tight text-white">
                       {card.title}
                     </h3>
-                    <p className="mt-[clamp(10px,1.05vw,20px)] max-w-[42ch] text-[var(--fs-xs)] leading-relaxed text-white/90">
+                    <p className="mt-[clamp(10px,1.05vw,20px)] max-w-[42ch] text-[length:var(--fs-xs)] leading-relaxed text-white/90">
                       {card.body}
                     </p>
                   </div>
 
                   <a
                     href="#contacto"
-                    className="group inline-flex w-fit items-center gap-4 rounded-full border border-white/70 px-[clamp(16px,1.25vw,24px)] py-[clamp(9px,0.83vw,16px)] text-[var(--fs-xs)] font-semibold text-white transition-colors duration-400 hover:bg-white/10"
+                    className="group inline-flex w-fit items-center gap-4 rounded-full border border-white/70 px-[clamp(16px,1.25vw,24px)] py-[clamp(9px,0.83vw,16px)] text-[length:var(--fs-xs)] font-semibold text-white transition-colors duration-400 hover:bg-white/10"
                   >
                     {card.cta}
                     <span className="relative block h-[2px] w-6 overflow-hidden bg-white/60">
@@ -162,7 +168,7 @@ export default function Models() {
                   </a>
                 </div>
 
-                <div className="relative aspect-[616/380] w-full">
+                <div className="relative aspect-[616/380] w-full lg:aspect-auto lg:h-full">
                   <Image
                     src={card.image}
                     alt={card.title}

@@ -84,7 +84,7 @@ export default function Header() {
                   <a
                     key={item.label}
                     href={item.href}
-                    className={`relative text-[var(--fs-sm)] font-semibold transition-colors duration-300 ${
+                    className={`relative text-[length:var(--fs-sm)] font-semibold transition-colors duration-300 ${
                       isActive ? "text-bone" : "text-ash hover:text-bone"
                     }`}
                   >
@@ -106,7 +106,7 @@ export default function Header() {
                 onClick={() => setLangOpen((v) => !v)}
                 aria-expanded={langOpen}
                 aria-haspopup="listbox"
-                className="flex items-center gap-3 text-[var(--fs-sm)] font-semibold text-bone"
+                className="flex items-center gap-3 text-[length:var(--fs-sm)] font-semibold text-bone"
               >
                 <Image
                   src="/media/ui/flag-es.png"

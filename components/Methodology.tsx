@@ -12,18 +12,18 @@ function MethodCard({ card }: { card: Card }) {
   return (
     <div className="relative w-full rounded-[clamp(10px,0.83vw,16px)] bg-[#141d21] p-[clamp(14px,1.25vw,24px)]">
       <span
-        className="absolute -top-3 left-[clamp(10px,1vw,18px)] rounded-full px-3 py-1 text-[clamp(9px,0.63vw,12px)] font-bold"
+        className="absolute -top-3 left-[clamp(10px,1vw,18px)] rounded-full px-3 py-1 text-[clamp(9px,0.84vw,12px)] font-bold"
         style={{ backgroundColor: card.tagColor, color: card.tagText }}
       >
         {card.tag}
       </span>
       <h3
-        className="mt-1 text-[clamp(0.95rem,1.25vw,1.5rem)] font-bold"
+        className="mt-1 text-[clamp(0.95rem,1.6667vw,1.5rem)] font-bold"
         style={{ color: card.titleColor }}
       >
         {card.title}
       </h3>
-      <p className="mt-2 text-[clamp(0.8125rem,0.94vw,1.125rem)] leading-snug text-ash">
+      <p className="mt-2 text-[clamp(0.8125rem,1.2533vw,1.125rem)] leading-snug text-ash">
         {card.body}
       </p>
     </div>

@@ -48,7 +48,7 @@ export default function Meeting() {
     >
       <div className="shell flex flex-col items-center text-center">
         <SectionTitle>{meeting.title}</SectionTitle>
-        <p className="mt-[clamp(12px,1.25vw,24px)] max-w-[52ch] text-[var(--fs-sm)] text-ash">
+        <p className="mt-[clamp(12px,1.25vw,24px)] max-w-[52ch] text-[length:var(--fs-sm)] text-ash">
           {meeting.subtitle}
         </p>
       </div>
@@ -101,7 +101,7 @@ export default function Meeting() {
               <button
                 type="button"
                 onClick={() => setStep("form")}
-                className="flex items-center justify-center rounded-[32px] border border-[#616083] bg-surface py-5 text-[var(--fs-xs)] font-bold text-bone transition-colors duration-300 hover:border-blue hover:bg-blue/10 hover:text-blue"
+                className="flex items-center justify-center rounded-[32px] border border-[#616083] bg-surface py-5 text-[length:var(--fs-xs)] font-bold text-bone transition-colors duration-300 hover:border-blue hover:bg-blue/10 hover:text-blue"
               >
                 Continuar
               </button>
@@ -121,7 +121,7 @@ export default function Meeting() {
               <button
                 type="button"
                 onClick={() => setStep("platform")}
-                className="mx-auto flex items-center gap-2 text-[var(--fs-xs)] text-bone transition-opacity duration-300 hover:opacity-70"
+                className="mx-auto flex items-center gap-2 text-[length:var(--fs-xs)] text-bone transition-opacity duration-300 hover:opacity-70"
               >
                 <Image src="/media/ui/arrow-back.svg" alt="" width={24} height={24} className="size-6" />
                 volver
@@ -151,7 +151,7 @@ export default function Meeting() {
                              * que cabe en el ancho del campo. Las opciones sí
                              * llevan color, que es lo que se ve al desplegarlo.
                              */
-                            className="w-full cursor-pointer appearance-none bg-transparent text-[var(--fs-xs)] text-transparent outline-none"
+                            className="w-full cursor-pointer appearance-none bg-transparent text-[length:var(--fs-xs)] text-transparent outline-none"
                           >
                             {dialCodes.map((c) => (
                               <option key={c.code} value={c.code} className="bg-card text-[#f7f7ff]">
@@ -161,7 +161,7 @@ export default function Meeting() {
                           </select>
                           <span
                             aria-hidden
-                            className="pointer-events-none absolute left-[52px] flex items-center gap-1.5 text-[var(--fs-xs)] text-[#f7f7ff]"
+                            className="pointer-events-none absolute left-[52px] flex items-center gap-1.5 text-[length:var(--fs-xs)] text-[#f7f7ff]"
                           >
                             <span className="text-[1.15em] leading-none">{selected.flag}</span>
                             {selected.dial}
@@ -194,7 +194,7 @@ export default function Meeting() {
                         required
                         autoComplete={f.autoComplete}
                         placeholder={f.placeholder}
-                        className={`h-[70px] w-full rounded-[48px] border border-[#616083] bg-surface pr-5 text-[var(--fs-xs)] text-[#f7f7ff] outline-none transition-colors duration-300 placeholder:text-[#f7f7ff]/55 focus:border-blue ${
+                        className={`h-[70px] w-full rounded-[48px] border border-[#616083] bg-surface pr-5 text-[length:var(--fs-xs)] text-[#f7f7ff] outline-none transition-colors duration-300 placeholder:text-[#f7f7ff]/55 focus:border-blue ${
                           f.hasDialCode ? "pl-[158px]" : "pl-[57px]"
                         }`}
                       />
@@ -219,20 +219,20 @@ export default function Meeting() {
                     <Image src="/media/ui/check-bold.svg" alt="" width={30} height={30} className="size-[22px]" />
                   )}
                 </span>
-                <span className="text-[var(--fs-xs)] font-light text-[#f7f7ff]">
+                <span className="text-[length:var(--fs-xs)] font-light text-[#f7f7ff]">
                   He leído y acepto la Política de Privacidad y protección de datos*
                 </span>
               </label>
 
               {error && (
-                <p role="alert" className="text-[var(--fs-xs)] text-red">
+                <p role="alert" className="text-[length:var(--fs-xs)] text-red">
                   {error}
                 </p>
               )}
 
               <button
                 type="submit"
-                className="h-[65px] w-full rounded-xl bg-blue/15 text-[var(--fs-xs)] font-bold text-blue transition-colors duration-300 hover:bg-blue/25"
+                className="h-[65px] w-full rounded-xl bg-blue/15 text-[length:var(--fs-xs)] font-bold text-blue transition-colors duration-300 hover:bg-blue/25"
               >
                 Quiero una reunión
               </button>
@@ -247,15 +247,15 @@ export default function Meeting() {
               transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
               className="rounded-[32px] border border-[#616083] bg-surface p-10 text-center"
             >
-              <p className="text-[var(--fs-h4)] font-bold text-bone">¡Listo!</p>
-              <p className="mt-3 text-[var(--fs-xs)] text-ash">
+              <p className="text-[length:var(--fs-h4)] font-bold text-bone">¡Listo!</p>
+              <p className="mt-3 text-[length:var(--fs-xs)] text-ash">
                 Te escribimos para coordinar la reunión por{" "}
                 {meeting.options.find((o) => o.id === platform)?.name}.
               </p>
               <button
                 type="button"
                 onClick={() => setStep("platform")}
-                className="mt-6 text-[var(--fs-xs)] font-bold text-blue hover:underline"
+                className="mt-6 text-[length:var(--fs-xs)] font-bold text-blue hover:underline"
               >
                 Agendar otra
               </button>

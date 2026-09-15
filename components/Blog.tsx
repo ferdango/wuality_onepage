@@ -42,8 +42,8 @@ export default function Blog() {
                 />
 
                 <div className="absolute inset-x-0 bottom-0 p-[clamp(12px,1.05vw,20px)]">
-                  <h3 className="text-[var(--fs-xs)] font-bold text-white">{item.title}</h3>
-                  <time className="mt-1 block text-[clamp(10px,0.63vw,12px)] text-white/70">
+                  <h3 className="text-[length:var(--fs-xs)] font-bold text-white">{item.title}</h3>
+                  <time className="mt-1 block text-[clamp(10px,0.84vw,12px)] text-white/70">
                     {item.date}
                   </time>
                 </div>
@@ -64,13 +64,13 @@ export default function Blog() {
                 </div>
 
                 <div className="flex flex-1 flex-col p-[clamp(8px,0.63vw,12px)]">
-                  <time className="text-[clamp(10px,0.63vw,12px)] text-muted">{item.date}</time>
-                  <h3 className="mt-1 flex-1 text-[var(--fs-xs)] font-bold leading-snug text-bone">
+                  <time className="text-[clamp(10px,0.84vw,12px)] text-muted">{item.date}</time>
+                  <h3 className="mt-1 flex-1 text-[length:var(--fs-xs)] font-bold leading-snug text-bone">
                     {item.title}
                   </h3>
                   <a
                     href="#"
-                    className="mt-4 w-fit rounded-full border border-bone/30 px-4 py-2 text-[clamp(11px,0.73vw,14px)] text-bone transition-colors duration-300 hover:border-blue hover:text-blue"
+                    className="mt-4 w-fit rounded-full border border-bone/30 px-4 py-2 text-[clamp(11px,0.9733vw,14px)] text-bone transition-colors duration-300 hover:border-blue hover:text-blue"
                   >
                     {item.cta}
                   </a>

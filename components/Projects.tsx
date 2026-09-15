@@ -57,7 +57,7 @@ export default function Projects() {
 
               {/* Invitación a abrir el detalle */}
               <span
-                className={`pointer-events-none absolute inset-x-0 bottom-0 flex items-center justify-center gap-2 bg-gradient-to-t from-black/70 to-transparent pb-[clamp(14px,1.25vw,24px)] pt-[clamp(28px,2.5vw,48px)] text-[var(--fs-xs)] font-semibold text-white transition-opacity duration-400 ${
+                className={`pointer-events-none absolute inset-x-0 bottom-0 flex items-center justify-center gap-2 bg-gradient-to-t from-black/70 to-transparent pb-[clamp(14px,1.25vw,24px)] pt-[clamp(28px,2.5vw,48px)] text-[length:var(--fs-xs)] font-semibold text-white transition-opacity duration-400 ${
                   isSelected ? "opacity-100" : "opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100"
                 }`}
               >
