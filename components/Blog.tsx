@@ -41,14 +41,6 @@ export default function Blog() {
                   className="absolute right-4 top-4 h-6 w-auto"
                 />
 
-                <button
-                  type="button"
-                  aria-label={`Reproducir ${item.title}`}
-                  className="absolute left-1/2 top-1/2 flex size-[clamp(44px,3.3vw,64px)] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-blue transition-transform duration-500 ease-wuality group-hover:scale-110"
-                >
-                  <Image src="/media/ui/play.svg" alt="" width={24} height={24} className="size-[38%]" />
-                </button>
-
                 <div className="absolute inset-x-0 bottom-0 p-[clamp(12px,1.05vw,20px)]">
                   <h3 className="text-[var(--fs-xs)] font-bold text-white">{item.title}</h3>
                   <time className="mt-1 block text-[clamp(10px,0.63vw,12px)] text-white/70">
