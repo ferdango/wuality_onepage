@@ -46,32 +46,104 @@ export const services = [
   },
 ];
 
+/**
+ * Cada proyecto alimenta su tarjeta en "Nuestros proyectos" y el detalle que se
+ * abre debajo al hacer clic.
+ *
+ * OJO: los textos de `chapters` son de relleno. El Figma solo trae un caso de
+ * estudio (Meltwater en desktop, "Starbucks LLC" en mobile) y tampoco coincide
+ * con estos cuatro clientes, así que hay que sustituirlos por los reales.
+ */
 export const projects = [
-  { name: "Jockey Plaza", logo: "/media/logos/jockeyplaza.png", shot: "/media/work/proj-jockeyplaza.png", bg: "#7f756b" },
-  { name: "Civitatis", logo: "/media/logos/civitatis.png", shot: "/media/work/proj-civitatis.png", bg: "#f78832" },
-  { name: "Nu", logo: "/media/logos/nu.png", shot: "/media/work/proj-nu.png", bg: "#e0e0e0" },
-  { name: "Backus", logo: "/media/logos/backus.png", shot: "/media/work/proj-backus.png", bg: "#cdc8dc" },
+  {
+    slug: "jockey-plaza",
+    name: "Jockey Plaza",
+    logo: "/media/logos/jockeyplaza.png",
+    shot: "/media/work/proj-jockeyplaza.png",
+    bg: "#7f756b",
+    tags: ["Diseño Web", "Desarrollo Web", "Branding"],
+    chapters: [
+      {
+        title: "Branding",
+        body: "Trasladamos la experiencia del centro comercial a una identidad digital propia: un sistema visual cálido y editorial que funciona igual en una ficha de tienda que en una campaña de temporada.",
+      },
+      {
+        title: "Desarrollo Web",
+        body: "App y sitio comparten una misma capa de contenido, de modo que catálogo, horarios y promociones se publican una sola vez y llegan a todos los canales sin duplicar trabajo.",
+      },
+      {
+        title: "Diseño Web",
+        body: "Rediseñamos la navegación alrededor de lo que la gente realmente busca —qué hay cerca, qué está abierto, qué está en oferta— y redujimos a tres toques el camino hasta una tienda.",
+      },
+    ],
+  },
+  {
+    slug: "civitatis",
+    name: "Civitatis",
+    logo: "/media/logos/civitatis.png",
+    shot: "/media/work/proj-civitatis.png",
+    bg: "#f78832",
+    tags: ["Diseño Web", "Producto", "UX Research"],
+    chapters: [
+      {
+        title: "UX Research",
+        body: "Acompañamos a viajeros reales durante la reserva para entender dónde se caían. La fricción no estaba en el precio, sino en no saber qué incluía cada actividad.",
+      },
+      {
+        title: "Producto",
+        body: "Reordenamos la ficha de actividad para responder primero las dudas que frenaban la compra: qué incluye, cuánto dura y qué pasa si llueve.",
+      },
+      {
+        title: "Diseño Web",
+        body: "Un sistema de componentes que soporta miles de actividades en varios idiomas sin que la página pierda ritmo ni personalidad.",
+      },
+    ],
+  },
+  {
+    slug: "nu",
+    name: "Nu",
+    logo: "/media/logos/nu.png",
+    shot: "/media/work/proj-nu.png",
+    bg: "#e0e0e0",
+    tags: ["Producto", "UX-UI", "Design System"],
+    chapters: [
+      {
+        title: "UX-UI",
+        body: "Diseñamos el panel de finanzas para que la primera pantalla responda la pregunta que todos se hacen al abrir la app: cuánto tengo y en qué se me fue.",
+      },
+      {
+        title: "Design System",
+        body: "Una librería de componentes accesibles y tipada, compartida entre equipos, que bajó de semanas a días el tiempo de lanzar una pantalla nueva.",
+      },
+      {
+        title: "Producto",
+        body: "Iteramos sobre datos de uso real: cada cambio salió a un porcentaje de usuarios antes de convertirse en la experiencia por defecto.",
+      },
+    ],
+  },
+  {
+    slug: "backus",
+    name: "Backus",
+    logo: "/media/logos/backus.png",
+    shot: "/media/work/proj-backus.png",
+    bg: "#cdc8dc",
+    tags: ["Desarrollo Web", "Estrategia", "Data"],
+    chapters: [
+      {
+        title: "Estrategia",
+        body: "Mapeamos el recorrido completo del punto de venta para decidir qué debía resolver la herramienta y qué no. Menos funciones, mejor ejecutadas.",
+      },
+      {
+        title: "Desarrollo Web",
+        body: "Una plataforma que funciona con conexión intermitente: el equipo de campo registra pedidos sin señal y todo se sincroniza al recuperarla.",
+      },
+      {
+        title: "Data",
+        body: "Tableros que muestran cobertura y rotación por zona, de modo que las decisiones comerciales dejan de depender de la hoja de cálculo de cada quien.",
+      },
+    ],
+  },
 ];
-
-export const caseStudy = {
-  tags: ["Diseño Web", "Desarrollo Web", "Branding"],
-  client: "Meltwater",
-  image: "/media/work/case-starbucks.jpg",
-  chapters: [
-    {
-      title: "Branding",
-      body: "Queríamos crear una primera impresión impactante que mostrara la gama de productos Meltwater desde los primeros segundos de llegar a su página de inicio. Un video animado de sus productos rediseñados crea una experiencia moderna y atractiva en la parte superior de la página, y se adapta a los gráficos incorporados en el sitio web personalizado.",
-    },
-    {
-      title: "Desarrollo Web",
-      body: "Construimos el sitio sobre una base headless para que el equipo de marketing pueda publicar sin depender de desarrollo, con componentes reutilizables y métricas de performance medidas en cada despliegue.",
-    },
-    {
-      title: "Diseño Web",
-      body: "Un sistema de diseño consistente en desktop, tablet y mobile: retícula flexible, tipografía escalable y componentes accesibles que mantienen la identidad de marca en cada punto de contacto.",
-    },
-  ],
-};
 
 export const partners = [
   { name: "Atlassian", logo: "/media/logos/p-atlassian.png" },

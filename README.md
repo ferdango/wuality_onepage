@@ -72,9 +72,9 @@ propósito: en algunas máquinas la familia resuelve a su variante oblicua.
 | Menú | Overlay a pantalla completa, entrada escalonada, hover blanco/gris, cierre con Escape y bloqueo de scroll |
 | Hero | Titular que entra palabra por palabra; el mockup de iPhone se expande a full-bleed con el scroll —perdiendo marco, isla dinámica y botones— y revela "Innovamos" / "Conectamos" desde lados opuestos |
 | Lo que hacemos | Lista sincronizada con la imagen (hover/clic/foco), botón circular animado con `layoutId`; en mobile, carrusel con dots y CTA |
-| Nuestros proyectos | Carrusel con swipe, arrastre, teclado y dots |
+| Nuestros proyectos | Carrusel con swipe, arrastre, teclado y dots; cada tarjeta abre su caso en la sección de abajo |
 | Todos los carruseles | Arrastre con mouse vía `useDragScroll`: desactiva el snap durante el gesto, lo restaura al soltar y suprime el click posterior para que soltar sobre una tarjeta no la active |
-| Caso de estudio | Acordeón de capítulos con altura animada |
+| Caso de estudio | Muestra el proyecto elegido arriba: al hacer clic en una tarjeta se ancla aquí y el contenido cambia con una transición. Acordeón de capítulos con altura animada |
 | Partners | Carrusel con autoplay que se pausa al interactuar o si la pestaña no está visible |
 | Metodología | Diagrama con tarjetas que entran escalonadas; en mobile, carrusel |
 | Reviews | Carrusel de testimonios con stack de avatares |
@@ -106,6 +106,12 @@ como custom properties en el contenedor y los hijos las consumen con CSS plano.
 Las propiedades no acelerables (ancho, alto, padding, radio, `top`) sí pueden ir
 enlazadas directamente.
 
+**La selección de proyecto vive en un contexto.** "Nuestros proyectos" y el
+detalle son secciones hermanas, así que `ProjectSelection.tsx` las coordina. El
+desplazamiento hasta el detalle se lanza tras dos `requestAnimationFrame`: el
+clic enfoca la tarjeta y el navegador desplaza el riel horizontal para hacerla
+visible, y ese movimiento cancela el nuestro si salen a la vez.
+
 **Los controles de carrusel aparecen solo si el riel desborda.** Con el contenido
 actual, algunos rieles caben enteros en desktop (los 4 proyectos llenan la fila
 exacta) y unos dots que no llevan a ninguna parte serían ruido. Un
@@ -122,8 +128,10 @@ Cosas que el Figma deja como placeholder y conviene reemplazar antes de publicar
 - **Reviews**: en el Figma las cuatro tarjetas repiten el mismo testimonio; aquí se
   completaron con variantes coherentes. Reemplazar por los reales.
 - **Chat**: el texto del modal dice "Tinbet" en el diseño; se respetó literal.
-- **Caso de estudio**: el desktop dice "Meltwater" y el mobile "Starbucks LLC".
-  Se usó Meltwater, que es el que trae el copy completo.
+- **Casos de estudio**: el Figma trae un solo caso ("Meltwater" en desktop,
+  "Starbucks LLC" en mobile) y no corresponde a ninguno de los cuatro proyectos
+  del carrusel. Como cada tarjeta ahora abre su propio caso, escribí un texto de
+  relleno por proyecto en `lib/content.ts`. Hay que reemplazarlos por los reales.
 - **Proyectos y partners en desktop**: el Figma dibuja dots bajo filas que ya
   están completas (4 proyectos, 5 partners). Con ese contenido no hay nada que
   desplazar y los controles quedan ocultos en desktop; en mobile y tablet sí

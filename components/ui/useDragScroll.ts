@@ -6,6 +6,8 @@ import { useEffect, type RefObject } from "react";
  * Arrastre con mouse/trackpad sobre un riel con scroll horizontal.
  *
  * En táctil no hace nada: el scroll nativo ya es mejor que cualquier emulación.
+ * Tampoco interviene si el riel cabe entero, para no robarle el clic a su
+ * contenido.
  * Mientras se arrastra desactiva el scroll-snap (si no, el riel se "pega" y el
  * gesto se siente trabado) y lo restaura al soltar, para que el navegador haga
  * el encaje final. También suprime el click posterior al arrastre, de modo que
@@ -25,6 +27,10 @@ export default function useDragScroll<T extends HTMLElement>(ref: RefObject<T | 
 
     const onPointerDown = (e: PointerEvent) => {
       if (e.pointerType === "touch" || e.button !== 0) return;
+      // Si el riel cabe entero no hay nada que arrastrar. Salir aquí evita que
+      // un micro-movimiento del ratón durante el clic se lea como gesto y acabe
+      // suprimiendo el clic sobre una tarjeta.
+      if (el.scrollWidth - el.clientWidth <= 0) return;
       active = true;
       moved = false;
       suppressClick = false;
