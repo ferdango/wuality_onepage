@@ -41,7 +41,7 @@ export default function Models() {
       {/* Claim: 220px en el Figma de 1920, 64px en el de 360 */}
       <motion.div
         ref={claimRef}
-        className="shell flex flex-col items-center overflow-hidden"
+        className="shell flex min-h-[60svh] flex-col items-center justify-center overflow-hidden"
         style={
           {
             "--shift": reduced ? 0 : shift,
