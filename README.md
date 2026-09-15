@@ -1,36 +1,103 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Wuality — One Page
 
-## Getting Started
+Implementación en código de la one-page de Wuality diseñada en Figma
+(`Wuality Web`, página **UI Desktop**: frame `9:2` desktop 1920 y frame `1573:153` mobile 360).
 
-First, run the development server:
+## Stack
+
+- **Next.js 15** (App Router, Turbopack) + **React 19** + **TypeScript**
+- **Tailwind CSS v4** — los tokens del diseño viven en `@theme` dentro de `app/globals.css`
+- **Motion** (`motion/react`) para las animaciones
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run dev    # http://localhost:3000
+npm run build
+npm start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Estructura
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+app/
+  layout.tsx        fuentes, metadata, viewport
+  page.tsx          composición de secciones
+  globals.css       tokens de marca + escala tipográfica fluida
+components/         una sección por archivo + ui/ con primitivos
+lib/content.ts      todo el copy y las rutas de assets (single source of truth)
+public/media/       assets exportados del Figma (brand, ui, work, logos, people)
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Sistema de diseño
 
-## Learn More
+Todo sale del Figma, no hay valores inventados:
 
-To learn more about Next.js, take a look at the following resources:
+| Token | Valor | Uso |
+|---|---|---|
+| `--color-ink` | `#05080A` | fondo de página |
+| `--color-surface` | `#060B0D` | fondo de tarjetas y footer |
+| `--color-card` | `#1B1E1E` | tiles (logo del footer) |
+| `--color-red` | `#FF1A30` | marca, punto de los títulos, barra de progreso |
+| `--color-blue` | `#007AFC` | acentos, botones, "Partners Model" |
+| `--color-yellow` | `#FBBD1D` | servicio activo, nombre en reviews |
+| `--color-bone` | `#F4F4F4` | texto principal |
+| `--color-ash` | `#C6CACA` | texto secundario |
+| `--color-muted` | `#7C8282` | texto desactivado, bordes |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Escala fluida
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+El diseño está hecho a 1920 px. En vez de tres juegos de medidas, cada tamaño se
+expresa como `clamp(mobile, Xvw, desktop)` donde `Xvw = valor_desktop / 1920`.
+Así el layout escala de forma continua entre breakpoints y coincide exactamente
+con el Figma a 1920 y a 360.
 
-## Deploy on Vercel
+Breakpoints reales: **< 768** mobile · **768–1023** tablet · **≥ 1024** desktop.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Tipografía
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+El diseño usa **Charlie Display** (licencia Atlassian, sin webfont pública). La web
+carga **Figtree** vía `next/font`, que es la sustituta de proporciones más cercanas
+y garantiza el mismo render en todos los equipos.
+
+Para usar la original: deja los `.woff2` en `public/fonts/`, descomenta el bloque
+`@font-face` al final de `app/globals.css` y antepón `"Charlie Display"` en la
+`font-family` de `body`. No se referencia la fuente instalada del sistema a
+propósito: en algunas máquinas la familia resuelve a su variante oblicua.
+
+## Animaciones y funcionalidades
+
+| Sección | Comportamiento |
+|---|---|
+| Header | Barra de progreso de scroll (roja), fondo con blur al bajar, scroll-spy que subraya la sección visible |
+| Idioma | Dropdown "Idioma y región" con las tres opciones del diseño, cierre por clic fuera y Escape |
+| Menú | Overlay a pantalla completa, entrada escalonada, hover blanco/gris, cierre con Escape y bloqueo de scroll |
+| Hero | Titular que entra palabra por palabra; la tarjeta del video se expande a full-bleed con el scroll y revela "Innovamos" / "Conectamos" desde lados opuestos |
+| Lo que hacemos | Lista sincronizada con la imagen (hover/clic/foco), botón circular animado con `layoutId`; en mobile, carrusel con dots y CTA |
+| Nuestros proyectos | Carrusel con swipe, arrastre, teclado y dots; botón azul de avance sobre el riel |
+| Caso de estudio | Acordeón de capítulos con altura animada |
+| Partners | Carrusel con autoplay que se pausa al interactuar o si la pestaña no está visible |
+| Metodología | Diagrama con tarjetas que entran escalonadas; en mobile, carrusel |
+| Reviews | Carrusel de testimonios con stack de avatares |
+| Clientes | Retícula 5×3 con hover que enciende el logo; en mobile, 3 filas con sangrado lateral |
+| Two models | Las dos líneas entran desde lados opuestos con el scroll |
+| FAQ | Acordeón de apertura única con icono +/− y altura animada |
+| Agenda una reunión | Flujo de 2 pasos: elección de plataforma (Meet/Zoom) → formulario con validación y estado de confirmación |
+| Blog | Carrusel con tarjetas de nota y de video |
+| Flotantes | Botón de WhatsApp con modal de chat y botón de cookies con banner; la decisión se guarda en `localStorage` |
+
+Todo respeta `prefers-reduced-motion`: las animaciones de entrada y las ligadas al
+scroll se desactivan y el contenido se muestra en su estado final.
+
+## Pendientes de contenido
+
+Cosas que el Figma deja como placeholder y conviene reemplazar antes de publicar:
+
+- **FAQ**: las tres preguntas y respuestas son *lorem ipsum* en el diseño.
+- **Blog**: las imágenes de los episodios son capturas de terceros usadas como
+  referencia visual. Sustituir por material propio.
+- **Reviews**: en el Figma las cuatro tarjetas repiten el mismo testimonio; aquí se
+  completaron con variantes coherentes. Reemplazar por los reales.
+- **Chat**: el texto del modal dice "Tinbet" en el diseño; se respetó literal.
+- **Caso de estudio**: el desktop dice "Meltwater" y el mobile "Starbucks LLC".
+  Se usó Meltwater, que es el que trae el copy completo.
+- **Tablet**: el Figma solo define 1920 y 360. El rango 768–1023 se derivó de forma
+  responsive a partir de ambos.

@@ -1,26 +1,156 @@
 @import "tailwindcss";
 
+@theme {
+  /* Paleta extraída del Figma (Wuality Web) */
+  --color-ink: #05080a;
+  --color-surface: #060b0d;
+  --color-card: #1b1e1e;
+  --color-line: #232828;
+  --color-bone: #f4f4f4;
+  --color-ash: #c6caca;
+  --color-muted: #7c8282;
+  --color-red: #ff1a30;
+  --color-blue: #007afc;
+  --color-yellow: #fbbd1d;
+  --color-mint: #4fe0a0;
+  --color-forest: #12604a;
+
+  --font-sans: var(--font-wuality);
+
+  --ease-wuality: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Escala fluida: valor mobile -> valor desktop (base 1920px) */
+  --fs-display: clamp(2.125rem, 5.4167vw, 6.5rem); /* 34 -> 104 */
+  --fs-h2: clamp(1.75rem, 4.1667vw, 5rem); /* 28 -> 80 */
+  --fs-h3: clamp(1.375rem, 2.5vw, 3rem); /* 22 -> 48 */
+  --fs-h4: clamp(1.125rem, 1.875vw, 2.25rem); /* 18 -> 36 */
+  --fs-lead: clamp(1rem, 1.4583vw, 1.75rem); /* 16 -> 28 */
+  --fs-body: clamp(0.9375rem, 1.25vw, 1.5rem); /* 15 -> 24 */
+  --fs-sm: clamp(0.875rem, 1.0417vw, 1.25rem); /* 14 -> 20 */
+  --fs-xs: clamp(0.8125rem, 0.9375vw, 1.125rem); /* 13 -> 18 */
+
+  --gutter: clamp(1rem, 6.25vw, 7.5rem); /* 16 -> 120 */
+  --section-y: clamp(3rem, 4.1667vw, 5rem); /* 48 -> 80 */
+
+  --dot: clamp(0.625rem, 1.6667vw, 2rem); /* punto rojo del título */
+  --header-h: clamp(64px, 4.583vw, 88px);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@layer base {
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  html {
+    scroll-behavior: smooth;
+    background: var(--color-ink);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  body {
+    background: var(--color-ink);
+    color: var(--color-bone);
+    /* Charlie Display es la tipografía del Figma (licencia Atlassian, sin webfont
+       pública). Para usarla: descomenta el @font-face de abajo, deja los .woff2 en
+       /public/fonts y antepón "Charlie Display" en esta lista. Mientras tanto
+       Figtree — cargada por next/font — mantiene el render idéntico en todos los
+       equipos. No se referencia la fuente instalada del sistema porque en algunas
+       máquinas la familia resuelve a su variante oblicua. */
+    font-family: var(--font-wuality), ui-sans-serif, system-ui, sans-serif;
+    letter-spacing: 0.01em;
+    overflow-x: hidden;
+  }
+
+  /* El header es fijo: los anclajes deben parar por debajo de él. */
+  section[id],
+  [id="contacto"] {
+    scroll-margin-top: calc(var(--header-h) + 16px);
+  }
+
+  ::selection {
+    background: var(--color-red);
+    color: #fff;
+  }
+
+  /* Scrollbar discreta y en marca */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-ink);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #22292b;
+    border-radius: 999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-red);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  .shell {
+    padding-inline: var(--gutter);
+  }
+
+  .h-display {
+    font-size: var(--fs-display);
+    line-height: 1.12;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .h-section {
+    font-size: var(--fs-h2);
+    line-height: 1.2;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  /* Punto rojo que acompaña a los títulos en el diseño */
+  .dotted::after {
+    content: "";
+    display: inline-block;
+    width: var(--dot);
+    height: var(--dot);
+    margin-left: 0.28em;
+    border-radius: 999px;
+    background: var(--color-red);
+    vertical-align: baseline;
+  }
+
+  .no-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
 }
+
+/* Utilidad para bloquear el scroll cuando hay overlay abierto */
+.scroll-locked {
+  overflow: hidden;
+}
+
+/* Tipografía original del diseño — activar cuando se tenga la licencia:
+@font-face {
+  font-family: "Charlie Display";
+  src: url("/fonts/CharlieDisplay-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Charlie Display";
+  src: url("/fonts/CharlieDisplay-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-display: swap;
+}
+*/
