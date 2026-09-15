@@ -139,13 +139,13 @@ export default function Hero() {
 
         {/* Palabras del bloque a pantalla completa */}
         <span
-          className="pointer-events-none absolute left-[var(--gutter)] top-[calc(var(--header-h)+clamp(12px,2vw,40px))] z-20 text-[clamp(2.5rem,7.7333vw,7rem)] font-bold leading-none tracking-[-0.02em] text-white drop-shadow-[0_2px_24px_rgba(0,0,0,0.35)]"
+          className="pointer-events-none absolute left-[var(--gutter)] top-[calc(var(--header-h)+clamp(12px,2vw,40px))] z-20 text-[clamp(2.5rem,5.8vw,7rem)] font-bold leading-none tracking-[-0.02em] text-white drop-shadow-[0_2px_24px_rgba(0,0,0,0.35)]"
           style={{ opacity: "var(--word-op)", translate: "calc(var(--word-x) * -1%) 0" }}
         >
           {hero.words[0]}
         </span>
         <span
-          className="pointer-events-none absolute bottom-[clamp(16px,2.6vw,50px)] right-[var(--gutter)] z-20 text-[clamp(2.5rem,7.7333vw,7rem)] font-bold leading-none tracking-[-0.02em] text-white drop-shadow-[0_2px_24px_rgba(0,0,0,0.35)]"
+          className="pointer-events-none absolute bottom-[clamp(16px,2.6vw,50px)] right-[var(--gutter)] z-20 text-[clamp(2.5rem,5.8vw,7rem)] font-bold leading-none tracking-[-0.02em] text-white drop-shadow-[0_2px_24px_rgba(0,0,0,0.35)]"
           style={{ opacity: "var(--word-op)", translate: "calc(var(--word-x) * 1%) 0" }}
         >
           {hero.words[1]}

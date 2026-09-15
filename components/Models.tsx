@@ -41,7 +41,12 @@ export default function Models() {
       {/* Claim: 220px en el Figma de 1920, 64px en el de 360 */}
       <motion.div
         ref={claimRef}
-        className="shell relative flex min-h-[60svh] flex-col items-center justify-center overflow-hidden"
+        /**
+         * Sin `overflow-hidden`: el recorte lo hace ya la capa del gráfico, y
+         * aquí impedía que el bloque creciera cuando el titular no cabe en
+         * 60svh (una ventana ancha y baja, 1920x900, se comía 38px de texto).
+         */
+        className="shell relative flex min-h-[60svh] flex-col items-center justify-center"
         style={
           {
             "--shift": reduced ? 0 : shift,
@@ -128,7 +133,7 @@ export default function Models() {
               }
             >
               <article
-                className="grid origin-top overflow-hidden shadow-[0_-24px_60px_-30px_rgba(0,0,0,0.9)] lg:grid-cols-2"
+                className="grid origin-top overflow-hidden shadow-[0_-24px_60px_-30px_rgba(0,0,0,0.9)] lg:grid-cols-2 xl:h-[520px]"
                 style={
                   reduced
                     ? undefined
@@ -140,16 +145,17 @@ export default function Models() {
               >
                 <div
                   /**
-                   * El Figma da a la tarjeta la proporción 616x380, pero con el
-                   * texto a su tamaño real y la tarjeta acotada a 1024px ya no
-                   * cabe: el panel de color se salía por debajo de la foto. La
-                   * altura la marca ahora el texto y la imagen la acompaña.
+                   * De 1280px en adelante la tarjeta mide 520px de alto (ver el
+                   * `xl:h-[520px]` del article). Por debajo la altura la marca
+                   * el texto: la proporción 616x380 del Figma se quedaba corta
+                   * con la tarjeta acotada a 1024px y el panel de color asomaba
+                   * por debajo de la foto.
                    */
-                  className="flex flex-col justify-between gap-[clamp(20px,2.1vw,40px)] px-[clamp(20px,2.1vw,40px)] py-[clamp(36px,3.75vw,72px)] lg:min-h-[clamp(300px,26.4vw,380px)] lg:px-[clamp(24px,2.5vw,48px)]"
+                  className="flex flex-col justify-between gap-[clamp(20px,2.1vw,40px)] px-[clamp(20px,2.1vw,40px)] py-[clamp(36px,3.75vw,72px)] lg:min-h-[clamp(300px,26.4vw,380px)] lg:px-[clamp(24px,2.5vw,48px)] xl:min-h-0"
                   style={{ backgroundColor: card.bg }}
                 >
                   <div>
-                    <h3 className="text-[clamp(1.5rem,3.3333vw,3rem)] font-bold leading-tight text-white">
+                    <h3 className="text-[clamp(1.5rem,2.5vw,3rem)] font-bold leading-tight text-white">
                       {card.title}
                     </h3>
                     <p className="mt-[clamp(10px,1.05vw,20px)] max-w-[42ch] text-[length:var(--fs-xs)] leading-relaxed text-white/90">

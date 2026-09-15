@@ -42,9 +42,10 @@ export default function Reviews() {
         </Reveal>
       </div>
 
-      <div className="shell mt-[clamp(24px,2.5vw,48px)]">
+      <div className="mt-[clamp(24px,2.5vw,48px)]">
         <Carousel
           ariaLabel="Opiniones de clientes"
+          railClassName="px-[var(--gutter)] scroll-pl-[var(--gutter)]"
           slideClassName="w-[84%] sm:w-[55%] lg:w-[26%]"
           gap="gap-4 lg:gap-6"
         >
@@ -80,7 +81,7 @@ export default function Reviews() {
                 {r.quote}
               </p>
 
-              <time className="mt-[clamp(12px,1.05vw,20px)] block text-[clamp(11px,0.9733vw,14px)] font-semibold text-bone">
+              <time className="mt-[clamp(12px,1.05vw,20px)] block text-[clamp(11px,0.73vw,14px)] font-semibold text-bone">
                 {r.date}
               </time>
             </article>

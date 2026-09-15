@@ -24,7 +24,7 @@ export default function CaseStudy() {
               {project.tags.map((t) => (
                 <li
                   key={t}
-                  className="rounded-full border border-red px-4 py-1.5 text-[clamp(11px,0.9733vw,14px)] font-semibold text-red"
+                  className="rounded-full border border-red px-4 py-1.5 text-[clamp(11px,0.73vw,14px)] font-semibold text-red"
                 >
                   {t}
                 </li>
@@ -33,7 +33,7 @@ export default function CaseStudy() {
           </Reveal>
 
           <Reveal delay={0.08}>
-            <h2 className="dotted mt-[clamp(14px,1.25vw,24px)] text-[clamp(2rem,4.44vw,4rem)] font-bold leading-none text-bone">
+            <h2 className="dotted mt-[clamp(14px,1.25vw,24px)] text-[clamp(2rem,3.33vw,4rem)] font-bold leading-none text-bone">
               {project.name}
             </h2>
           </Reveal>
@@ -56,7 +56,7 @@ export default function CaseStudy() {
                       type="button"
                       onClick={() => setOpen(isOpen ? -1 : i)}
                       aria-expanded={isOpen}
-                      className={`block w-full py-[clamp(10px,1.05vw,20px)] text-left text-[clamp(1.25rem,2.5vw,2.25rem)] font-bold transition-colors duration-400 ${
+                      className={`block w-full py-[clamp(10px,1.05vw,20px)] text-left text-[clamp(1.25rem,1.875vw,2.25rem)] font-bold transition-colors duration-400 ${
                         isOpen ? "text-blue" : "text-muted hover:text-ash"
                       }`}
                     >

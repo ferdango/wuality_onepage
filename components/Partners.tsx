@@ -10,9 +10,10 @@ export default function Partners() {
     <section className="bg-ink py-[calc(var(--section-y)*1.4)]">
       <SectionTitle className="mb-[clamp(2rem,3.3vw,4rem)]">Partners digitales</SectionTitle>
 
-      <div className="shell">
+      <div>
         <Carousel
           ariaLabel="Partners digitales de Wuality"
+          railClassName="px-[var(--gutter)] scroll-pl-[var(--gutter)]"
           autoPlayMs={4200}
           slideClassName="w-[70%] sm:w-[45%] lg:w-[calc(20%-1.2rem)]"
           gap="gap-4 lg:gap-6"
