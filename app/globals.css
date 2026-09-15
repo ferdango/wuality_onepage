@@ -146,39 +146,6 @@
     pointer-events: none;
   }
 
-  /**
-   * Dibujado del diagrama de metodología. `--draw` (0→1) lo publica el
-   * componente desde el scroll; `--start` y `--speed` los pone el efecto en
-   * cada path para escalonarlos. El trazo no escala con el viewBox, así que
-   * mantiene el mismo grosor a cualquier tamaño.
-   */
-  .method-draw path {
-    --progress: clamp(0, (var(--draw) - var(--start, 0)) * var(--speed, 1), 1);
-    /* El trazo ocupa su ventana entera: es lo que hace que la línea avance
-       sin pausas de un tramo al siguiente. */
-    --trace: var(--progress);
-    stroke-width: 1.5;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    stroke-dasharray: 1;
-    stroke-dashoffset: calc(1 - var(--trace));
-    /* El contorno guía se va con el relleno, para acabar en el arte original. */
-    stroke-opacity: clamp(0, (1 - var(--progress)) * 6, 0.85);
-    fill-opacity: clamp(0, (var(--progress) - 0.7) * 3.4, 1);
-    vector-effect: non-scaling-stroke;
-  }
-
-  /* Late una vez cuando su slide pasa a ser el activo del carrusel. */
-  [data-active="true"] .pop-on-active {
-    animation: emoji-pop 0.72s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    [data-active="true"] .pop-on-active {
-      animation: none;
-    }
-  }
-
   .no-scrollbar {
     scrollbar-width: none;
     -ms-overflow-style: none;

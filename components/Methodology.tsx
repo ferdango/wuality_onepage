@@ -1,9 +1,8 @@
 "use client";
 
+import Image from "next/image";
 import { motion, useReducedMotion } from "motion/react";
 import Carousel from "./ui/Carousel";
-import MethodDiagram from "./MethodDiagram";
-import type { InlineSvg } from "@/lib/svg";
 import SectionTitle from "./ui/SectionTitle";
 import { methodology } from "@/lib/content";
 
@@ -31,7 +30,7 @@ function MethodCard({ card }: { card: Card }) {
   );
 }
 
-export default function Methodology({ diagram }: { diagram: InlineSvg }) {
+export default function Methodology() {
   const reduced = useReducedMotion();
 
   return (
@@ -40,11 +39,15 @@ export default function Methodology({ diagram }: { diagram: InlineSvg }) {
 
       {/* Desktop: diagrama con tarjetas flotando alrededor */}
       <div className="relative mx-auto hidden aspect-[1920/860] w-full max-w-[1920px] lg:block">
-        <MethodDiagram
-          svg={diagram}
-          title="Ciclo de trabajo iterativo de Wuality"
-          className="absolute left-1/2 top-1/2 h-[86%] w-[40%] -translate-x-1/2 -translate-y-1/2"
-        />
+        <div className="absolute left-1/2 top-1/2 h-[86%] w-[40%] -translate-x-1/2 -translate-y-1/2">
+          <Image
+            src="/media/ui/method-diagram.svg"
+            alt="Ciclo de trabajo iterativo de Wuality"
+            fill
+            sizes="40vw"
+            className="object-contain"
+          />
+        </div>
 
         {methodology.map((card, i) => (
           <motion.div
@@ -63,11 +66,15 @@ export default function Methodology({ diagram }: { diagram: InlineSvg }) {
 
       {/* Mobile / tablet: diagrama arriba, tarjetas en carrusel */}
       <div className="lg:hidden">
-        <MethodDiagram
-          svg={diagram}
-          title="Ciclo de trabajo iterativo de Wuality"
-          className="mx-auto aspect-square w-[82%] max-w-[420px]"
-        />
+        <div className="relative mx-auto aspect-square w-[82%] max-w-[420px]">
+          <Image
+            src="/media/ui/method-diagram.svg"
+            alt="Ciclo de trabajo iterativo de Wuality"
+            fill
+            sizes="82vw"
+            className="object-contain"
+          />
+        </div>
 
         <div className="shell mt-8">
           <Carousel

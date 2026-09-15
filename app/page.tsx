@@ -14,11 +14,8 @@ import Meeting from "@/components/Meeting";
 import Blog from "@/components/Blog";
 import Footer from "@/components/Footer";
 import FloatingActions from "@/components/FloatingActions";
-import { inlineSvg } from "@/lib/svg";
 
-export default async function Page() {
-  const methodDiagram = await inlineSvg("media/ui/method-diagram.svg");
-
+export default function Page() {
   return (
     <>
       <Header />
@@ -30,7 +27,7 @@ export default async function Page() {
           <CaseStudy />
         </ProjectSelectionProvider>
         <Partners />
-        <Methodology diagram={methodDiagram} />
+        <Methodology />
         <Reviews />
         <Clients />
         <Models />

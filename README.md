@@ -82,7 +82,7 @@ propósito: en algunas máquinas la familia resuelve a su variante oblicua.
 | Todos los carruseles | Bucle infinito con avance automático, que se pausa al pasar el cursor, al enfocar, al tocar o si la pestaña no está visible. Arrastre con mouse vía `useDragScroll`: desactiva el snap durante el gesto, lo restaura al soltar y suprime el click posterior para que soltar sobre una tarjeta no la active |
 | Caso de estudio | Muestra el proyecto elegido arriba: al hacer clic en una tarjeta se ancla aquí y el contenido cambia con una transición. Acordeón de capítulos con altura animada |
 | Partners | Carrusel con autoplay que se pausa al interactuar o si la pestaña no está visible |
-| Metodología | El diagrama se dibuja con el scroll: los contornos se trazan de izquierda a derecha siguiendo el ciclo y detrás entra el relleno. Tarjetas escalonadas; en mobile, carrusel |
+| Metodología | Diagrama con tarjetas que entran escalonadas; en mobile, carrusel |
 | Reviews | Carrusel de testimonios con stack de avatares; el emoji de la tarjeta activa da un pulso al entrar |
 | Clientes | Retícula de 2 columnas en móvil y 5 en desktop, sin scroll lateral. Los logos van en escala de grises y recuperan su color al pasar el cursor o al mantener pulsado |
 | Two models | Las dos líneas entran desde lados opuestos con el scroll, al tamaño del Figma (220px sobre el lienzo de 1920) |
@@ -142,26 +142,6 @@ detalle de proyecto sincronizado con el carrusel.
 `{ scroll: false }` justamente para eso: el clic lleva la vista al detalle, pero
 el avance automático cada 5s solo cambia el contenido, sin arrastrar la página
 mientras el usuario está leyendo otra sección.
-
-**El diagrama se incrusta, no se sirve como imagen.** El export son ocho figuras
-rellenas sin trazo, y un `<img>` no deja tocar sus paths. `lib/svg.ts` lo lee de
-`/public` en el servidor —en build, porque la página es estática— y el
-componente lo inyecta para poder animarlo. El "dibujado" usa el contorno de cada
-figura como línea: `pathLength="1"` normaliza su longitud y basta con animar
-`stroke-dashoffset` de 1 a 0, sin inventar ninguna geometría. El orden sale de la
-centro horizontal de cada figura, que es lo que sigue el recorrido del ciclo: la
-flecha verde arranca en el mismo x que las piezas del centro, así que ordenando
-por el borde izquierdo se colaba a mitad de la secuencia.
-
-Las ventanas de cada trazo van encadenadas —una empieza justo antes de que
-acabe la anterior— para que la línea avance sin pausas. Y el progreso va atado
-al scroll sin muelle de por medio: el scroll ya es continuo, y el muelle solo
-metía retardo entre el gesto y la línea.
-
-Un detalle que cuesta ver: el export trae ids fijos y el diagrama se monta dos
-veces (desktop y mobile), así que sin renombrarlos la copia visible referencia
-los degradados de la copia oculta y algunos tramos no llegan a pintarse. El
-componente les añade un sufijo único por instancia.
 
 **El centrado del iPhone va en el estilo en línea, no en clases.** Tailwind v4
 implementa `-translate-x-1/2` con la propiedad `translate`, que el `translate`
