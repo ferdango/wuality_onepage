@@ -83,7 +83,7 @@ propósito: en algunas máquinas la familia resuelve a su variante oblicua.
 | FAQ | Acordeón de apertura única con icono +/− y altura animada |
 | Agenda una reunión | Flujo de 2 pasos: elección de plataforma (Meet/Zoom) → formulario con validación y estado de confirmación |
 | Blog | Carrusel con tarjetas de nota y de video |
-| Flotantes | Botón de WhatsApp con modal de chat y botón de cookies con banner; la decisión se guarda en `localStorage` |
+| Flotantes | El botón de WhatsApp enlaza directo al chat de `+51 966 461 384` (número en `lib/content.ts`); el globo del diseño aparece al pasar el cursor, solo donde hay hover real. Botón de cookies con banner; la decisión se guarda en `localStorage` |
 
 Todo respeta `prefers-reduced-motion`: las animaciones de entrada y las ligadas al
 scroll se desactivan y el contenido se muestra en su estado final.

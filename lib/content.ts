@@ -270,6 +270,9 @@ export const footer = {
 export const chat = {
   question: "¿Alguna pregunta sobre Tinbet para empresas?",
   cta: "Iniciar chat",
+  /** Número de atención. `href` se deriva de aquí: wa.me solo acepta dígitos. */
+  phone: "+51 966 461 384",
+  href: "https://wa.me/51966461384",
 };
 
 export const cookies = {
