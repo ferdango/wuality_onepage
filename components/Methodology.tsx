@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import Image from "@/components/ui/Img";
 import { motion, useReducedMotion } from "motion/react";
 import Carousel from "./ui/Carousel";
 import SectionTitle from "./ui/SectionTitle";

@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import Image from "@/components/ui/Img";
 import { AnimatePresence, motion, useScroll, useSpring } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import Logo from "./ui/Logo";

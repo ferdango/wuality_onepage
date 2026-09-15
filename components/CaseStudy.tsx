@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import Image from "@/components/ui/Img";
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useState } from "react";
 import Reveal from "./ui/Reveal";

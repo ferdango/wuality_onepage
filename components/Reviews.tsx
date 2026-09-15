@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import Image from "@/components/ui/Img";
 import Carousel from "./ui/Carousel";
 import Reveal from "./ui/Reveal";
 import { reviews } from "@/lib/content";

@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import Image from "@/components/ui/Img";
 import { AnimatePresence, motion } from "motion/react";
 import { useState, type FormEvent } from "react";
 import SectionTitle from "./ui/SectionTitle";

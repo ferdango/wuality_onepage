@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from "./Img";
 
 /**
  * Logotipo horizontal de marca, versión roja sobre fondo oscuro. Sale del

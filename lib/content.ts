@@ -32,12 +32,12 @@ export const services = [
   {
     title: "Create Digital Products",
     items: "UX-UI / Product management / Front-End /Back-End / Apps",
-    image: "/media/work/proj-nu.png",
+    image: "/media/work/proj-nu.jpg",
   },
   {
     title: "Strategy & AI-Driven Insights",
     items: "Accesibility / Customer journey / Research / Trends",
-    image: "/media/work/proj-backus.png",
+    image: "/media/work/proj-backus.jpg",
   },
   {
     title: "Paid Media & SEO",
@@ -59,7 +59,7 @@ export const projects = [
     slug: "jockey-plaza",
     name: "Jockey Plaza",
     logo: "/media/logos/jockeyplaza.png",
-    shot: "/media/work/proj-jockeyplaza.png",
+    shot: "/media/work/proj-jockeyplaza.jpg",
     bg: "#7f756b",
     tags: ["Diseño Web", "Desarrollo Web", "Branding"],
     chapters: [
@@ -103,7 +103,7 @@ export const projects = [
     slug: "nu",
     name: "Nu",
     logo: "/media/logos/nu.png",
-    shot: "/media/work/proj-nu.png",
+    shot: "/media/work/proj-nu.jpg",
     bg: "#e0e0e0",
     tags: ["Producto", "UX-UI", "Design System"],
     chapters: [
@@ -125,7 +125,7 @@ export const projects = [
     slug: "backus",
     name: "Backus",
     logo: "/media/logos/backus.png",
-    shot: "/media/work/proj-backus.png",
+    shot: "/media/work/proj-backus.jpg",
     bg: "#cdc8dc",
     tags: ["Desarrollo Web", "Estrategia", "Data"],
     chapters: [
@@ -321,9 +321,9 @@ export const blog = {
   title: "Lo que necesitas saber para llegar más lejos",
   items: [
     { type: "note", date: "7 de mayo del 2025", title: "Lo que necesitas saber para llegar más lejos", image: "/media/work/blog-office.jpg", cta: "Leer nota" },
-    { type: "video", date: "7 de mayo del 2025", title: "EP1: Conoce a Tinbet", image: "/media/work/blog-podcast.png" },
+    { type: "video", date: "7 de mayo del 2025", title: "EP1: Conoce a Tinbet", image: "/media/work/blog-podcast.jpg" },
     { type: "note", date: "7 de mayo del 2025", title: "Diseño de producto: del insight al release", image: "/media/work/blog-office.jpg", cta: "Leer nota" },
-    { type: "video", date: "7 de mayo del 2025", title: "EP2: Métricas que sí importan", image: "/media/work/blog-podcast.png" },
+    { type: "video", date: "7 de mayo del 2025", title: "EP2: Métricas que sí importan", image: "/media/work/blog-podcast.jpg" },
     { type: "note", date: "7 de mayo del 2025", title: "Cómo medimos el impacto de un rediseño", image: "/media/work/blog-office.jpg", cta: "Leer nota" },
   ],
 };
