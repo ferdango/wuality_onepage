@@ -1,8 +1,8 @@
 "use client";
 
-import Image from "@/components/ui/Img";
 import { motion, useReducedMotion } from "motion/react";
 import Carousel from "./ui/Carousel";
+import MethodCycle from "./ui/MethodCycle";
 import SectionTitle from "./ui/SectionTitle";
 import { methodology } from "@/lib/content";
 
@@ -40,13 +40,7 @@ export default function Methodology() {
       {/* Desktop: diagrama con tarjetas flotando alrededor */}
       <div className="relative mx-auto hidden aspect-[1920/860] w-full max-w-[1920px] lg:block">
         <div className="absolute left-1/2 top-1/2 h-[86%] w-[40%] -translate-x-1/2 -translate-y-1/2">
-          <Image
-            src="/media/ui/method-cycle.svg"
-            alt="Ciclo de trabajo iterativo de Wuality"
-            fill
-            sizes="40vw"
-            className="object-contain"
-          />
+          <MethodCycle sizes="40vw" />
         </div>
 
         {methodology.map((card, i) => (
@@ -67,13 +61,7 @@ export default function Methodology() {
       {/* Mobile / tablet: diagrama arriba, tarjetas en carrusel */}
       <div className="lg:hidden">
         <div className="relative mx-auto aspect-square w-[82%] max-w-[420px]">
-          <Image
-            src="/media/ui/method-cycle.svg"
-            alt="Ciclo de trabajo iterativo de Wuality"
-            fill
-            sizes="82vw"
-            className="object-contain"
-          />
+          <MethodCycle sizes="82vw" />
         </div>
 
         <div className="shell mt-8">
