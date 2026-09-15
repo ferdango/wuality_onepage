@@ -29,7 +29,9 @@ export default function Projects() {
               aria-controls={PROJECT_DETAIL_ID}
               aria-label={`Ver el caso de ${p.name}`}
               style={{ backgroundColor: p.bg }}
-              className="group relative flex aspect-[360/470] w-full flex-col items-center overflow-hidden pt-[clamp(20px,2.1vw,40px)] text-left outline-none lg:aspect-[480/745]"
+              className={`group relative flex aspect-[360/470] w-full flex-col items-center overflow-hidden pt-[clamp(20px,2.1vw,40px)] text-left outline-none transition-opacity duration-500 ease-wuality lg:aspect-[480/745] ${
+                isSelected ? "opacity-100" : "opacity-64"
+              }`}
             >
               <div className="relative h-[clamp(24px,2.1vw,40px)] w-[62%]">
                 <Image
@@ -63,11 +65,9 @@ export default function Projects() {
                 </svg>
               </span>
 
-              {/* Foco visible sin romper el sangrado de la tarjeta */}
+              {/* Foco de teclado, hacia dentro para no romper el sangrado de la tarjeta */}
               <span
-                className={`pointer-events-none absolute inset-0 ring-inset transition-all duration-400 ${
-                  isSelected ? "ring-4 ring-red" : "ring-0 ring-transparent group-focus-visible:ring-4 group-focus-visible:ring-bone"
-                }`}
+                className="pointer-events-none absolute inset-0 ring-0 ring-transparent ring-inset transition-all duration-400 group-focus-visible:ring-4 group-focus-visible:ring-bone"
                 aria-hidden
               />
             </button>
