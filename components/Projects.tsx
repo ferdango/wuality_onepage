@@ -2,14 +2,30 @@
 
 import Image from "next/image";
 import { motion } from "motion/react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Dots from "./ui/Dots";
+import useDragScroll from "./ui/useDragScroll";
 import SectionTitle from "./ui/SectionTitle";
 import { projects } from "@/lib/content";
 
 export default function Projects() {
   const railRef = useRef<HTMLDivElement>(null);
   const [index, setIndex] = useState(0);
+
+  useDragScroll(railRef);
+
+  // Los controles solo tienen sentido si el riel desborda (ver Carousel).
+  const [overflowing, setOverflowing] = useState(false);
+  useEffect(() => {
+    const rail = railRef.current;
+    if (!rail) return;
+    const check = () => setOverflowing(rail.scrollWidth - rail.clientWidth > 4);
+    check();
+    const observer = new ResizeObserver(check);
+    observer.observe(rail);
+    Array.from(rail.children).forEach((child) => observer.observe(child));
+    return () => observer.disconnect();
+  }, []);
 
   const goTo = (i: number) => {
     const rail = railRef.current;
@@ -47,7 +63,7 @@ export default function Projects() {
             if (e.key === "ArrowRight") { e.preventDefault(); goTo(Math.min(index + 1, projects.length - 1)); }
             if (e.key === "ArrowLeft") { e.preventDefault(); goTo(Math.max(index - 1, 0)); }
           }}
-          className="no-scrollbar flex snap-x snap-mandatory overflow-x-auto overscroll-x-contain outline-none"
+          className="no-scrollbar flex cursor-grab snap-x snap-mandatory overflow-x-auto overscroll-x-contain outline-none active:cursor-grabbing"
         >
           {projects.map((p) => (
             <article
@@ -79,6 +95,7 @@ export default function Projects() {
         </div>
 
         {/* Botón de avance sobre el riel, como en el diseño */}
+        {overflowing && (
         <motion.button
           type="button"
           onClick={() => goTo((index + 1) % projects.length)}
@@ -90,9 +107,12 @@ export default function Projects() {
             <path d="M4 12h15M13 6l6 6-6 6" />
           </svg>
         </motion.button>
+        )}
       </div>
 
-      <Dots count={projects.length} index={index} onSelect={goTo} className="mt-[clamp(16px,1.7vw,32px)]" />
+      {overflowing && (
+        <Dots count={projects.length} index={index} onSelect={goTo} className="mt-[clamp(16px,1.7vw,32px)]" />
+      )}
     </section>
   );
 }

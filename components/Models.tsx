@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
+import { motion, useMotionTemplate, useReducedMotion, useScroll, useTransform } from "motion/react";
 import { useRef } from "react";
 import Carousel from "./ui/Carousel";
 import Reveal from "./ui/Reveal";
@@ -54,26 +54,34 @@ export default function Models() {
   const reduced = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
 
-  // Las dos líneas del claim entran desde lados opuestos.
-  const x1 = useTransform(scrollYProgress, [0, 0.5], ["8%", "0%"]);
-  const x2 = useTransform(scrollYProgress, [0, 0.5], ["-8%", "0%"]);
+  /**
+   * Las dos líneas del claim entran desde lados opuestos. El desplazamiento
+   * viaja como variable CSS en vez de como transform: un transform enlazado a
+   * `useScroll` con `target` acaba acelerado por hardware sobre un ViewTimeline
+   * cuyo rango no coincide con el de la librería en JS (misma razón que en Hero).
+   */
+  const shift = useMotionTemplate`${useTransform(scrollYProgress, [0, 0.5], [8, 0])}`;
 
   return (
     <section className="bg-ink py-[calc(var(--section-y)*1.6)]">
-      <div ref={ref} className="shell flex flex-col items-center overflow-hidden">
-        <motion.p
-          style={reduced ? undefined : { x: x1 }}
+      <motion.div
+        ref={ref}
+        className="shell flex flex-col items-center overflow-hidden"
+        style={{ "--shift": reduced ? 0 : shift } as React.CSSProperties}
+      >
+        <p
           className="text-center text-[clamp(2rem,5.4vw,6.5rem)] font-bold leading-[1.15] tracking-[-0.02em] text-bone"
+          style={{ translate: "calc(var(--shift) * 1%) 0" }}
         >
           {models.line1}
-        </motion.p>
-        <motion.p
-          style={reduced ? undefined : { x: x2 }}
+        </p>
+        <p
           className="mt-[clamp(6px,1vw,20px)] text-center text-[clamp(2rem,5.4vw,6.5rem)] font-medium leading-[1.15] tracking-[-0.02em] text-bone"
+          style={{ translate: "calc(var(--shift) * -1%) 0" }}
         >
           {models.line2}
-        </motion.p>
-      </div>
+        </p>
+      </motion.div>
 
       {/* Desktop: tarjetas apiladas y desalineadas como en el Figma */}
       <div className="shell mt-[clamp(32px,3.3vw,64px)] hidden flex-col items-center lg:flex">

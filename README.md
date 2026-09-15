@@ -70,9 +70,10 @@ propósito: en algunas máquinas la familia resuelve a su variante oblicua.
 | Header | Barra de progreso de scroll (roja), fondo con blur al bajar, scroll-spy que subraya la sección visible |
 | Idioma | Dropdown "Idioma y región" con las tres opciones del diseño, cierre por clic fuera y Escape |
 | Menú | Overlay a pantalla completa, entrada escalonada, hover blanco/gris, cierre con Escape y bloqueo de scroll |
-| Hero | Titular que entra palabra por palabra; la tarjeta del video se expande a full-bleed con el scroll y revela "Innovamos" / "Conectamos" desde lados opuestos |
+| Hero | Titular que entra palabra por palabra; el mockup de iPhone se expande a full-bleed con el scroll —perdiendo marco, isla dinámica y botones— y revela "Innovamos" / "Conectamos" desde lados opuestos |
 | Lo que hacemos | Lista sincronizada con la imagen (hover/clic/foco), botón circular animado con `layoutId`; en mobile, carrusel con dots y CTA |
 | Nuestros proyectos | Carrusel con swipe, arrastre, teclado y dots; botón azul de avance sobre el riel |
+| Todos los carruseles | Arrastre con mouse vía `useDragScroll`: desactiva el snap durante el gesto, lo restaura al soltar y suprime el click posterior para que soltar sobre una tarjeta no la active |
 | Caso de estudio | Acordeón de capítulos con altura animada |
 | Partners | Carrusel con autoplay que se pausa al interactuar o si la pestaña no está visible |
 | Metodología | Diagrama con tarjetas que entran escalonadas; en mobile, carrusel |
@@ -87,6 +88,30 @@ propósito: en algunas máquinas la familia resuelve a su variante oblicua.
 Todo respeta `prefers-reduced-motion`: las animaciones de entrada y las ligadas al
 scroll se desactivan y el contenido se muestra en su estado final.
 
+## Detalles de implementación que conviene conocer
+
+**El mockup del iPhone es CSS, no una imagen.** Está construido con las
+proporciones reales del dispositivo (402 × 874 pt, radio 55, isla 125 × 36),
+parametrizadas en `components/Hero.tsx` con las variables `--dev-h`, `--dev-w`,
+`--bezel`, `--radius` y `--btn-w`. Escala a cualquier tamaño sin perder nitidez
+y el chasis se desvanece cuando el video pasa a pantalla completa.
+
+**Los valores ligados al scroll viajan como variables CSS.** Motion acelera por
+hardware los valores de `useScroll` aplicados a propiedades acelerables
+(`opacity`, transforms) atándolos a un `ViewTimeline` nativo. Su rango se deriva
+del `offset`: `["start start", "end end"]` se mapea a `contain`, que queda
+degenerado cuando el objetivo es más alto que el viewport —como el hero, de
+320svh— y el progreso se congela. Por eso Hero y Models publican esos valores
+como custom properties en el contenedor y los hijos las consumen con CSS plano.
+Las propiedades no acelerables (ancho, alto, padding, radio, `top`) sí pueden ir
+enlazadas directamente.
+
+**Los controles de carrusel aparecen solo si el riel desborda.** Con el contenido
+actual, algunos rieles caben enteros en desktop (los 4 proyectos llenan la fila
+exacta) y unos dots que no llevan a ninguna parte serían ruido. Un
+`ResizeObserver` los muestra en cuanto hay algo que desplazar, así que basta con
+añadir items en `lib/content.ts` para que reaparezcan.
+
 ## Pendientes de contenido
 
 Cosas que el Figma deja como placeholder y conviene reemplazar antes de publicar:
@@ -99,5 +124,9 @@ Cosas que el Figma deja como placeholder y conviene reemplazar antes de publicar
 - **Chat**: el texto del modal dice "Tinbet" en el diseño; se respetó literal.
 - **Caso de estudio**: el desktop dice "Meltwater" y el mobile "Starbucks LLC".
   Se usó Meltwater, que es el que trae el copy completo.
+- **Proyectos y partners en desktop**: el Figma dibuja dots bajo filas que ya
+  están completas (4 proyectos, 5 partners). Con ese contenido no hay nada que
+  desplazar y los controles quedan ocultos en desktop; en mobile y tablet sí
+  aparecen. Añadir un proyecto o un partner más los activa en todos los tamaños.
 - **Tablet**: el Figma solo define 1920 y 360. El rango 768–1023 se derivó de forma
   responsive a partir de ambos.

@@ -126,6 +126,17 @@
     vertical-align: baseline;
   }
 
+  /* Estado activo del arrastre: sin snap (el gesto se siente libre),
+     sin selección de texto y con el cursor de agarre. */
+  .is-dragging {
+    scroll-snap-type: none !important;
+    cursor: grabbing;
+    user-select: none;
+  }
+  .is-dragging * {
+    pointer-events: none;
+  }
+
   .no-scrollbar {
     scrollbar-width: none;
     -ms-overflow-style: none;

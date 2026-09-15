@@ -41,7 +41,7 @@ export default function Reviews() {
       <div className="shell mt-[clamp(24px,2.5vw,48px)]">
         <Carousel
           ariaLabel="Opiniones de clientes"
-          slideClassName="w-[84%] sm:w-[55%] lg:w-[calc(25%-1.125rem)]"
+          slideClassName="w-[84%] sm:w-[55%] lg:w-[26%]"
           gap="gap-4 lg:gap-6"
         >
           {reviews.items.map((r) => (

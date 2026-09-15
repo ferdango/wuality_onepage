@@ -15,7 +15,7 @@ export default function Blog() {
       <div className="shell mt-[clamp(24px,3.3vw,64px)]">
         <Carousel
           ariaLabel="Artículos y episodios de Wuality"
-          slideClassName="w-[76%] sm:w-[48%] lg:w-[calc(25%-1.125rem)]"
+          slideClassName="w-[76%] sm:w-[48%] lg:w-[21%]"
           gap="gap-4 lg:gap-6"
         >
           {blog.items.map((item, i) =>

@@ -10,6 +10,7 @@ import {
   type ReactNode,
 } from "react";
 import Dots from "./Dots";
+import useDragScroll from "./useDragScroll";
 
 type Props = {
   children: ReactNode;
@@ -91,44 +92,34 @@ export default function Carousel({
   const next = useCallback(() => goTo((index + 1) % count), [goTo, index, count]);
   const prev = useCallback(() => goTo((index - 1 + count) % count), [goTo, index, count]);
 
+  /**
+   * Con pocos slides el riel puede caber entero (p. ej. 4 proyectos en desktop).
+   * En ese caso no hay nada que desplazar: ocultamos dots y controles en vez de
+   * dejarlos inertes. Si se añaden más items, reaparecen solos.
+   */
+  const [overflowing, setOverflowing] = useState(false);
+  useEffect(() => {
+    const rail = railRef.current;
+    if (!rail) return;
+    const check = () => setOverflowing(rail.scrollWidth - rail.clientWidth > 4);
+    check();
+    const observer = new ResizeObserver(check);
+    observer.observe(rail);
+    Array.from(rail.children).forEach((child) => observer.observe(child));
+    return () => observer.disconnect();
+  }, [count]);
+
   // Autoplay: se pausa al interactuar o cuando la pestaña no está visible.
   const [paused, setPaused] = useState(false);
   useEffect(() => {
-    if (!autoPlayMs || paused || count < 2) return;
+    if (!autoPlayMs || paused || count < 2 || !overflowing) return;
     const id = setInterval(() => {
       if (document.visibilityState === "visible") next();
     }, autoPlayMs);
     return () => clearInterval(id);
-  }, [autoPlayMs, paused, next, count]);
+  }, [autoPlayMs, paused, next, count, overflowing]);
 
-  // Arrastre con mouse (en táctil el scroll nativo ya funciona).
-  const drag = useRef<{ startX: number; startLeft: number; active: boolean }>({
-    startX: 0,
-    startLeft: 0,
-    active: false,
-  });
-
-  const onPointerDown = (e: React.PointerEvent) => {
-    if (e.pointerType !== "mouse") return;
-    const rail = railRef.current;
-    if (!rail) return;
-    drag.current = { startX: e.clientX, startLeft: rail.scrollLeft, active: true };
-    rail.setPointerCapture(e.pointerId);
-  };
-
-  const onPointerMove = (e: React.PointerEvent) => {
-    const rail = railRef.current;
-    if (!rail || !drag.current.active) return;
-    rail.scrollLeft = drag.current.startLeft - (e.clientX - drag.current.startX);
-  };
-
-  const endDrag = (e: React.PointerEvent) => {
-    const rail = railRef.current;
-    if (!rail || !drag.current.active) return;
-    drag.current.active = false;
-    if (rail.hasPointerCapture(e.pointerId)) rail.releasePointerCapture(e.pointerId);
-    goTo(index);
-  };
+  useDragScroll(railRef);
 
   return (
     <div
@@ -147,10 +138,6 @@ export default function Carousel({
           if (e.key === "ArrowRight") { e.preventDefault(); next(); }
           if (e.key === "ArrowLeft") { e.preventDefault(); prev(); }
         }}
-        onPointerDown={onPointerDown}
-        onPointerMove={onPointerMove}
-        onPointerUp={endDrag}
-        onPointerCancel={endDrag}
         className={`no-scrollbar flex cursor-grab snap-x snap-mandatory overflow-x-auto overscroll-x-contain outline-none active:cursor-grabbing ${gap} ${railClassName}`}
       >
         {slides.map((slide, i) => (
@@ -165,7 +152,7 @@ export default function Carousel({
         ))}
       </div>
 
-      {(showDots || controls) && (
+      {overflowing && (showDots || controls) && (
         <div className="mt-6 flex items-center justify-center gap-6 md:mt-8">
           {showDots && <Dots count={count} index={index} onSelect={goTo} />}
           {controls?.({ index, count, next, prev })}

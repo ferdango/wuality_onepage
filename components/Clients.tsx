@@ -2,6 +2,8 @@
 
 import Image from "next/image";
 import { motion, useReducedMotion } from "motion/react";
+import { useRef } from "react";
+import useDragScroll from "./ui/useDragScroll";
 import { clients } from "@/lib/content";
 
 function Tile({ logo, name, i }: { logo: string; name: string; i: number }) {
@@ -28,6 +30,9 @@ function Tile({ logo, name, i }: { logo: string; name: string; i: number }) {
 }
 
 export default function Clients() {
+  const railRef = useRef<HTMLDivElement>(null);
+  useDragScroll(railRef);
+
   return (
     <section className="bg-ink pb-[calc(var(--section-y)*1.4)]">
       {/* Desktop: retícula 5×3 */}
@@ -38,7 +43,10 @@ export default function Clients() {
       </div>
 
       {/* Mobile: 3 filas que sangran a los lados, como en el frame de 360 */}
-      <div className="no-scrollbar grid auto-cols-[38%] grid-flow-col grid-rows-3 gap-2 overflow-x-auto px-[var(--gutter)] lg:hidden">
+      <div
+        ref={railRef}
+        className="no-scrollbar grid auto-cols-[38%] cursor-grab grid-flow-col grid-rows-3 gap-2 overflow-x-auto px-[var(--gutter)] active:cursor-grabbing lg:hidden"
+      >
         {clients.map((c, i) => (
           <Tile key={c.name} logo={c.logo} name={c.name} i={i} />
         ))}

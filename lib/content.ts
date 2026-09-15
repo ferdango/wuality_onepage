@@ -235,6 +235,7 @@ export const blog = {
     { type: "video", date: "7 de mayo del 2025", title: "EP1: Conoce a Tinbet", image: "/media/work/blog-podcast.png" },
     { type: "note", date: "7 de mayo del 2025", title: "Diseño de producto: del insight al release", image: "/media/work/blog-office.jpg", cta: "Leer nota" },
     { type: "video", date: "7 de mayo del 2025", title: "EP2: Métricas que sí importan", image: "/media/work/blog-podcast.png" },
+    { type: "note", date: "7 de mayo del 2025", title: "Cómo medimos el impacto de un rediseño", image: "/media/work/blog-office.jpg", cta: "Leer nota" },
   ],
 };
 
