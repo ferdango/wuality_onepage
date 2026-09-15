@@ -116,7 +116,7 @@ export default function Models() {
           return (
             <div
               key={card.title}
-              className="sticky mx-auto w-full max-w-[1080px] last:mb-0 mb-[clamp(24px,4vw,80px)]"
+              className="sticky mx-auto w-full max-w-[1024px] last:mb-0 mb-[clamp(24px,4vw,80px)]"
               style={
                 {
                   // 48px de aire bajo el header: pegada arriba se veía apretada.
