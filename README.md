@@ -73,6 +73,7 @@ propósito: en algunas máquinas la familia resuelve a su variante oblicua.
 | Sección | Comportamiento |
 |---|---|
 | Header | Barra de progreso de scroll (roja), fondo con blur al bajar, scroll-spy que subraya la sección visible |
+| Títulos | El punto rojo rebota en bucle como una pelota, con achatamiento al tocar suelo (`.dotted::after`) |
 | Idioma | Dropdown "Idioma y región" con las tres opciones del diseño, cierre por clic fuera y Escape |
 | Menú | Overlay a pantalla completa, entrada escalonada, hover blanco/gris, cierre con Escape y bloqueo de scroll |
 | Hero | Titular que entra palabra por palabra. El iPhone arranca con su base un 30% fuera de pantalla y sube entero; ya arriba, se expande a full-bleed —perdiendo marco, isla dinámica y botones— y revela "Innovamos" / "Conectamos" desde lados opuestos |
@@ -81,7 +82,7 @@ propósito: en algunas máquinas la familia resuelve a su variante oblicua.
 | Todos los carruseles | Bucle infinito con avance automático, que se pausa al pasar el cursor, al enfocar, al tocar o si la pestaña no está visible. Arrastre con mouse vía `useDragScroll`: desactiva el snap durante el gesto, lo restaura al soltar y suprime el click posterior para que soltar sobre una tarjeta no la active |
 | Caso de estudio | Muestra el proyecto elegido arriba: al hacer clic en una tarjeta se ancla aquí y el contenido cambia con una transición. Acordeón de capítulos con altura animada |
 | Partners | Carrusel con autoplay que se pausa al interactuar o si la pestaña no está visible |
-| Metodología | Diagrama con tarjetas que entran escalonadas; en mobile, carrusel |
+| Metodología | El diagrama se dibuja con el scroll: los contornos se trazan de izquierda a derecha siguiendo el ciclo y detrás entra el relleno. Tarjetas escalonadas; en mobile, carrusel |
 | Reviews | Carrusel de testimonios con stack de avatares |
 | Clientes | Retícula 5×3 con hover que enciende el logo; en mobile, 3 filas con sangrado lateral |
 | Two models | Las dos líneas entran desde lados opuestos con el scroll, al tamaño del Figma (220px sobre el lienzo de 1920) |
@@ -125,6 +126,15 @@ exactamente al ancho de un set, lo que hay bajo el cursor no cambia y el corte
 es invisible. El salto se hace al detenerse, no durante el scroll, para no
 cancelar un desplazamiento suave en curso. Los puntos usan el índice módulo el
 número real de slides.
+
+**El diagrama se incrusta, no se sirve como imagen.** El export son ocho figuras
+rellenas sin trazo, y un `<img>` no deja tocar sus paths. `lib/svg.ts` lo lee de
+`/public` en el servidor —en build, porque la página es estática— y el
+componente lo inyecta para poder animarlo. El "dibujado" usa el contorno de cada
+figura como línea: `pathLength="1"` normaliza su longitud y basta con animar
+`stroke-dashoffset` de 1 a 0, sin inventar ninguna geometría. El orden sale de la
+primera coordenada X de cada path, así que no depende del layout y también es
+correcto en la copia que está oculta al montar.
 
 **El centrado del iPhone va en el estilo en línea, no en clases.** Tailwind v4
 implementa `-translate-x-1/2` con la propiedad `translate`, que el `translate`
