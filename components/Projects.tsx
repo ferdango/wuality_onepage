@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import Dots from "./ui/Dots";
 import useDragScroll from "./ui/useDragScroll";
@@ -94,20 +93,6 @@ export default function Projects() {
           ))}
         </div>
 
-        {/* Botón de avance sobre el riel, como en el diseño */}
-        {overflowing && (
-        <motion.button
-          type="button"
-          onClick={() => goTo((index + 1) % projects.length)}
-          aria-label="Siguiente proyecto"
-          whileTap={{ scale: 0.92 }}
-          className="absolute left-[35%] top-[72%] z-10 flex size-[clamp(56px,5.2vw,100px)] -translate-y-1/2 items-center justify-center rounded-full bg-blue text-white shadow-2xl shadow-black/30 transition-transform duration-500 ease-wuality hover:scale-110 lg:left-[17%] lg:top-[68%]"
-        >
-          <svg viewBox="0 0 24 24" className="size-[28%]" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M4 12h15M13 6l6 6-6 6" />
-          </svg>
-        </motion.button>
-        )}
       </div>
 
       {overflowing && (

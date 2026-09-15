@@ -72,7 +72,7 @@ propósito: en algunas máquinas la familia resuelve a su variante oblicua.
 | Menú | Overlay a pantalla completa, entrada escalonada, hover blanco/gris, cierre con Escape y bloqueo de scroll |
 | Hero | Titular que entra palabra por palabra; el mockup de iPhone se expande a full-bleed con el scroll —perdiendo marco, isla dinámica y botones— y revela "Innovamos" / "Conectamos" desde lados opuestos |
 | Lo que hacemos | Lista sincronizada con la imagen (hover/clic/foco), botón circular animado con `layoutId`; en mobile, carrusel con dots y CTA |
-| Nuestros proyectos | Carrusel con swipe, arrastre, teclado y dots; botón azul de avance sobre el riel |
+| Nuestros proyectos | Carrusel con swipe, arrastre, teclado y dots |
 | Todos los carruseles | Arrastre con mouse vía `useDragScroll`: desactiva el snap durante el gesto, lo restaura al soltar y suprime el click posterior para que soltar sobre una tarjeta no la active |
 | Caso de estudio | Acordeón de capítulos con altura animada |
 | Partners | Carrusel con autoplay que se pausa al interactuar o si la pestaña no está visible |
