@@ -17,13 +17,18 @@ export default function Footer() {
 
       <div className="shell relative flex flex-col items-center gap-[clamp(28px,2.5vw,48px)] text-center lg:flex-row lg:items-end lg:justify-between lg:text-left">
         <Reveal className="flex flex-col items-center gap-[clamp(20px,1.875vw,36px)] lg:items-start">
-          <div className="flex h-[clamp(80px,6.46vw,124px)] w-[clamp(92px,7.45vw,143px)] items-center justify-center rounded-[clamp(16px,1.25vw,24px)] bg-card">
+          {/**
+           * Símbolo de la marca nueva (01. Logotipo / 03. Símbolo), la esfera
+           * roja. La ficha es cuadrada porque el símbolo lo es: en el entregable
+           * se entrega como imagen de perfil.
+           */}
+          <div className="flex size-[clamp(80px,6.46vw,124px)] items-center justify-center rounded-[clamp(16px,1.25vw,24px)] bg-card">
             <Image
-              src="/media/brand/isotype-red.svg"
+              src="/media/brand/wuality-simbolo-red.png"
               alt="Wuality"
-              width={96}
-              height={48}
-              className="h-[clamp(28px,2.5vw,48px)] w-auto"
+              width={600}
+              height={600}
+              className="size-[72%]"
             />
           </div>
 
