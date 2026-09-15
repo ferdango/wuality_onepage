@@ -1,10 +1,29 @@
 import Image from "@/components/ui/Img";
+import BrandPattern, { type Piece } from "./ui/BrandPattern";
 import Reveal from "./ui/Reveal";
 import { footer } from "@/lib/content";
 
+/**
+ * El footer es ancho y bajo, así que las figuras se reparten por los márgenes
+ * —arriba y en los dos costados— y dejan libre la banda central, que es donde
+ * cae el texto en móvil y la fila de logo y redes en desktop.
+ */
+const FOOTER_PATTERN: Piece[] = [
+  { fig: "cinta-calida", x: 13, y: 30, w: 20, cap: 28, rotate: -14, opacity: 0.3 },
+  { fig: "esfera-amarilla", x: 29, y: 16, w: 13, cap: 24, opacity: 0.4 },
+  { fig: "gota-azul", x: 49, y: 13, w: 13, cap: 17, rotate: 12, opacity: 0.3 },
+  { fig: "cinta-fria", x: 77, y: 22, w: 20, cap: 30, rotate: 10, opacity: 0.3 },
+  { fig: "esfera-roja", x: 93, y: 52, w: 10, cap: 20, opacity: 0.38 },
+  { fig: "cinta-magenta", x: 87, y: 78, w: 16, cap: 24, rotate: -18, opacity: 0.35 },
+  { fig: "esfera-roja", x: 7, y: 80, w: 10, cap: 20, opacity: 0.35 },
+  { fig: "gota-azul", x: 24, y: 89, w: 12, cap: 16, rotate: -8, opacity: 0.3 },
+];
+
 export default function Footer() {
   return (
-    <footer className="relative overflow-hidden bg-surface pb-[clamp(2rem,7.3vw,8.75rem)] pt-[108px]">
+    <footer className="relative overflow-hidden bg-surface pb-[108px]">
+      <BrandPattern pieces={FOOTER_PATTERN} />
+
       <div className="shell relative flex flex-col items-center gap-[clamp(28px,2.5vw,48px)] text-center lg:flex-row lg:items-end lg:justify-between lg:text-left">
         <Reveal className="flex flex-col items-center gap-[clamp(20px,1.875vw,36px)] lg:items-start">
           {/**

@@ -3,10 +3,26 @@
 import Image from "@/components/ui/Img";
 import { AnimatePresence, motion } from "motion/react";
 import { useState, type FormEvent } from "react";
+import BrandPattern, { type Piece } from "./ui/BrandPattern";
 import SectionTitle from "./ui/SectionTitle";
 import { dialCodes, meeting } from "@/lib/content";
 
 type Step = "platform" | "form" | "done";
+
+/**
+ * Figuras repartidas por el aire de arriba y de abajo, esquivando la columna
+ * central donde vive el formulario. Cada una entera y dentro de la caja.
+ */
+const MEETING_PATTERN: Piece[] = [
+  { fig: "cinta-calida", x: 22, y: 9, w: 36, cap: 17, rotate: -12, opacity: 0.6 },
+  { fig: "esfera-roja", x: 73, y: 6, w: 24, cap: 12, opacity: 0.62 },
+  { fig: "gota-azul", x: 83, y: 19, w: 21, cap: 10, rotate: 18, opacity: 0.55 },
+  { fig: "esfera-amarilla", x: 46, y: 17, w: 22, cap: 11, opacity: 0.55 },
+  { fig: "cinta-fria", x: 76, y: 89, w: 38, cap: 18, rotate: 8, opacity: 0.6 },
+  { fig: "cinta-magenta", x: 24, y: 90, w: 29, cap: 13, rotate: -20, opacity: 0.45 },
+  { fig: "esfera-amarilla", x: 48, y: 81, w: 24, cap: 12, opacity: 0.55 },
+  { fig: "esfera-roja", x: 11, y: 77, w: 16, cap: 9, opacity: 0.55 },
+];
 
 type Field = {
   name: string;
@@ -48,28 +64,10 @@ export default function Meeting() {
     >
       {/**
        * Sólo en móvil: en 90svh de alto el formulario deja mucho aire arriba y
-       * abajo, así que se rellena con las dos cintas del entregable —la cálida
-       * arriba, la fría abajo—, encajadas en las esquinas y sangrando fuera de
-       * pantalla. Van sobre negro, así que con `screen` el fondo desaparece y
-       * sólo se suma el degradado. En tablet y desktop no aparecen: ahí el
-       * bloque va holgado y el aire es parte del diseño.
+       * abajo, y ahí se siembran figuras del entregable. En tablet y desktop no
+       * aparecen: el bloque va holgado y el aire forma parte del diseño.
        */}
-      <div aria-hidden className="pointer-events-none absolute inset-0 md:hidden">
-        <Image
-          src="/media/brand/figura-calida.jpg"
-          alt=""
-          width={900}
-          height={900}
-          className="absolute -left-[28%] -top-[16%] w-[86%] max-w-none opacity-60 mix-blend-screen"
-        />
-        <Image
-          src="/media/brand/figura-fria.jpg"
-          alt=""
-          width={900}
-          height={900}
-          className="absolute -right-[30%] -bottom-[18%] w-[92%] max-w-none opacity-60 mix-blend-screen"
-        />
-      </div>
+      <BrandPattern className="md:hidden" pieces={MEETING_PATTERN} />
 
       <div className="shell relative flex flex-col items-center text-center">
         <SectionTitle>{meeting.title}</SectionTitle>
