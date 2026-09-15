@@ -41,7 +41,7 @@ export default function Models() {
       {/* Claim: 220px en el Figma de 1920, 64px en el de 360 */}
       <motion.div
         ref={claimRef}
-        className="shell flex min-h-[60svh] flex-col items-center justify-center overflow-hidden"
+        className="shell relative flex min-h-[60svh] flex-col items-center justify-center overflow-hidden"
         style={
           {
             "--shift": reduced ? 0 : shift,
@@ -56,14 +56,40 @@ export default function Models() {
           } as React.CSSProperties
         }
       >
+        {/**
+         * Elemento gráfico de marca: dos esferas que se encuentran. Dice lo
+         * mismo que el titular —dos que acaban siendo uno— así que va detrás
+         * del texto, con el punto de encuentro a la altura del hueco entre las
+         * dos líneas.
+         *
+         * El original viene sobre negro; con `screen` ese negro desaparece y
+         * sólo queda el resplandor rojo, así que no hacen falta máscaras ni se
+         * ven los cantos del encuadre. Se dimensiona para sangrar por los
+         * cuatro lados —de ahí el `max` entre ancho y alto de viewport—: si
+         * cupiera entero se verían dos círculos completos en vez de dos arcos.
+         */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 overflow-hidden mix-blend-screen [mask-image:linear-gradient(to_bottom,transparent,black_26%,black_74%,transparent)]"
+        >
+          <Image
+            src="/media/brand/esferas-convergen.jpg"
+            alt=""
+            width={1400}
+            height={1400}
+            className="absolute left-1/2 top-1/2 size-[max(118vw,86svh)] max-w-none -translate-x-1/2 -translate-y-1/2 opacity-30"
+            style={{ scale: "calc(1 + var(--shift) * 0.014)" }}
+          />
+        </div>
+
         <p
-          className="whitespace-nowrap text-center text-[length:var(--claim)] font-bold leading-[1] tracking-[-0.02em] text-bone"
+          className="relative whitespace-nowrap text-center text-[length:var(--claim)] font-bold leading-[1] tracking-[-0.02em] text-bone"
           style={{ translate: "calc(var(--shift) * 1%) 0" }}
         >
           {models.line1}
         </p>
         <p
-          className="mt-[clamp(2.4375rem,5vw,6rem)] whitespace-nowrap text-center font-chau text-[length:var(--claim)] leading-[1] tracking-[-0.01em] text-bone"
+          className="relative mt-[clamp(2.4375rem,5vw,6rem)] whitespace-nowrap text-center font-chau text-[length:var(--claim)] leading-[1] tracking-[-0.01em] text-bone"
           style={{ translate: "calc(var(--shift) * -1%) 0" }}
         >
           {models.line2}

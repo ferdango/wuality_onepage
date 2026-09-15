@@ -4,7 +4,37 @@ import { footer } from "@/lib/content";
 
 export default function Footer() {
   return (
-    <footer className="relative overflow-hidden bg-surface pb-[clamp(2rem,7.3vw,8.75rem)] pt-[var(--section-y)]">
+    <footer className="relative overflow-hidden bg-surface pb-[clamp(2rem,7.3vw,8.75rem)] pt-[108px]">
+      {/**
+       * Franja superior con el elemento gráfico de marca: la esfera del
+       * entregable asomando por el borde. Es mucho más ancha que los 108px de
+       * la franja, así que lo que entra es sólo su casquete: un arco muy
+       * abierto que hace de horizonte. Como el original va sobre negro,
+       * `screen` deja pasar el fondo del footer y sólo suma el resplandor.
+       */}
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-[108px] overflow-hidden [mask-image:linear-gradient(to_bottom,black,black_50%,transparent)]">
+        <Image
+          src="/media/brand/esfera-roja.jpg"
+          alt=""
+          aria-hidden
+          width={1000}
+          height={1000}
+          /**
+           * La esfera se dibuja al doble del ancho de pantalla y se sube lo
+           * justo para que su polo quede a 10px del borde: como en el archivo
+           * la bola empieza al 15% de la altura, ese desplazamiento es
+           * `10px - 0.15 * 200vw`. Así el vértice cae siempre en el mismo
+           * sitio y lo único que cambia con el ancho es cuánto se abre el
+           * arco, sin media queries.
+           *
+           * Va girada 180º porque en el original el polo norte es la zona
+           * apagada y el sur el que tiene la luz; lo que asoma por el borde
+           * tiene que ser la parte encendida.
+           */
+          className="absolute left-1/2 top-[calc(26px-30vw)] size-[200vw] max-w-none -translate-x-1/2 rotate-180 opacity-55 mix-blend-screen"
+        />
+      </div>
+
       {/* Destello rojo de marca (mingcute:flash-fill en el diseño mobile) */}
       <Image
         src="/media/ui/flash.svg"
