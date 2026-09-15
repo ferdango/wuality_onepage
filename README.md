@@ -75,10 +75,10 @@ propósito: en algunas máquinas la familia resuelve a su variante oblicua.
 | Header | Barra de progreso de scroll (roja), fondo con blur al bajar, scroll-spy que subraya la sección visible |
 | Idioma | Dropdown "Idioma y región" con las tres opciones del diseño, cierre por clic fuera y Escape |
 | Menú | Overlay a pantalla completa, entrada escalonada, hover blanco/gris, cierre con Escape y bloqueo de scroll |
-| Hero | Titular que entra palabra por palabra; el mockup de iPhone se expande a full-bleed con el scroll —perdiendo marco, isla dinámica y botones— y revela "Innovamos" / "Conectamos" desde lados opuestos |
+| Hero | Titular que entra palabra por palabra. El iPhone arranca con su base un 30% fuera de pantalla y sube entero; ya arriba, se expande a full-bleed —perdiendo marco, isla dinámica y botones— y revela "Innovamos" / "Conectamos" desde lados opuestos |
 | Lo que hacemos | Lista sincronizada con la imagen (hover/clic/foco), botón circular animado con `layoutId`; en mobile, carrusel con dots y CTA |
 | Nuestros proyectos | Carrusel con swipe, arrastre, teclado y dots; cada tarjeta abre su caso en la sección de abajo |
-| Todos los carruseles | Arrastre con mouse vía `useDragScroll`: desactiva el snap durante el gesto, lo restaura al soltar y suprime el click posterior para que soltar sobre una tarjeta no la active |
+| Todos los carruseles | Bucle infinito con avance automático, que se pausa al pasar el cursor, al enfocar, al tocar o si la pestaña no está visible. Arrastre con mouse vía `useDragScroll`: desactiva el snap durante el gesto, lo restaura al soltar y suprime el click posterior para que soltar sobre una tarjeta no la active |
 | Caso de estudio | Muestra el proyecto elegido arriba: al hacer clic en una tarjeta se ancla aquí y el contenido cambia con una transición. Acordeón de capítulos con altura animada |
 | Partners | Carrusel con autoplay que se pausa al interactuar o si la pestaña no está visible |
 | Metodología | Diagrama con tarjetas que entran escalonadas; en mobile, carrusel |
@@ -118,11 +118,17 @@ desplazamiento hasta el detalle se lanza tras dos `requestAnimationFrame`: el
 clic enfoca la tarjeta y el navegador desplaza el riel horizontal para hacerla
 visible, y ese movimiento cancela el nuestro si salen a la vez.
 
-**Los controles de carrusel aparecen solo si el riel desborda.** Con el contenido
-actual, algunos rieles caben enteros en desktop (los 4 proyectos llenan la fila
-exacta) y unos dots que no llevan a ninguna parte serían ruido. Un
-`ResizeObserver` los muestra en cuanto hay algo que desplazar, así que basta con
-añadir items en `lib/content.ts` para que reaparezcan.
+**El bucle del carrusel es por repetición, no por reordenado.** Los slides se
+renderizan tres veces y el riel arranca en la copia central. Cuando el scroll se
+detiene fuera de ella, se salta un set entero de golpe; como el salto equivale
+exactamente al ancho de un set, lo que hay bajo el cursor no cambia y el corte
+es invisible. El salto se hace al detenerse, no durante el scroll, para no
+cancelar un desplazamiento suave en curso. Los puntos usan el índice módulo el
+número real de slides.
+
+**El centrado del iPhone va en el estilo en línea, no en clases.** Tailwind v4
+implementa `-translate-x-1/2` con la propiedad `translate`, que el `translate`
+en línea de la subida pisaría por completo, dejando el teléfono descentrado.
 
 ## Pendientes de contenido
 
@@ -138,10 +144,6 @@ Cosas que el Figma deja como placeholder y conviene reemplazar antes de publicar
   "Starbucks LLC" en mobile) y no corresponde a ninguno de los cuatro proyectos
   del carrusel. Como cada tarjeta ahora abre su propio caso, escribí un texto de
   relleno por proyecto en `lib/content.ts`. Hay que reemplazarlos por los reales.
-- **Proyectos y partners en desktop**: el Figma dibuja dots bajo filas que ya
-  están completas (4 proyectos, 5 partners). Con ese contenido no hay nada que
-  desplazar y los controles quedan ocultos en desktop; en mobile y tablet sí
-  aparecen. Añadir un proyecto o un partner más los activa en todos los tamaños.
 - **Modelos en móvil**: el Figma los muestra como carrusel con dots. Aquí se
   apilan igual que en desktop, por pedido explícito; si prefieres el carrusel del
   diseño, es volver a la versión anterior del componente.
