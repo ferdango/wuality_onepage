@@ -63,11 +63,10 @@ export default function Meeting() {
       className="relative flex min-h-[90svh] flex-col justify-center overflow-hidden bg-ink py-[calc(var(--section-y)*1.4)]"
     >
       {/**
-       * Sólo en móvil: en 90svh de alto el formulario deja mucho aire arriba y
-       * abajo, y ahí se siembran figuras del entregable. En tablet y desktop no
-       * aparecen: el bloque va holgado y el aire forma parte del diseño.
+       * En 90svh de alto el formulario deja mucho aire arriba y abajo, y ahí se
+       * siembran figuras del entregable. Mismo reparto en todos los tamaños.
        */}
-      <BrandPattern className="md:hidden" pieces={MEETING_PATTERN} />
+      <BrandPattern pieces={MEETING_PATTERN} />
 
       <div className="shell relative flex flex-col items-center text-center">
         <SectionTitle>{meeting.title}</SectionTitle>

@@ -9,6 +9,7 @@ import {
   useTransform,
 } from "motion/react";
 import { useRef } from "react";
+import BrandPattern, { type Piece } from "./ui/BrandPattern";
 import { hero } from "@/lib/content";
 
 /** Parte del recorrido que ocupa la subida inicial del teléfono. */
@@ -35,6 +36,28 @@ const RISE = 0.22;
  * es más alto que el viewport —esta sección mide 320svh— y el progreso se
  * congela. Las propiedades no acelerables sí pueden ir enlazadas.
  */
+/** Costados y franja bajo el titular; el teléfono ocupa el centro. */
+const HERO_MOBILE: Piece[] = [
+  { fig: "cinta-calida", x: 21, y: 32, w: 31, cap: 15, rotate: -14, opacity: 0.5 },
+  { fig: "gota-azul", x: 80, y: 28, w: 27, cap: 12, rotate: 16, opacity: 0.45 },
+  { fig: "esfera-roja", x: 88, y: 46, w: 20, cap: 11, opacity: 0.45 },
+  { fig: "esfera-amarilla", x: 13, y: 52, w: 22, cap: 12, opacity: 0.4 },
+  { fig: "cinta-magenta", x: 20, y: 88, w: 30, cap: 14, rotate: 18, opacity: 0.4 },
+  { fig: "cinta-fria", x: 80, y: 82, w: 29, cap: 13, rotate: -10, opacity: 0.42 },
+];
+
+/** En desktop el mockup deja libres los dos tercios laterales. */
+const HERO_DESKTOP: Piece[] = [
+  { fig: "cinta-calida", x: 11, y: 40, w: 17, cap: 30, rotate: -16, opacity: 0.5 },
+  { fig: "esfera-amarilla", x: 24, y: 22, w: 8, cap: 15, opacity: 0.4 },
+  { fig: "gota-azul", x: 9, y: 72, w: 11, cap: 18, rotate: 12, opacity: 0.42 },
+  { fig: "esfera-roja", x: 22, y: 78, w: 9, cap: 16, opacity: 0.45 },
+  { fig: "cinta-fria", x: 89, y: 36, w: 17, cap: 30, rotate: 14, opacity: 0.5 },
+  { fig: "esfera-roja", x: 76, y: 20, w: 8, cap: 14, opacity: 0.4 },
+  { fig: "cinta-magenta", x: 88, y: 76, w: 13, cap: 23, rotate: -18, opacity: 0.4 },
+  { fig: "esfera-amarilla", x: 78, y: 84, w: 9, cap: 16, opacity: 0.4 },
+];
+
 export default function Hero() {
   const ref = useRef<HTMLDivElement>(null);
   const reduced = useReducedMotion();
@@ -119,6 +142,16 @@ export default function Hero() {
         className="sticky top-0 h-[100svh] overflow-hidden"
         style={scrollVars as React.CSSProperties}
       >
+        {/**
+         * Fondo de marca. Va lo primero y sin z propio, así que queda por
+         * debajo del titular (z-10) y del mockup (z-15). Dos repartos
+         * distintos porque el hueco libre no es el mismo: en móvil el teléfono
+         * se come el centro y sólo quedan los costados y la franja bajo el
+         * titular; en desktop sobra sitio a izquierda y derecha.
+         */}
+        <BrandPattern className="md:hidden" pieces={HERO_MOBILE} />
+        <BrandPattern className="hidden md:block" pieces={HERO_DESKTOP} />
+
         {/* Titular */}
         <h1
           className="shell h-display absolute inset-x-0 top-[calc(var(--header-h)+clamp(28px,3.4vw,66px))] z-10 mx-auto max-w-[1600px] text-center text-bone"

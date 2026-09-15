@@ -22,9 +22,11 @@ export type Piece = {
  * Siembra figuras del entregable por el fondo de una sección.
  *
  * Cada figura va entera —recortada a su propio contorno y colocada por su
- * centro—, nunca sangrando fuera de la caja. Las láminas vienen sobre negro,
- * así que con `mix-blend-screen` ese fondo desaparece contra el de la sección y
- * sólo se suma el degradado: no hacen falta PNG con alfa.
+ * centro—, nunca sangrando fuera de la caja. Llevan alfa recto, recuperado de
+ * las láminas del entregable (que vienen compuestas sobre negro), así que se
+ * componen de forma normal: con `mix-blend-screen` se veía el recuadro del
+ * original, porque su negro no es exacto y la mezcla lo sumaba como un
+ * rectángulo más claro que el fondo.
  *
  * La caja debe ser `relative`; el patrón no captura eventos ni se anuncia a
  * lectores de pantalla.
@@ -47,11 +49,11 @@ export default function BrandPattern({
       {pieces.map((p, i) => (
         <Image
           key={i}
-          src={`/media/brand/figuras/${p.fig}.jpg`}
+          src={`/media/brand/figuras/${p.fig}.png`}
           alt=""
           width={420}
           height={420}
-          className="absolute max-w-none mix-blend-screen"
+          className="absolute max-w-none"
           style={{
             left: `${p.x}%`,
             top: `${p.y}%`,
