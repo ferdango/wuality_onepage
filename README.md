@@ -88,7 +88,7 @@ propósito: en algunas máquinas la familia resuelve a su variante oblicua.
 | Two models | Las dos líneas entran desde lados opuestos con el scroll, al tamaño del Figma (220px sobre el lienzo de 1920) |
 | Modelos | Las dos tarjetas se apilan al bajar: cada una queda fija un poco más abajo que la anterior y la de atrás se encoge y se oscurece |
 | FAQ | Acordeón de apertura única con icono +/− y altura animada |
-| Agenda una reunión | Flujo de 2 pasos: elección de plataforma (Meet/Zoom) → "Continuar" → formulario con validación y estado de confirmación |
+| Agenda una reunión | Sección de 90vh. Flujo de 2 pasos: elección de plataforma (Meet/Zoom) → "Continuar" → formulario con selector de prefijo internacional, validación y estado de confirmación |
 | Blog | Carrusel con tarjetas de nota y de video |
 | Flotantes | El botón de WhatsApp enlaza directo al chat de `+51 966 461 384` (número en `lib/content.ts`); el globo del diseño aparece al pasar el cursor, solo donde hay hover real. Botón de cookies con banner; la decisión se guarda en `localStorage` |
 
@@ -160,6 +160,13 @@ componente les añade un sufijo único por instancia.
 **El centrado del iPhone va en el estilo en línea, no en clases.** Tailwind v4
 implementa `-translate-x-1/2` con la propiedad `translate`, que el `translate`
 en línea de la subida pisaría por completo, dejando el teléfono descentrado.
+
+**Las banderas del prefijo son emoji, no imágenes.** Las dibuja la fuente del
+sistema, así que no hay un set de banderas que mantener ni peticiones extra.
+En Windows, que no trae glifos de bandera, se ve el código de dos letras en su
+lugar. El control es un `select` nativo —en móvil abre el selector del sistema—
+con el texto en transparente: el estado cerrado lo pinta una etiqueta propia que
+cabe en el ancho del campo, y las opciones sí llevan color.
 
 ## Pendientes de contenido
 

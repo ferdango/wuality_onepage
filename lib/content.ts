@@ -291,6 +291,23 @@ export const faq = {
   ],
 };
 
+/**
+ * Prefijos para el campo de celular. La bandera va como emoji: se dibuja con la
+ * fuente del sistema, así que no hay que mantener un set de imágenes. En
+ * Windows, que no trae glifos de bandera, se ve el código de dos letras.
+ */
+export const dialCodes = [
+  { code: "PE", dial: "+51", flag: "🇵🇪", name: "Perú" },
+  { code: "CL", dial: "+56", flag: "🇨🇱", name: "Chile" },
+  { code: "CO", dial: "+57", flag: "🇨🇴", name: "Colombia" },
+  { code: "EC", dial: "+593", flag: "🇪🇨", name: "Ecuador" },
+  { code: "BO", dial: "+591", flag: "🇧🇴", name: "Bolivia" },
+  { code: "AR", dial: "+54", flag: "🇦🇷", name: "Argentina" },
+  { code: "MX", dial: "+52", flag: "🇲🇽", name: "México" },
+  { code: "US", dial: "+1", flag: "🇺🇸", name: "Estados Unidos" },
+  { code: "ES", dial: "+34", flag: "🇪🇸", name: "España" },
+];
+
 export const meeting = {
   title: "Agenda una reunión",
   subtitle: "Elige una de las plataformas para tener nuestra primera reunión",

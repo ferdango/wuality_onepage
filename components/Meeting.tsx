@@ -4,7 +4,7 @@ import Image from "next/image";
 import { AnimatePresence, motion } from "motion/react";
 import { useState, type FormEvent } from "react";
 import SectionTitle from "./ui/SectionTitle";
-import { meeting } from "@/lib/content";
+import { dialCodes, meeting } from "@/lib/content";
 
 type Step = "platform" | "form" | "done";
 
@@ -14,13 +14,13 @@ type Field = {
   icon: string;
   type: "text" | "tel" | "email";
   autoComplete: string;
-  /** Prefijo fijo del país, como en el diseño del campo de celular. */
-  prefix?: string;
+  /** El campo de celular antepone el selector de prefijo internacional. */
+  hasDialCode?: boolean;
 };
 
 const fields: Field[] = [
   { name: "nombre", placeholder: "Nombres y apellidos", icon: "/media/ui/user.svg", type: "text", autoComplete: "name" },
-  { name: "celular", placeholder: "Celular", icon: "/media/ui/whatsapp.svg", type: "tel", autoComplete: "tel", prefix: "+51" },
+  { name: "celular", placeholder: "Celular", icon: "/media/ui/whatsapp.svg", type: "tel", autoComplete: "tel", hasDialCode: true },
   { name: "email", placeholder: "Correo electrónico", icon: "/media/ui/mail-field.svg", type: "email", autoComplete: "email" },
 ];
 
@@ -28,6 +28,7 @@ export default function Meeting() {
   const [step, setStep] = useState<Step>("platform");
   const [platform, setPlatform] = useState(meeting.options[0].id);
   const [accepted, setAccepted] = useState(true);
+  const [dial, setDial] = useState(dialCodes[0].code);
   const [error, setError] = useState("");
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -41,7 +42,10 @@ export default function Meeting() {
   };
 
   return (
-    <section id="contacto" className="bg-ink py-[calc(var(--section-y)*1.4)]">
+    <section
+      id="contacto"
+      className="flex min-h-[90svh] flex-col justify-center bg-ink py-[calc(var(--section-y)*1.4)]"
+    >
       <div className="shell flex flex-col items-center text-center">
         <SectionTitle>{meeting.title}</SectionTitle>
         <p className="mt-[clamp(12px,1.25vw,24px)] max-w-[52ch] text-[var(--fs-sm)] text-ash">
@@ -124,33 +128,79 @@ export default function Meeting() {
               </button>
 
               <div className="flex flex-col gap-3">
-                {fields.map((f) => (
-                  <label key={f.name} className="relative block">
-                    <span className="sr-only">{f.placeholder}</span>
-                    {f.prefix && (
-                      <span className="absolute inset-y-px left-px flex w-[108px] items-center justify-end rounded-l-[48px] bg-[#141d21] pr-3 text-[var(--fs-xs)] text-[#f7f7ff]">
-                        {f.prefix}
-                      </span>
-                    )}
-                    <Image
-                      src={f.icon}
-                      alt=""
-                      width={32}
-                      height={32}
-                      className="pointer-events-none absolute left-4 top-1/2 z-10 size-8 -translate-y-1/2"
-                    />
-                    <input
-                      name={f.name}
-                      type={f.type}
-                      required
-                      autoComplete={f.autoComplete}
-                      placeholder={f.placeholder}
-                      className={`h-[70px] w-full rounded-[48px] border border-[#616083] bg-surface pr-5 text-[var(--fs-xs)] text-[#f7f7ff] outline-none transition-colors duration-300 placeholder:text-[#f7f7ff]/55 focus:border-blue ${
-                        f.prefix ? "pl-[125px]" : "pl-[57px]"
-                      }`}
-                    />
-                  </label>
-                ))}
+                {fields.map((f) => {
+                  const selected = dialCodes.find((c) => c.code === dial) ?? dialCodes[0];
+                  return (
+                    <label key={f.name} className="relative block">
+                      <span className="sr-only">{f.placeholder}</span>
+
+                      {f.hasDialCode && (
+                        /**
+                         * Un `select` nativo y no un menú propio: en móvil abre
+                         * el selector del sistema, que se maneja mucho mejor con
+                         * el pulgar y ya viene resuelto para lectores de pantalla.
+                         */
+                        <span className="absolute inset-y-px left-px z-10 flex w-[142px] items-center gap-1 rounded-l-[48px] bg-[#141d21] pl-[52px] pr-2">
+                          <select
+                            aria-label="Prefijo del país"
+                            value={dial}
+                            onChange={(e) => setDial(e.target.value)}
+                            /**
+                             * El texto del propio `select` va en transparente:
+                             * el estado cerrado lo pinta la etiqueta de al lado,
+                             * que cabe en el ancho del campo. Las opciones sí
+                             * llevan color, que es lo que se ve al desplegarlo.
+                             */
+                            className="w-full cursor-pointer appearance-none bg-transparent text-[var(--fs-xs)] text-transparent outline-none"
+                          >
+                            {dialCodes.map((c) => (
+                              <option key={c.code} value={c.code} className="bg-card text-[#f7f7ff]">
+                                {c.flag} {c.dial} · {c.name}
+                              </option>
+                            ))}
+                          </select>
+                          <span
+                            aria-hidden
+                            className="pointer-events-none absolute left-[52px] flex items-center gap-1.5 text-[var(--fs-xs)] text-[#f7f7ff]"
+                          >
+                            <span className="text-[1.15em] leading-none">{selected.flag}</span>
+                            {selected.dial}
+                          </span>
+                          <svg
+                            viewBox="0 0 24 24"
+                            aria-hidden
+                            className="pointer-events-none ml-auto size-4 shrink-0 text-[#f7f7ff]/70"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2.4"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          >
+                            <path d="M6 9l6 6 6-6" />
+                          </svg>
+                        </span>
+                      )}
+
+                      <Image
+                        src={f.icon}
+                        alt=""
+                        width={32}
+                        height={32}
+                        className="pointer-events-none absolute left-4 top-1/2 z-20 size-8 -translate-y-1/2"
+                      />
+                      <input
+                        name={f.name}
+                        type={f.type}
+                        required
+                        autoComplete={f.autoComplete}
+                        placeholder={f.placeholder}
+                        className={`h-[70px] w-full rounded-[48px] border border-[#616083] bg-surface pr-5 text-[var(--fs-xs)] text-[#f7f7ff] outline-none transition-colors duration-300 placeholder:text-[#f7f7ff]/55 focus:border-blue ${
+                          f.hasDialCode ? "pl-[158px]" : "pl-[57px]"
+                        }`}
+                      />
+                    </label>
+                  );
+                })}
               </div>
 
               <label className="flex cursor-pointer items-center gap-4 text-left">
