@@ -188,6 +188,8 @@ export default function Carousel({
               className={`shrink-0 snap-start ${slideClassName}`}
               aria-roledescription="slide"
               aria-label={`${i + 1} de ${count}`}
+              // Deja que el contenido del slide reaccione a estar activo (ver .pop-on-active).
+              data-active={copy * count + i === domIndex ? "true" : undefined}
             >
               {slide}
             </div>

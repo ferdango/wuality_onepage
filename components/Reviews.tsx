@@ -68,7 +68,7 @@ export default function Reviews() {
                   alt="Reseña positiva"
                   width={32}
                   height={32}
-                  className="size-[clamp(24px,1.67vw,32px)] shrink-0"
+                  className="pop-on-active size-[clamp(24px,1.67vw,32px)] shrink-0"
                 />
               </header>
 

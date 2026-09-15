@@ -83,7 +83,7 @@ propósito: en algunas máquinas la familia resuelve a su variante oblicua.
 | Caso de estudio | Muestra el proyecto elegido arriba: al hacer clic en una tarjeta se ancla aquí y el contenido cambia con una transición. Acordeón de capítulos con altura animada |
 | Partners | Carrusel con autoplay que se pausa al interactuar o si la pestaña no está visible |
 | Metodología | El diagrama se dibuja con el scroll: los contornos se trazan de izquierda a derecha siguiendo el ciclo y detrás entra el relleno. Tarjetas escalonadas; en mobile, carrusel |
-| Reviews | Carrusel de testimonios con stack de avatares |
+| Reviews | Carrusel de testimonios con stack de avatares; el emoji de la tarjeta activa da un pulso al entrar |
 | Clientes | Retícula 5×3 con hover que enciende el logo; en mobile, 3 filas con sangrado lateral |
 | Two models | Las dos líneas entran desde lados opuestos con el scroll, al tamaño del Figma (220px sobre el lienzo de 1920) |
 | Modelos | Las dos tarjetas se apilan al bajar: cada una queda fija un poco más abajo que la anterior y la de atrás se encoge y se oscurece |
@@ -127,6 +127,11 @@ es invisible. El salto se hace al detenerse, no durante el scroll, para no
 cancelar un desplazamiento suave en curso. Los puntos usan el índice módulo el
 número real de slides.
 
+**El carrusel marca su slide activo.** El riel pone `data-active` en el slide en
+curso, así que el contenido puede reaccionar solo con CSS —el pulso del emoji en
+las reseñas es `.pop-on-active`— sin que el carrusel sepa nada de lo que lleva
+dentro.
+
 **El diagrama se incrusta, no se sirve como imagen.** El export son ocho figuras
 rellenas sin trazo, y un `<img>` no deja tocar sus paths. `lib/svg.ts` lo lee de
 `/public` en el servidor —en build, porque la página es estática— y el
@@ -135,6 +140,11 @@ figura como línea: `pathLength="1"` normaliza su longitud y basta con animar
 `stroke-dashoffset` de 1 a 0, sin inventar ninguna geometría. El orden sale de la
 primera coordenada X de cada path, así que no depende del layout y también es
 correcto en la copia que está oculta al montar.
+
+Un detalle que cuesta ver: el export trae ids fijos y el diagrama se monta dos
+veces (desktop y mobile), así que sin renombrarlos la copia visible referencia
+los degradados de la copia oculta y algunos tramos no llegan a pintarse. El
+componente les añade un sufijo único por instancia.
 
 **El centrado del iPhone va en el estilo en línea, no en clases.** Tailwind v4
 implementa `-translate-x-1/2` con la propiedad `translate`, que el `translate`
