@@ -156,33 +156,37 @@ export const partners = [
 export const methodology = [
   {
     tag: "Design Thinking",
+    fig: "esfera-amarilla",
     tagColor: "#fbbd1d",
     tagText: "#05080a",
     title: "User-centric design",
     titleColor: "#fbbd1d",
     body: "Ponemos a tus usuarios en el centro de todo lo que creamos",
-    pos: { top: "14%", left: "8%" },
+    pos: { top: "15%", left: "13%" },
   },
   {
     tag: "Ceremonias, Reuniones",
+    fig: "esfera-roja",
     tagColor: "#ff1a30",
     tagText: "#ffffff",
     title: "Feedback constante",
     titleColor: "#ff1a30",
     body: "Tu opinión es el motor de nuestra creación.",
-    pos: { top: "14%", right: "8%" },
+    pos: { top: "15%", right: "13%" },
   },
   {
     tag: "Scrum & Lean UX",
+    fig: "gota-azul",
     tagColor: "#2ea6ff",
     tagText: "#05080a",
     title: "Gestión ágil",
     titleColor: "#2ea6ff",
     body: "Con nuestra gestión ágil, transformamos la incertidumbre en resultados rápidos y visibles.",
-    pos: { bottom: "4%", left: "3%" },
+    pos: { bottom: "7%", left: "13%" },
   },
   {
     tag: "Kayzen",
+    fig: "cinta-magenta",
     // Magenta y no verde: la paleta de figuras de la marca no tiene verde, y el
     // nodo del diagrama tiene que coincidir con el color de su tarjeta.
     tagColor: "#a33099",
@@ -190,7 +194,7 @@ export const methodology = [
     title: "Mejora continua",
     titleColor: "#d85fc9",
     body: "El mundo digital evoluciona, y tu producto también debería mantenerse a la vanguardia.",
-    pos: { bottom: "8%", right: "3%" },
+    pos: { bottom: "11%", right: "13%" },
   },
 ];
 

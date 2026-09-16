@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "@/components/ui/Img";
 import { motion, useReducedMotion } from "motion/react";
 import Carousel from "./ui/Carousel";
 import MethodCycle from "./ui/MethodCycle";
@@ -10,13 +11,26 @@ type Card = (typeof methodology)[number];
 
 function MethodCard({ card }: { card: Card }) {
   return (
-    <div className="relative w-full rounded-[clamp(10px,0.83vw,16px)] bg-[#141d21] p-[clamp(14px,1.25vw,24px)]">
-      <span
-        className="absolute -top-3 left-[clamp(10px,1vw,18px)] rounded-full px-3 py-1 text-[clamp(9px,0.63vw,12px)] font-bold"
-        style={{ backgroundColor: card.tagColor, color: card.tagText }}
+    <div className="relative w-full rounded-[clamp(10px,0.83vw,16px)] bg-[#141d21]/[0.68] p-[clamp(14px,1.25vw,24px)] backdrop-blur-[40px]">
+      {/**
+       * En lugar de la píldora de color, la figura del entregable que le toca:
+       * es la misma que hace de nodo en el diagrama, así que la tarjeta y su
+       * punto del ciclo se reconocen a la vez. El texto de la etiqueta no se
+       * pierde, baja al interior sobre el título.
+       */}
+      <Image
+        src={`/media/brand/figuras/${card.fig}.png`}
+        alt=""
+        width={380}
+        height={380}
+        className="absolute -top-[clamp(18px,1.5vw,28px)] left-[clamp(10px,1vw,18px)] h-auto w-[clamp(44px,3.6vw,68px)]"
+      />
+      <p
+        className="mt-[clamp(20px,1.7vw,32px)] text-[clamp(9px,0.63vw,12px)] font-bold uppercase tracking-[0.08em]"
+        style={{ color: card.tagColor }}
       >
         {card.tag}
-      </span>
+      </p>
       <h3
         className="mt-1 text-[clamp(0.95rem,1.25vw,1.5rem)] font-bold"
         style={{ color: card.titleColor }}
@@ -77,7 +91,7 @@ export default function Methodology() {
             ariaLabel="Pilares de la metodología de Wuality"
             slideClassName="w-[78%] sm:w-[48%]"
             gap="gap-4"
-            railClassName="pt-4 px-[var(--gutter)] scroll-pl-[var(--gutter)]"
+            railClassName="pt-8 px-[var(--gutter)] scroll-pl-[var(--gutter)]"
           >
             {methodology.map((card) => (
               <MethodCard key={card.title} card={card} />
