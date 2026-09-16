@@ -238,13 +238,13 @@ export default function Hero() {
             />
 
             {/* Marca sobre la pantalla */}
-            <div className="absolute left-1/2 top-[calc(var(--dev-h)*0.075)] flex h-[calc(var(--dev-h)*0.058)] w-[calc(var(--dev-w)*0.29)] -translate-x-1/2 items-center justify-center rounded-[calc(var(--dev-w)*0.045)] bg-white/85 opacity-[var(--chip)] backdrop-blur-md">
+            <div className="absolute left-1/2 top-[calc(var(--dev-h)*0.075)] flex h-[calc(var(--dev-h)*0.058)] w-[calc(var(--dev-w)*0.16)] -translate-x-1/2 items-center justify-center rounded-[calc(var(--dev-w)*0.045)] bg-white/85 opacity-[var(--chip)] backdrop-blur-md">
               <Image
-                src="/media/brand/isotype-red.svg"
+                src="/media/brand/wuality-simbolo-red.png"
                 alt="Wuality"
                 width={80}
                 height={40}
-                className="h-[calc(var(--dev-h)*0.027)] w-auto"
+                className="h-[calc(var(--dev-h)*0.034)] w-auto"
               />
             </div>
 

@@ -58,7 +58,7 @@ export default function FloatingActions() {
         aria-expanded={cookieOpen}
         className="fixed bottom-[clamp(16px,1.67vw,32px)] left-[clamp(16px,1.67vw,32px)] z-50 flex size-[clamp(44px,3.33vw,64px)] items-center justify-center rounded-full bg-bone shadow-xl shadow-black/40 transition-transform duration-400 ease-wuality hover:scale-110"
       >
-        <Image src="/media/ui/cookie.svg" alt="" width={32} height={32} className="size-[52%]" />
+        <Image src="/media/ui/cookie.svg" alt="" width={32} height={32} className="size-[58%]" />
       </button>
 
       {/* WhatsApp (abajo derecha): el botón lleva directo al chat */}

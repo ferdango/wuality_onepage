@@ -109,7 +109,8 @@ export default function Header() {
                 className="flex items-center gap-3 text-[length:var(--fs-sm)] font-semibold text-bone"
               >
                 <Image
-                  src="/media/ui/flag-es.png"
+                  // La bandera sigue al idioma elegido; antes iba fija a España.
+                  src={languages.find((l) => l.code === lang)?.flag ?? languages[0].flag}
                   alt=""
                   width={32}
                   height={32}

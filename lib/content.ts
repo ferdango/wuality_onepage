@@ -13,8 +13,8 @@ export const nav = [
 
 export const languages = [
   { code: "ES", name: "Español - América Latina", region: "Perú", flag: "/media/ui/flag-es.png" },
-  { code: "EN", name: "English", region: "USA", flag: "" },
-  { code: "RU", name: "Ruso", region: "Russian", flag: "" },
+  { code: "EN", name: "English", region: "USA", flag: "/media/ui/flag-us.svg" },
+  { code: "RU", name: "Ruso", region: "Russian", flag: "/media/ui/flag-ru.svg" },
 ];
 
 export const hero = {
