@@ -36,7 +36,17 @@ const DIRECTION_LOCK = 8;
 
 type Gesture = "idle" | "undecided" | "rotate" | "scroll";
 
-export default function MethodCycle({ sizes }: { sizes: string }) {
+export default function MethodCycle({
+  sizes,
+  angle: angleProp,
+  activeFig,
+}: {
+  sizes: string;
+  /** Ángulo impuesto desde fuera (el scroll de la sección). El arrastre parte de él. */
+  angle?: number;
+  /** Figura resaltada; las demás se apagan. */
+  activeFig?: string;
+}) {
   const wheel = useRef<HTMLDivElement>(null);
   const angle = useRef(0);
   const velocity = useRef(0);
@@ -51,8 +61,11 @@ export default function MethodCycle({ sizes }: { sizes: string }) {
    * El ángulo se escribe directamente en el DOM en vez de pasar por estado: a
    * 60fps un re-render por fotograma no aporta nada y se nota.
    */
-  const apply = useCallback(() => {
-    if (wheel.current) wheel.current.style.rotate = `${angle.current}deg`;
+  const apply = useCallback((smooth = false) => {
+    const el = wheel.current;
+    if (!el) return;
+    el.style.transition = smooth ? "rotate 900ms cubic-bezier(0.22, 1, 0.36, 1)" : "none";
+    el.style.rotate = `${angle.current}deg`;
   }, []);
 
   const stopSpin = useCallback(() => {
@@ -63,6 +76,18 @@ export default function MethodCycle({ sizes }: { sizes: string }) {
   }, []);
 
   useEffect(() => stopSpin, [stopSpin]);
+
+  /**
+   * Cuando el scroll manda un ángulo nuevo, la rueda se re-ancla en él. El
+   * arrastre sigue funcionando entre paso y paso: sólo cambia su punto de
+   * partida.
+   */
+  useEffect(() => {
+    if (angleProp === undefined) return;
+    stopSpin();
+    angle.current = angleProp;
+    apply(true);
+  }, [angleProp, apply, stopSpin]);
 
   /** Ángulo del puntero medido desde el centro de la rueda. */
   const pointerAngle = (event: React.PointerEvent) => {
@@ -194,8 +219,16 @@ export default function MethodCycle({ sizes }: { sizes: string }) {
           width={380}
           height={380}
           draggable={false}
-          className="pointer-events-none absolute max-w-none"
-          style={{ left: `${n.x}%`, top: `${n.y}%`, width: `${n.w}%`, height: "auto", translate: "-50% -50%" }}
+          className="pointer-events-none absolute max-w-none transition-[opacity,scale] duration-700 ease-wuality"
+          style={{
+            left: `${n.x}%`,
+            top: `${n.y}%`,
+            width: `${n.w}%`,
+            height: "auto",
+            translate: "-50% -50%",
+            opacity: activeFig && activeFig !== n.fig ? 0.32 : 1,
+            scale: activeFig === n.fig ? 1.14 : 1,
+          }}
         />
       ))}
     </div>
