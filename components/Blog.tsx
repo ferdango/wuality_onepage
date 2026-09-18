@@ -67,13 +67,13 @@ export default function Blog() {
                 </div>
 
                 <div className="flex flex-1 flex-col p-[clamp(8px,0.63vw,12px)]">
-                  <time className="text-[clamp(10px,0.63vw,12px)] text-muted">{item.date}</time>
-                  <h3 className="mt-1 flex-1 text-[length:var(--fs-xs)] font-bold leading-snug text-bone">
+                  <time className="text-[clamp(11px,0.7292vw,14px)] text-muted">{item.date}</time>
+                  <h3 className="mt-1 flex-1 text-[length:var(--fs-body)] font-extrabold leading-snug text-bone">
                     {item.title}
                   </h3>
                   <Link
                     href={`/blog/${item.slug}/`}
-                    className="mt-4 w-fit rounded-full border border-bone/30 px-4 py-2 text-[clamp(11px,0.73vw,14px)] text-bone transition-colors duration-300 hover:border-blue hover:text-blue"
+                    className="mt-4 w-fit rounded-full border border-bone/30 px-6 py-2.5 text-[clamp(12px,0.8333vw,16px)] font-semibold text-bone transition-colors duration-300 hover:border-blue hover:text-blue"
                   >
                     {item.cta}
                   </Link>

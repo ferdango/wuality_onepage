@@ -438,13 +438,21 @@ export const footer = {
     { text: "impulsamos", color: "#ff1a30" },
     { text: " marcas." },
   ],
+  /**
+   * Un color de marca por palabra, en el orden de la paleta del manual: azul,
+   * amarillo, magenta y rojo. Los puntos van en gris para que no compitan y se
+   * lean como separadores, no como parte de la palabra.
+   */
   claimMobile: [
     { text: "Imagine", color: "#007afc" },
-    { text: ". " },
+    { text: ".", color: "#7c8282" },
+    { text: " " },
     { text: "Create", color: "#fbbd1d" },
-    { text: ". " },
-    { text: "Develop" },
-    { text: ". " },
+    { text: ".", color: "#7c8282" },
+    { text: " " },
+    { text: "Develop", color: "#d85fc9" },
+    { text: ".", color: "#7c8282" },
+    { text: " " },
     { text: "Together", color: "#ff1a30" },
   ],
   email: "hola@wuality.agency",

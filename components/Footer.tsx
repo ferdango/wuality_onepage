@@ -49,7 +49,8 @@ export default function Footer() {
                   </span>
                 ))}
               </span>
-              <span className="lg:hidden">
+              {/* En negrita: son cuatro palabras sueltas y a peso normal el color se diluía. */}
+              <span className="font-bold lg:hidden">
                 {footer.claimMobile.map((c, i) => (
                   <span key={i} style={c.color ? { color: c.color } : undefined}>
                     {c.text}
