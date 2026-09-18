@@ -4,10 +4,15 @@ import Image from "@/components/ui/Img";
 import { AnimatePresence, motion, useScroll, useSpring } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import Logo from "./ui/Logo";
+import Link from "next/link";
 import MenuOverlay from "./MenuOverlay";
 import { languages, nav } from "@/lib/content";
 
-export default function Header() {
+/**
+ * `linkBase` antepone la ruta del home a los anclajes. Vacío en la portada, "/"
+ * en una ruta interna como un artículo, donde esas secciones no existen.
+ */
+export default function Header({ linkBase = "" }: { linkBase?: string }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
   const [lang, setLang] = useState(languages[0].code);
@@ -74,16 +79,16 @@ export default function Header() {
         }`}
       >
         <div className="shell flex h-[var(--header-h)] items-center justify-between">
-          <Logo />
+          <Logo href={linkBase || "#top"} />
 
           <div className="flex items-center gap-[clamp(12px,2.5vw,48px)]">
             <nav className="hidden items-center gap-[clamp(20px,2.5vw,48px)] lg:flex">
               {nav.map((item) => {
                 const isActive = active === item.href;
                 return (
-                  <a
+                  <Link
                     key={item.label}
-                    href={item.href}
+                    href={`${linkBase}${item.href}`}
                     className={`relative text-[length:var(--fs-sm)] font-semibold transition-colors duration-300 ${
                       isActive ? "text-bone" : "text-ash hover:text-bone"
                     }`}
@@ -94,7 +99,7 @@ export default function Header() {
                         isActive ? "w-full" : "w-0"
                       }`}
                     />
-                  </a>
+                  </Link>
                 );
               })}
             </nav>
@@ -182,7 +187,7 @@ export default function Header() {
         </div>
       </header>
 
-      <MenuOverlay open={menuOpen} onClose={() => setMenuOpen(false)} />
+      <MenuOverlay open={menuOpen} onClose={() => setMenuOpen(false)} linkBase={linkBase} />
     </>
   );
 }

@@ -1,13 +1,14 @@
 "use client";
 
 import Image from "@/components/ui/Img";
+import Link from "next/link";
 import Carousel from "./ui/Carousel";
 import Reveal from "./ui/Reveal";
 import { blog } from "@/lib/content";
 
 export default function Blog() {
   return (
-    <section className="bg-ink py-[calc(var(--section-y)*1.4)]">
+    <section id="blog" className="bg-ink py-[calc(var(--section-y)*1.4)]">
       <Reveal>
         <h2 className="h-section shell mx-auto max-w-[24ch] text-center text-bone">{blog.title}</h2>
       </Reveal>
@@ -21,9 +22,10 @@ export default function Blog() {
         >
           {blog.items.map((item, i) =>
             item.type === "video" ? (
-              <article
+              <Link
                 key={i}
-                className="group relative aspect-[4/5] overflow-hidden rounded-[clamp(14px,1.25vw,24px)]"
+                href={`/blog/${item.slug}/`}
+                className="group relative block aspect-[4/5] overflow-hidden rounded-[clamp(14px,1.25vw,24px)]"
               >
                 <Image
                   src={item.image}
@@ -48,7 +50,7 @@ export default function Blog() {
                     {item.date}
                   </time>
                 </div>
-              </article>
+              </Link>
             ) : (
               <article
                 key={i}
@@ -69,12 +71,12 @@ export default function Blog() {
                   <h3 className="mt-1 flex-1 text-[length:var(--fs-xs)] font-bold leading-snug text-bone">
                     {item.title}
                   </h3>
-                  <a
-                    href="#"
+                  <Link
+                    href={`/blog/${item.slug}/`}
                     className="mt-4 w-fit rounded-full border border-bone/30 px-4 py-2 text-[clamp(11px,0.73vw,14px)] text-bone transition-colors duration-300 hover:border-blue hover:text-blue"
                   >
                     {item.cta}
-                  </a>
+                  </Link>
                 </div>
               </article>
             ),

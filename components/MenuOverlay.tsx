@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useState } from "react";
 import Logo from "./ui/Logo";
 import { nav } from "@/lib/content";
+import { withBase } from "@/lib/href";
 
 /** Orden del menú overlay en el Figma (distinto al del header). */
 const menuOrder = ["About Wuality", "Services", "Work", "Reviews", "Edu"] as const;
@@ -12,9 +13,12 @@ const items = menuOrder.map((label) => nav.find((n) => n.label === label)!);
 export default function MenuOverlay({
   open,
   onClose,
+  linkBase = "",
 }: {
   open: boolean;
   onClose: () => void;
+  /** Igual que en Header: desde una ruta interna los anclajes vuelven al home. */
+  linkBase?: string;
 }) {
   const [hovered, setHovered] = useState<number | null>(0);
 
@@ -64,7 +68,7 @@ export default function MenuOverlay({
             {items.map((item, i) => (
               <motion.a
                 key={item.label}
-                href={item.href}
+                href={withBase(`${linkBase}${item.href}`)}
                 onClick={onClose}
                 onMouseEnter={() => setHovered(i)}
                 initial={{ opacity: 0, y: 34 }}

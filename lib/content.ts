@@ -323,16 +323,111 @@ export const meeting = {
   ],
 };
 
+/**
+ * Cuerpo del artículo tal cual viene en el Figma (frame "Single Article Text").
+ * Es copia de maqueta, como el lorem ipsum del FAQ: los cinco posts comparten
+ * el mismo cuerpo hasta que haya textos reales.
+ */
+const articleDemoBody = [
+  {
+    type: "p",
+    text: "Sin lugar a dudas, el fraude financiero es una práctica que amenaza las organizaciones bancarias desde hace décadas y, sin embargo, evoluciona constantemente obligando a las empresas a desarrollarse con ellas para fortalecer las vulnerabilidades, procesos e, incluso la fuerza humana para sobrellevar estos riesgos.",
+  },
+  {
+    type: "p",
+    text: "Ahora bien, si no sabes a detalle qué es el fraude financiero, cómo funciona o cuáles son los principales tipos, ¡este es el post para ti!",
+  },
+  { type: "h2", text: "Autofraude" },
+  {
+    type: "p",
+    text: "Ocurre cuando el propio cliente simula haber sido víctima de una estafa para obtener beneficios indebidos, como reembolsos o cancelaciones de deuda.",
+  },
+  {
+    type: "p",
+    text: "Es una práctica fraudulenta que perjudica a las instituciones financieras y suele ser difícil de detectar sin un sistema de monitoreo avanzado.",
+  },
+] as const;
+
+const articleAuthor = { name: "José Quinteros", avatar: "/media/people/a1.jpg" } as const;
+
+const articleLead =
+  "Conoce cómo el fraude financiero impacta a personas y empresas y cómo un sistema tecnológico puede mitigar este riesgo efectivamente en tu negocio.";
+
 export const blog = {
   title: "Lo que necesitas saber para llegar más lejos",
+  /**
+   * `type` decide qué maqueta del Figma se usa al abrir el post: los "video"
+   * llevan el icono de YouTube en la tarjeta del home y abren "Single Article
+   * Video"; el resto abre "Single Article Text".
+   */
   items: [
-    { type: "note", date: "7 de mayo del 2025", title: "Lo que necesitas saber para llegar más lejos", image: "/media/work/blog-office.jpg", cta: "Leer nota" },
-    { type: "video", date: "7 de mayo del 2025", title: "EP1: Conoce a Tinbet", image: "/media/work/blog-podcast.jpg" },
-    { type: "note", date: "7 de mayo del 2025", title: "Diseño de producto: del insight al release", image: "/media/work/blog-office.jpg", cta: "Leer nota" },
-    { type: "video", date: "7 de mayo del 2025", title: "EP2: Métricas que sí importan", image: "/media/work/blog-podcast.jpg" },
-    { type: "note", date: "7 de mayo del 2025", title: "Cómo medimos el impacto de un rediseño", image: "/media/work/blog-office.jpg", cta: "Leer nota" },
+    {
+      slug: "lo-que-necesitas-saber-para-llegar-mas-lejos",
+      type: "note",
+      date: "7 de mayo del 2025",
+      title: "Lo que necesitas saber para llegar más lejos",
+      image: "/media/work/blog-office.jpg",
+      cta: "Leer nota",
+      category: "Transformación Digital",
+      author: articleAuthor,
+      publishedAt: "04/07/2023",
+      lead: articleLead,
+      body: articleDemoBody,
+    },
+    {
+      slug: "ep1-conoce-a-tinbet",
+      type: "video",
+      date: "7 de mayo del 2025",
+      title: "EP1: Conoce a Tinbet",
+      image: "/media/work/blog-podcast.jpg",
+      category: "VideoBlogs",
+      author: articleAuthor,
+      publishedAt: "04/07/2023",
+      video: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    },
+    {
+      slug: "diseno-de-producto-del-insight-al-release",
+      type: "note",
+      date: "7 de mayo del 2025",
+      title: "Diseño de producto: del insight al release",
+      image: "/media/work/blog-office.jpg",
+      cta: "Leer nota",
+      category: "Transformación Digital",
+      author: articleAuthor,
+      publishedAt: "04/07/2023",
+      lead: articleLead,
+      body: articleDemoBody,
+    },
+    {
+      slug: "ep2-metricas-que-si-importan",
+      type: "video",
+      date: "7 de mayo del 2025",
+      title: "EP2: Métricas que sí importan",
+      image: "/media/work/blog-podcast.jpg",
+      category: "VideoBlogs",
+      author: articleAuthor,
+      publishedAt: "04/07/2023",
+      video: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    },
+    {
+      slug: "como-medimos-el-impacto-de-un-rediseno",
+      type: "note",
+      date: "7 de mayo del 2025",
+      title: "Cómo medimos el impacto de un rediseño",
+      image: "/media/work/blog-office.jpg",
+      cta: "Leer nota",
+      category: "Transformación Digital",
+      author: articleAuthor,
+      publishedAt: "04/07/2023",
+      lead: articleLead,
+      body: articleDemoBody,
+    },
   ],
+  share: "Compartir",
+  next: "Siguiente artículo",
 };
+
+export type BlogItem = (typeof blog.items)[number];
 
 export const footer = {
   name: "Wuality: Agencia de Innovación & Tecnología",
