@@ -431,19 +431,15 @@ export type BlogItem = (typeof blog.items)[number];
 
 export const footer = {
   name: "Wuality: Agencia de Innovación & Tecnología",
-  claim: [
-    { text: "Creamos " },
-    { text: "experiencias digitales", color: "#007afc" },
-    { text: ", " },
-    { text: "impulsamos", color: "#ff1a30" },
-    { text: " marcas." },
-  ],
   /**
    * Un color de marca por palabra, en el orden de la paleta del manual: azul,
    * amarillo, magenta y rojo. Los puntos van en gris para que no compitan y se
    * lean como separadores, no como parte de la palabra.
+   *
+   * El mismo en todos los tamaños: antes en desktop iba otra frase ("Creamos
+   * experiencias digitales, impulsamos marcas.") con sólo dos palabras en color.
    */
-  claimMobile: [
+  claim: [
     { text: "Imagine", color: "#007afc" },
     { text: ".", color: "#7c8282" },
     { text: " " },

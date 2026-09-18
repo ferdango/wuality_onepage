@@ -41,22 +41,13 @@ export default function Footer() {
 
           <div className="max-w-[529px]">
             <p className="text-[length:var(--fs-body)] font-bold tracking-[0.06em] text-bone">{footer.name}</p>
-            <p className="mt-4 text-[length:var(--fs-sm)] tracking-[0.06em] text-ash">
-              <span className="hidden lg:inline">
-                {footer.claim.map((c, i) => (
-                  <span key={i} style={c.color ? { color: c.color } : undefined}>
-                    {c.text}
-                  </span>
-                ))}
-              </span>
-              {/* En negrita: son cuatro palabras sueltas y a peso normal el color se diluía. */}
-              <span className="font-bold lg:hidden">
-                {footer.claimMobile.map((c, i) => (
-                  <span key={i} style={c.color ? { color: c.color } : undefined}>
-                    {c.text}
-                  </span>
-                ))}
-              </span>
+            {/* En negrita: son cuatro palabras sueltas y a peso normal el color se diluía. */}
+            <p className="mt-4 text-[length:var(--fs-sm)] font-bold tracking-[0.06em] text-ash">
+              {footer.claim.map((c, i) => (
+                <span key={i} style={c.color ? { color: c.color } : undefined}>
+                  {c.text}
+                </span>
+              ))}
             </p>
           </div>
         </Reveal>
