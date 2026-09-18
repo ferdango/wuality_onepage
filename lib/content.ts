@@ -8,7 +8,7 @@ export const nav = [
   { label: "Work", short: "Work", href: "#work" },
   { label: "Services", short: "Services", href: "#services" },
   { label: "Reviews", short: "Reviews", href: "#reviews" },
-  { label: "Edu", short: "Edu", href: "#edu" },
+  { label: "Blog", short: "Blog", href: "#blog" },
 ] as const;
 
 export const languages = [

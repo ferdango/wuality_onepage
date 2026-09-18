@@ -7,7 +7,7 @@ import { nav } from "@/lib/content";
 import { withBase } from "@/lib/href";
 
 /** Orden del menú overlay en el Figma (distinto al del header). */
-const menuOrder = ["About Wuality", "Services", "Work", "Reviews", "Edu"] as const;
+const menuOrder = ["About Wuality", "Services", "Work", "Reviews", "Blog"] as const;
 const items = menuOrder.map((label) => nav.find((n) => n.label === label)!);
 
 export default function MenuOverlay({
