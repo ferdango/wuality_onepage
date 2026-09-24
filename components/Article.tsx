@@ -108,7 +108,7 @@ function ShareRail() {
 export default function Article({ item, next }: { item: BlogItem; next: BlogItem }) {
   if (item.type === "video") {
     return (
-      <article className="pb-[80px] pt-[calc(var(--header-h)+clamp(32px,5.3vw,80px))]">
+      <article className="pb-0 pt-[calc(var(--header-h)+clamp(32px,5.3vw,80px))]">
         <Reveal className={`${COL} flex flex-col items-center gap-1 text-center`} style={colMax(1080)}>
           <Crumb category={item.category} centered />
           <h1 className={`${T.title} font-extrabold leading-tight text-white`}>{item.title}</h1>
@@ -147,7 +147,7 @@ export default function Article({ item, next }: { item: BlogItem; next: BlogItem
   }
 
   return (
-    <article className="pb-[108px] pt-[calc(var(--header-h)+clamp(32px,5.3vw,80px))]">
+    <article className="pb-0 pt-[calc(var(--header-h)+clamp(32px,5.3vw,80px))]">
       <Reveal className={`${COL} flex flex-col gap-3`} style={colMax(768)}>
         <Crumb category={item.category} />
         <h1 className={`${T.title} font-extrabold leading-tight text-white`}>{item.title}</h1>
