@@ -43,49 +43,43 @@ export default function Reviews() {
       </div>
 
       <div className="mt-[clamp(24px,2.5vw,48px)]">
+        {/**
+         * Tarjetas de la referencia: por cada cliente, su foto y a continuación
+         * su cita sobre amarillo de marca, con el nombre y el cargo al pie. Las
+         * dos miden lo mismo, así que el riel se lee como una tira continua.
+         */}
         <Carousel
           ariaLabel="Opiniones de clientes"
           railClassName="px-[var(--gutter)] scroll-pl-[var(--gutter)]"
-          slideClassName="w-[84%] sm:w-[55%] lg:w-[26%]"
-          gap="gap-4 lg:gap-6"
+          slideClassName="w-[80%] sm:w-[46%] lg:w-[28.5vw]"
+          gap="gap-4 lg:gap-8"
         >
-          {reviews.items.map((r) => (
-            <article
-              key={r.name + r.date}
-              className="flex h-full flex-col rounded-[clamp(14px,1.25vw,24px)] border border-line bg-surface p-[clamp(16px,1.25vw,24px)] transition-colors duration-500 hover:border-bone/20"
+          {reviews.items.flatMap((r) => [
+            <figure
+              key={`${r.name}-foto`}
+              className="relative aspect-[570/700] w-full overflow-hidden rounded-[clamp(10px,0.7vw,14px)] bg-card"
             >
-              <header className="flex items-start justify-between gap-3">
-                <div className="flex items-center gap-3">
-                  <Image
-                    src={r.avatar}
-                    alt=""
-                    width={44}
-                    height={44}
-                    className="size-[clamp(32px,2.3vw,44px)] rounded-full object-cover"
-                  />
-                  <span>
-                    <span className="block text-[length:var(--fs-xs)] font-bold text-yellow">{r.name}</span>
-                    <span className="block text-[length:var(--fs-xs)] text-ash">{r.role}</span>
-                  </span>
-                </div>
-                <Image
-                  src="/media/ui/heart-eyes.png"
-                  alt="Reseña positiva"
-                  width={32}
-                  height={32}
-                  className="pop-on-active size-[clamp(24px,1.67vw,32px)] shrink-0"
-                />
-              </header>
-
-              <p className="mt-[clamp(12px,1.05vw,20px)] flex-1 text-[length:var(--fs-xs)] leading-relaxed text-ash">
-                {r.quote}
-              </p>
-
-              <time className="mt-[clamp(12px,1.05vw,20px)] block text-[clamp(11px,0.73vw,14px)] font-semibold text-bone">
-                {r.date}
-              </time>
-            </article>
-          ))}
+              <Image
+                src={r.avatar}
+                alt={r.name}
+                fill
+                sizes="(max-width: 640px) 80vw, (max-width: 1024px) 46vw, 29vw"
+                className="object-cover"
+              />
+            </figure>,
+            <blockquote
+              key={`${r.name}-cita`}
+              className="flex aspect-[570/700] w-full flex-col justify-between rounded-[clamp(10px,0.7vw,14px)] bg-yellow p-[clamp(20px,1.9vw,36px)] text-ink"
+            >
+              <p className="text-[clamp(1rem,1.25vw,1.5rem)] leading-[1.35]">{r.quote}</p>
+              <footer>
+                <p className="text-[clamp(1.5rem,1.8vw,2.125rem)] font-semibold leading-tight tracking-[-0.01em]">
+                  {r.name}
+                </p>
+                <p className="mt-[clamp(8px,0.8vw,16px)] text-[length:var(--fs-sm)]">{r.role}</p>
+              </footer>
+            </blockquote>,
+          ])}
         </Carousel>
       </div>
     </section>

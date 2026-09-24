@@ -54,9 +54,16 @@ export const services = [
  * estudio (Meltwater en desktop, "Starbucks LLC" en mobile) y tampoco coincide
  * con estos cuatro clientes, así que hay que sustituirlos por los reales.
  */
+/**
+ * `headline` y `accent` son la tarjeta de color que se revela sobre la foto al
+ * llegar cada proyecto en "Nuestros proyectos". Los titulares salen de los
+ * propios capítulos de cada caso, no de métricas nuevas.
+ */
 export const projects = [
   {
     slug: "jockey-plaza",
+    headline: "Tres toques hasta cualquier tienda del centro comercial",
+    accent: "#f2cdb5",
     name: "Jockey Plaza",
     logo: "/media/logos/jockeyplaza.png",
     shot: "/media/work/proj-jockeyplaza.jpg",
@@ -79,6 +86,8 @@ export const projects = [
   },
   {
     slug: "civitatis",
+    headline: "Una ficha de actividad que resuelve las dudas antes de reservar",
+    accent: "#f78832",
     name: "Civitatis",
     logo: "/media/logos/civitatis.png",
     shot: "/media/work/proj-civitatis.png",
@@ -101,6 +110,8 @@ export const projects = [
   },
   {
     slug: "nu",
+    headline: "De semanas a días para lanzar una pantalla nueva",
+    accent: "#c7b5f4",
     name: "Nu",
     logo: "/media/logos/nu.png",
     shot: "/media/work/proj-nu.jpg",
@@ -123,6 +134,8 @@ export const projects = [
   },
   {
     slug: "backus",
+    headline: "Pedidos sin señal para el equipo de campo",
+    accent: "#94c5f2",
     name: "Backus",
     logo: "/media/logos/backus.png",
     shot: "/media/work/proj-backus.jpg",
@@ -283,16 +296,20 @@ export const faq = {
   cta: { label: "Sigues con dudas?", button: "Agenda con nosotros" },
   items: [
     {
-      q: "What is a typical course schedule and structure?",
-      a: "Lorem ipsum dolor sit amet consectetur. Diam massa sed iaculis donec vel. Vitae hendrerit aliquam amet egestas enim. Velit massa elementum magna risus. Aliquet nec mauris sed nulla nisl id quam ipsum tempus. Enim sit etiam pretium faucibus quam. Viverra semper in sed at mauris cursus est. Ac sagittis auctor condimentum vulputate aliquam interdum.",
+      q: "¿Qué tipo de proyectos desarrolla Wuality?",
+      a: "Trabajamos en proyectos de transformación digital que combinan estrategia, diseño, tecnología y crecimiento. Podemos ayudarte desde la construcción de una marca o producto digital hasta el desarrollo de plataformas, aplicaciones, estrategias de SEO, paid media y soluciones impulsadas por IA.",
     },
     {
-      q: "What is a typical course schedule and structure?",
-      a: "Lorem ipsum dolor sit amet consectetur. Diam massa sed iaculis donec vel. Vitae hendrerit aliquam amet egestas enim. Velit massa elementum magna risus. Aliquet nec mauris sed nulla nisl id quam ipsum tempus.",
+      q: "¿Cómo trabajan con nuevos clientes?",
+      a: "Primero entendemos tu negocio, objetivos y necesidades. A partir de ese diagnóstico definimos el alcance, equipo y metodología más adecuados para el proyecto, con comunicación y feedback constante durante todo el proceso.",
     },
     {
-      q: "What is a typical course schedule and structure?",
-      a: "Lorem ipsum dolor sit amet consectetur. Diam massa sed iaculis donec vel. Vitae hendrerit aliquam amet egestas enim. Velit massa elementum magna risus.",
+      q: "¿Trabajan por proyecto o como partner a largo plazo?",
+      a: "Ambas opciones. Podemos desarrollar un proyecto con un alcance y entregables definidos, o integrarnos como un partner estratégico para acompañar la evolución continua de tu producto, marca o negocio digital.",
+    },
+    {
+      q: "¿Cómo puedo empezar un proyecto con Wuality?",
+      a: "Cuéntanos qué quieres lograr, qué problema necesitas resolver y en qué etapa se encuentra tu proyecto. Agendamos una primera reunión para entender el reto y definir contigo el siguiente paso.",
     },
   ],
 };
