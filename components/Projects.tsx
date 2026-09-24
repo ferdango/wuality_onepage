@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "@/components/ui/Img";
+import Link from "next/link";
 import {
   motion,
   useMotionTemplate,
@@ -72,7 +73,7 @@ function FeaturedDesktop() {
   const pin = useRef<HTMLDivElement>(null);
   const column = useRef<HTMLDivElement>(null);
   const cursor = useRef<HTMLSpanElement>(null);
-  const cards = useRef<(HTMLDivElement | null)[]>([]);
+  const cards = useRef<(HTMLAnchorElement | null)[]>([]);
   const [active, setActive] = useState(0);
 
   /**
@@ -248,13 +249,14 @@ function ProjectCard({
   project: Project;
   active: boolean;
   reduced: boolean;
-  ref: (el: HTMLDivElement | null) => void;
+  ref: (el: HTMLAnchorElement | null) => void;
 }) {
   return (
-    <div
+    <Link
       ref={ref}
-      aria-label={project.name}
-      className="relative block h-[var(--card)] w-full shrink-0 cursor-none overflow-hidden rounded-[clamp(14px,1.25vw,24px)] text-left"
+      href={`/proyectos/${project.slug}/`}
+      aria-label={`Ver el caso de ${project.name}`}
+      className="relative block h-[var(--card)] w-full shrink-0 cursor-none overflow-hidden rounded-[clamp(14px,1.25vw,24px)] text-left outline-none focus-visible:ring-4 focus-visible:ring-bone"
     >
       <Image src={project.shot} alt="" fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover" />
       <span className="absolute bottom-[clamp(12px,1.05vw,20px)] right-[clamp(12px,1.05vw,20px)]">
@@ -286,7 +288,7 @@ function ProjectCard({
           <Chip label={project.tags[0]} tone="dark" />
         </span>
       </span>
-    </div>
+    </Link>
   );
 }
 
@@ -300,7 +302,11 @@ function FeaturedMobile() {
       <div className="flex flex-col gap-4 rounded-[28px] bg-[#101617] p-4">
         {projects.map((project) => (
           <Reveal key={project.slug} y={24}>
-            <div className="relative block aspect-[552/415] w-full overflow-hidden rounded-[20px] text-left">
+            <Link
+              href={`/proyectos/${project.slug}/`}
+              aria-label={`Ver el caso de ${project.name}`}
+              className="relative block aspect-[552/415] w-full overflow-hidden rounded-[20px] text-left"
+            >
               <Image src={project.shot} alt="" fill sizes="92vw" className="object-cover" />
               <span className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent" />
               <span className="absolute right-3 top-3">
@@ -312,7 +318,7 @@ function FeaturedMobile() {
                   {project.name}
                 </span>
               </span>
-            </div>
+            </Link>
           </Reveal>
         ))}
       </div>

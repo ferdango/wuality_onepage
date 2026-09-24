@@ -87,7 +87,8 @@ export const projects = [
   {
     slug: "civitatis",
     headline: "Una ficha de actividad que resuelve las dudas antes de reservar",
-    accent: "#f78832",
+    // Menta y no el naranja de su fondo: con el mismo color la tarjeta no se distinguía de la foto.
+    accent: "#b9f0d8",
     name: "Civitatis",
     logo: "/media/logos/civitatis.png",
     shot: "/media/work/proj-civitatis.png",
