@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "@/components/ui/Img";
-import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "motion/react";
+import { useMotionValueEvent, useScroll } from "motion/react";
 import { useCallback, useRef, useState } from "react";
 import SectionTitle from "./ui/SectionTitle";
 import { services } from "@/lib/content";
@@ -10,17 +10,32 @@ const N = services.length;
 
 /** Scroll que consume cada servicio mientras la sección está anclada. */
 const STEP_SVH = 55;
+/** Fracción de tramo que hay que rebasar para cambiar de servicio. */
+const HYSTERESIS = 0.08;
 
-function ArrowCircle({ className = "" }: { className?: string }) {
-  return (
-    <span
-      className={`flex size-[clamp(56px,5.625vw,108px)] items-center justify-center rounded-full bg-blue text-white transition-transform duration-500 ease-wuality group-hover:scale-105 ${className}`}
-    >
-      <svg viewBox="0 0 24 24" className="size-[26%]" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M4 12h15M13 6l6 6-6 6" />
-      </svg>
-    </span>
-  );
+/**
+ * Cambio de foto sin bajón: la nueva aparece encima de la anterior, que se
+ * queda opaca debajo y sólo se oculta cuando la nueva ya la cubre. Con un
+ * fundido cruzado normal, a mitad las dos están al 50% y se transparenta el
+ * fondo oscuro, que también se lee como un parpadeo.
+ */
+function photoStyle(isActive: boolean, ms: number, scale?: number): React.CSSProperties {
+  return {
+    zIndex: isActive ? 1 : 0,
+    opacity: isActive ? 1 : 0,
+    scale: scale && !isActive ? scale : undefined,
+    transition: isActive
+      ? `opacity ${ms}ms cubic-bezier(0.22, 1, 0.36, 1), scale ${ms * 1.4}ms cubic-bezier(0.22, 1, 0.36, 1)`
+      : `opacity 0ms linear ${ms}ms, scale 0ms linear ${ms}ms`,
+  };
+}
+
+/** Texto: el saliente se va rápido y el entrante llega justo detrás, para que no se solapen letras. */
+function textStyle(isActive: boolean): React.CSSProperties {
+  return {
+    opacity: isActive ? 1 : 0,
+    transition: isActive ? "opacity 300ms ease-out 120ms" : "opacity 150ms ease-in",
+  };
 }
 
 function Cta() {
@@ -49,7 +64,17 @@ export default function Services() {
    */
   const { scrollYProgress } = useScroll({ target: pin, offset: ["start start", "end end"] });
   useMotionValueEvent(scrollYProgress, "change", (v) => {
-    setActive(Math.min(N - 1, Math.max(0, Math.floor(v * N))));
+    const raw = v * N;
+    /**
+     * Histéresis: para cambiar de servicio hay que pasar la frontera un poco.
+     * Sin ella, el rebote del scroll táctil justo en el borde entre dos tramos
+     * los hacía alternar varias veces seguidas, que se veía como un parpadeo.
+     */
+    setActive((cur) => {
+      if (raw >= cur + 1 + HYSTERESIS) return Math.min(N - 1, Math.floor(raw - HYSTERESIS));
+      if (raw < cur - HYSTERESIS) return Math.max(0, Math.floor(raw + HYSTERESIS));
+      return cur;
+    });
   });
 
   /** Pulsar un servicio lleva el scroll al centro de su tramo. */
@@ -61,8 +86,6 @@ export default function Services() {
     const smooth = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     window.scrollTo({ top: top + segment * (i + 0.5), behavior: smooth ? "smooth" : "auto" });
   }, []);
-
-  const current = services[active];
 
   return (
     <section id="services" className="bg-ink">
@@ -82,12 +105,12 @@ export default function Services() {
               {services.map((s, i) => {
                 const isActive = i === active;
                 return (
-                  <li key={s.title} className="relative">
+                  <li key={s.title}>
                     <button
                       type="button"
                       onClick={() => goTo(i)}
                       aria-current={isActive}
-                      className="group flex w-full flex-col items-start gap-4 py-[clamp(14px,1.6vw,32px)] pl-[var(--gutter)] pr-[clamp(80px,7vw,140px)] text-left"
+                      className="group flex w-full flex-col items-start gap-4 py-[clamp(14px,1.6vw,32px)] pl-[var(--gutter)] pr-[clamp(24px,3vw,56px)] text-left"
                     >
                       <span
                         className={`text-[length:var(--fs-h3)] font-bold leading-tight tracking-[-0.01em] transition-colors duration-400 ${
@@ -104,68 +127,72 @@ export default function Services() {
                         {s.items}
                       </span>
                     </button>
-
-                    <AnimatePresence>
-                      {isActive && (
-                        <motion.span
-                          layoutId="services-arrow"
-                          initial={{ opacity: 0, scale: 0.6 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          exit={{ opacity: 0, scale: 0.6 }}
-                          transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                          className="pointer-events-none absolute right-[clamp(8px,1.6vw,32px)] top-1/2 -translate-y-1/2"
-                        >
-                          <ArrowCircle />
-                        </motion.span>
-                      )}
-                    </AnimatePresence>
                   </li>
                 );
               })}
             </ul>
 
+            {/**
+             * Las cuatro fotos están siempre montadas, una encima de otra, y sólo
+             * cambia cuál se ve: montar la nueva en cada cambio obligaba a
+             * cargarla y durante ese instante no había ninguna.
+             */}
             <div className="relative h-full w-1/2 shrink-0 overflow-hidden">
-              <AnimatePresence mode="popLayout">
-                <motion.div
-                  key={active}
-                  initial={{ opacity: 0, scale: 1.06 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 1.02 }}
-                  transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                  className="absolute inset-0"
-                >
-                  <Image src={current.image} alt={current.title} fill sizes="50vw" className="object-cover" />
-                </motion.div>
-              </AnimatePresence>
+              {services.map((s, i) => (
+                <Image
+                  key={s.title}
+                  src={s.image}
+                  alt={i === active ? s.title : ""}
+                  fill
+                  sizes="50vw"
+                  className="object-cover"
+                  style={photoStyle(i === active, 600, 1.04)}
+                />
+              ))}
             </div>
           </div>
 
-          {/* Mobile / tablet: un servicio a la vez, el que toca por scroll */}
+          {/**
+           * Mobile / tablet: un servicio a la vez, el que toca por scroll. Los
+           * cuatro están montados en la misma celda y sólo cambia la opacidad;
+           * antes se desmontaba uno y se montaba el siguiente con un hueco en
+           * medio, y en el cambio se veía la sección vacía un instante.
+           */}
           <div className="flex min-h-0 flex-1 flex-col lg:hidden">
-            <AnimatePresence mode="wait">
-              <motion.article
-                key={active}
-                initial={{ opacity: 0, y: 18 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -18 }}
-                transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                className="flex min-h-0 flex-1 flex-col"
-              >
-                <div className="shell flex shrink-0 flex-col gap-3 pb-5">
-                  <h3 className="text-[length:var(--fs-h3)] font-bold text-yellow">{current.title}</h3>
-                  <p className="text-[length:var(--fs-body)] text-bone">{current.items}</p>
-                </div>
-                <div className="relative min-h-0 w-full flex-1">
-                  <Image src={current.image} alt={current.title} fill sizes="100vw" className="object-cover" />
-                </div>
-                <a
-                  href="#contacto"
-                  className="block shrink-0 bg-[#0b1a2e] py-4 text-center text-[length:var(--fs-body)] font-bold text-blue transition-colors duration-300 active:bg-[#10233c]"
+            <div className="shell grid shrink-0 pb-5">
+              {services.map((s, i) => (
+                <div
+                  key={s.title}
+                  aria-hidden={i !== active}
+                  className="col-start-1 row-start-1 flex flex-col gap-3"
+                  style={textStyle(i === active)}
                 >
-                  Consulta aquí
-                </a>
-              </motion.article>
-            </AnimatePresence>
+                  <h3 className="text-[length:var(--fs-h3)] font-bold text-yellow">{s.title}</h3>
+                  <p className="text-[length:var(--fs-body)] text-bone">{s.items}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="relative min-h-0 w-full flex-1 overflow-hidden">
+              {services.map((s, i) => (
+                <Image
+                  key={s.title}
+                  src={s.image}
+                  alt={i === active ? s.title : ""}
+                  fill
+                  sizes="100vw"
+                  className="object-cover"
+                  style={photoStyle(i === active, 450)}
+                />
+              ))}
+            </div>
+
+            <a
+              href="#contacto"
+              className="block shrink-0 bg-[#0b1a2e] py-4 text-center text-[length:var(--fs-body)] font-bold text-blue transition-colors duration-300 active:bg-[#10233c]"
+            >
+              Consulta aquí
+            </a>
 
             {/* Por dónde se va */}
             <ul className="mt-4 flex shrink-0 items-center justify-center gap-2" aria-hidden>

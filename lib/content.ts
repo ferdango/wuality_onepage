@@ -339,6 +339,28 @@ export const meeting = {
     { id: "meet", name: "Google Meet" },
     { id: "zoom", name: "Zoom" },
   ],
+  /** Buzón que recibe todas las reuniones. */
+  inbox: "hola@wuality.agency",
+  /** Duración de la primera reunión, para el evento de Google Calendar. */
+  durationMin: 30,
+  /**
+   * Agenda de citas de Google Calendar de hola@wuality.agency (Google Calendar →
+   * Crear → Agenda de citas → Compartir → Sitio web → la URL del `src`).
+   *
+   * Vacía, Google Meet abre un evento ya rellenado en el Google Calendar del
+   * visitante, con el buzón como invitado: al guardarlo, Google le envía la
+   * invitación. Con la URL, la agenda se incrusta en el propio flujo y Google se
+   * encarga de la disponibilidad, el enlace de Meet y las confirmaciones.
+   */
+  bookingUrl: "",
+  /**
+   * Servicio que reenvía por correo los datos del formulario: el sitio es
+   * estático, sin servidor propio que pueda mandar correos. FormSubmit no pide
+   * cuenta; el primer envío le llega al buzón como correo de activación y, una
+   * vez confirmado, los siguientes llegan con los datos. Tras activarlo, FormSubmit
+   * da un alias para no dejar la dirección a la vista en el código.
+   */
+  mailEndpoint: "https://formsubmit.co/ajax/hola@wuality.agency",
 };
 
 /**
@@ -443,6 +465,7 @@ export const blog = {
   ],
   share: "Compartir",
   next: "Siguiente artículo",
+  related: "Más ideas para ti",
 };
 
 export type BlogItem = (typeof blog.items)[number];
