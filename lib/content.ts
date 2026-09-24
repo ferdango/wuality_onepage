@@ -4,7 +4,7 @@
  */
 
 export const nav = [
-  { label: "About Wuality", short: "About", href: "#about" },
+  { label: "About Wuality", short: "About", href: "#edu" },
   { label: "Work", short: "Work", href: "#work" },
   { label: "Services", short: "Services", href: "#services" },
   { label: "Reviews", short: "Reviews", href: "#reviews" },

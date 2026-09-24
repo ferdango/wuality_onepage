@@ -12,7 +12,6 @@ import {
 import { useCallback, useEffect, useRef, useState } from "react";
 import Reveal from "./ui/Reveal";
 import SectionTitle from "./ui/SectionTitle";
-import { PROJECT_DETAIL_ID, useProjectSelection } from "./ProjectSelection";
 import { projects } from "@/lib/content";
 
 type Project = (typeof projects)[number];
@@ -69,12 +68,11 @@ function Chip({ label, tone = "light" }: { label: string; tone?: "light" | "dark
 /* ------------------------------------------------------------------------ */
 
 function FeaturedDesktop() {
-  const { select } = useProjectSelection();
   const reduced = useReducedMotion();
   const pin = useRef<HTMLDivElement>(null);
   const column = useRef<HTMLDivElement>(null);
   const cursor = useRef<HTMLSpanElement>(null);
-  const cards = useRef<(HTMLButtonElement | null)[]>([]);
+  const cards = useRef<(HTMLDivElement | null)[]>([]);
   const [active, setActive] = useState(0);
 
   /**
@@ -92,12 +90,6 @@ function FeaturedDesktop() {
     if (!pin.current?.offsetHeight) return;
     setActive(Math.min(N - 1, Math.max(0, Math.round(v))));
   });
-
-  // El detalle de abajo sigue al proyecto en curso, sin mover la página.
-  useEffect(() => {
-    if (!pin.current?.offsetHeight) return;
-    select(active, { scroll: false });
-  }, [active, select]);
 
   /**
    * Botón que sigue al cursor. Descansa en el centro de la tarjeta activa y,
@@ -223,7 +215,6 @@ function FeaturedDesktop() {
                     project={project}
                     active={i === active}
                     reduced={Boolean(reduced)}
-                    onOpen={() => select(i)}
                     ref={(el) => {
                       cards.current[i] = el;
                     }}
@@ -252,23 +243,18 @@ function ProjectCard({
   project,
   active,
   reduced,
-  onOpen,
   ref,
 }: {
   project: Project;
   active: boolean;
   reduced: boolean;
-  onOpen: () => void;
-  ref: (el: HTMLButtonElement | null) => void;
+  ref: (el: HTMLDivElement | null) => void;
 }) {
   return (
-    <button
+    <div
       ref={ref}
-      type="button"
-      onClick={onOpen}
-      aria-controls={PROJECT_DETAIL_ID}
-      aria-label={`Ver el caso de ${project.name}`}
-      className="relative block h-[var(--card)] w-full shrink-0 cursor-none overflow-hidden rounded-[clamp(14px,1.25vw,24px)] text-left outline-none focus-visible:ring-4 focus-visible:ring-bone"
+      aria-label={project.name}
+      className="relative block h-[var(--card)] w-full shrink-0 cursor-none overflow-hidden rounded-[clamp(14px,1.25vw,24px)] text-left"
     >
       <Image src={project.shot} alt="" fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover" />
       <span className="absolute bottom-[clamp(12px,1.05vw,20px)] right-[clamp(12px,1.05vw,20px)]">
@@ -300,7 +286,7 @@ function ProjectCard({
           <Chip label={project.tags[0]} tone="dark" />
         </span>
       </span>
-    </button>
+    </div>
   );
 }
 
@@ -309,19 +295,12 @@ function ProjectCard({
 /* ------------------------------------------------------------------------ */
 
 function FeaturedMobile() {
-  const { select } = useProjectSelection();
   return (
     <div className="shell lg:hidden">
       <div className="flex flex-col gap-4 rounded-[28px] bg-[#101617] p-4">
-        {projects.map((project, i) => (
+        {projects.map((project) => (
           <Reveal key={project.slug} y={24}>
-            <button
-              type="button"
-              onClick={() => select(i)}
-              aria-controls={PROJECT_DETAIL_ID}
-              aria-label={`Ver el caso de ${project.name}`}
-              className="relative block aspect-[552/415] w-full overflow-hidden rounded-[20px] text-left"
-            >
+            <div className="relative block aspect-[552/415] w-full overflow-hidden rounded-[20px] text-left">
               <Image src={project.shot} alt="" fill sizes="92vw" className="object-cover" />
               <span className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent" />
               <span className="absolute right-3 top-3">
@@ -333,7 +312,7 @@ function FeaturedMobile() {
                   {project.name}
                 </span>
               </span>
-            </button>
+            </div>
           </Reveal>
         ))}
       </div>

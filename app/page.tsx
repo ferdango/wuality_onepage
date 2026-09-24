@@ -2,8 +2,6 @@ import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import Services from "@/components/Services";
 import Projects from "@/components/Projects";
-import { ProjectSelectionProvider } from "@/components/ProjectSelection";
-import CaseStudy from "@/components/CaseStudy";
 import Partners from "@/components/Partners";
 import Methodology from "@/components/Methodology";
 import Reviews from "@/components/Reviews";
@@ -22,10 +20,7 @@ export default function Page() {
       <main>
         <Hero />
         <Services />
-        <ProjectSelectionProvider>
-          <Projects />
-          <CaseStudy />
-        </ProjectSelectionProvider>
+        <Projects />
         <Partners />
         <Methodology />
         <Reviews />

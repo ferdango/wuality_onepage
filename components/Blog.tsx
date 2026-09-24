@@ -2,24 +2,24 @@
 
 import Image from "@/components/ui/Img";
 import Link from "next/link";
-import Carousel from "./ui/Carousel";
+import HorizontalScroll from "./ui/HorizontalScroll";
 import Reveal from "./ui/Reveal";
 import { blog } from "@/lib/content";
 
 export default function Blog() {
   return (
-    <section id="blog" className="bg-ink py-[calc(var(--section-y)*1.4)]">
-      <Reveal>
-        <h2 className="h-section shell mx-auto max-w-[24ch] text-center text-bone">{blog.title}</h2>
-      </Reveal>
-
-      <div className="mt-[clamp(24px,3.3vw,64px)]">
-        <Carousel
-          ariaLabel="Artículos y episodios de Wuality"
-          railClassName="px-[var(--gutter)] scroll-pl-[var(--gutter)]"
-          slideClassName="w-[76%] sm:w-[48%] lg:w-[320px]"
-          gap="gap-4 lg:gap-6"
-        >
+    <section id="blog" className="bg-ink">
+      {/* Mismo recorrido que las reseñas: el scroll lleva el riel hasta el último post y luego sigue. */}
+      <HorizontalScroll
+        ariaLabel="Artículos y episodios de Wuality"
+        slideClassName="w-[72vw] sm:w-[44vw] lg:w-[320px]"
+        gap="gap-4 lg:gap-6"
+        header={
+          <Reveal>
+            <h2 className="h-section shell mx-auto max-w-[24ch] text-center text-bone">{blog.title}</h2>
+          </Reveal>
+        }
+      >
           {blog.items.map((item, i) =>
             item.type === "video" ? (
               <Link
@@ -81,8 +81,7 @@ export default function Blog() {
               </article>
             ),
           )}
-        </Carousel>
-      </div>
+      </HorizontalScroll>
     </section>
   );
 }
