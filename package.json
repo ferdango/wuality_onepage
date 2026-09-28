@@ -4,8 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build --turbopack",
+    "build": "next build --turbopack && node scripts/format-html.mjs",
     "start": "next start",
+    "preview": "node scripts/serve-out.mjs",
     "lint": "eslint"
   },
   "dependencies": {
@@ -22,6 +23,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.5.25",
+    "parse5": "^8.0.1",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

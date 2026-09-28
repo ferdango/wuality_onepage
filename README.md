@@ -10,8 +10,9 @@ Implementación en código de la one-page de Wuality diseñada en Figma
 - **Motion** (`motion/react`) para las animaciones
 
 ```bash
-npm run dev    # http://localhost:3000
-npm run build  # exporta el sitio estático a ./out
+npm run dev      # http://localhost:3000
+npm run build    # exporta el sitio estático a ./out, con el HTML tabulado
+npm run preview  # sirve ./out como GitHub Pages: http://localhost:4173
 ```
 
 ## Publicación
@@ -24,12 +25,29 @@ Pages es hosting estático, y eso condiciona dos cosas:
 
 - **El sitio no cuelga de la raíz del dominio.** El basePath entra por
   `NEXT_PUBLIC_BASE_PATH`, que solo define el workflow, así que `npm run dev`
-  sigue atendiendo en `/`. Ojo: con las imágenes sin optimizar, `next/image`
-  antepone el basePath a sus propios assets pero **no** al `src`. Por eso todo
-  pasa por `components/ui/Img.tsx` en vez de importar `next/image` directamente
-  — si añades una imagen, usa ese envoltorio.
+  sigue atendiendo en `/`. Las imágenes pasan todas por `components/ui/Img.tsx`,
+  un `<img>` propio que antepone el basePath al `src`. Sustituye a `next/image`,
+  que sin optimizador no aportaba nada y escribía su CSS en línea en cada
+  etiqueta — si añades una imagen, usa ese componente.
 - **Los archivos de `public/media` se sirven tal cual**, sin redimensionar. Están
   guardados ya a tamaño web; si incorporas un asset nuevo, redúcelo antes.
+
+### HTML tabulado y CSS aparte
+
+`npm run build` termina con `scripts/format-html.mjs`, que deja cada página de
+`out/` tabulada (una etiqueta de bloque por línea, indentada con tabuladores).
+El CSS no va dentro del HTML: Tailwind lo compila a una sola hoja minificada
+que la página enlaza con `<link rel="stylesheet">`, y el script hace fallar el
+build si aparece un `<style>`. Los `style="…"` que quedan en las etiquetas son
+valores que calcula el JavaScript (animaciones, progreso del scroll, posición de
+las figuras), no hojas de estilo.
+
+El formato no es un simple *beautify*: React compara el HTML con lo que
+renderiza al hidratar, y un salto de línea de más entre dos etiquetas le hace
+repintar la página entera en el cliente. Por eso el script sólo mete saltos
+entre etiquetas y añade al `<head>` una línea que los retira mientras el
+navegador lee la página. En cada build comprueba con `parse5` que el documento
+resultante es idéntico al original sin formato.
 
 ## Estructura
 
@@ -41,7 +59,13 @@ app/
 components/         una sección por archivo + ui/ con primitivos
 lib/content.ts      todo el copy y las rutas de assets (single source of truth)
 public/media/       assets exportados del Figma (brand, ui, work, logos, people)
+scripts/            posproceso del build (HTML tabulado) y servidor de ./out
 ```
+
+"Últimos posts" (`components/SocialPosts.tsx`) muestra las publicaciones de
+TikTok e Instagram que se listen en `social.posts` de `lib/content.ts`: basta
+con pegar el enlace de cada post. Mientras la lista esté vacía, la sección
+presenta las dos cuentas con su botón de seguir.
 
 ## Sistema de diseño
 

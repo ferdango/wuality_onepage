@@ -7,6 +7,7 @@ import Methodology from "@/components/Methodology";
 import Reviews from "@/components/Reviews";
 import Clients from "@/components/Clients";
 import Models from "@/components/Models";
+import SocialPosts from "@/components/SocialPosts";
 import Faq from "@/components/Faq";
 import Meeting from "@/components/Meeting";
 import Blog from "@/components/Blog";
@@ -26,6 +27,7 @@ export default function Page() {
         <Reviews />
         <Clients />
         <Models />
+        <SocialPosts />
         <Faq />
         <Meeting />
         <Blog />

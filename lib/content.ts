@@ -292,6 +292,55 @@ export const models = {
   ],
 };
 
+export type SocialNetwork = "tiktok" | "instagram";
+
+/**
+ * "Últimos posts": las cuentas de Wuality en TikTok e Instagram.
+ *
+ * Para enseñar una publicación basta con pegar su enlace en `posts`, la más
+ * reciente primero; la sección la incrusta con el reproductor oficial de cada
+ * red. Tienen que ser enlaces completos:
+ *   TikTok     https://www.tiktok.com/@wualityagency/video/<id>
+ *   Instagram  https://www.instagram.com/p/<código>/  (o /reel/<código>/)
+ *
+ * A 28/09/2026 ninguna de las dos cuentas ha publicado nada todavía, así que
+ * `posts` va vacío y la sección presenta las cuentas con su botón de seguir.
+ */
+export const social = {
+  title: "Últimos posts",
+  lead: "Lo último de Wuality en TikTok e Instagram.",
+  profiles: [
+    {
+      network: "tiktok" as SocialNetwork,
+      name: "TikTok",
+      handle: "@wualityagency",
+      href: "https://www.tiktok.com/@wualityagency",
+      icon: "/media/ui/tiktok.svg",
+      // Bio de la propia cuenta.
+      bio: "Somos un equipo con toda la energía para impulsar negocios ⚡⚡",
+      cta: "Seguir en TikTok",
+      soon: "Primeros videos, muy pronto",
+    },
+    {
+      network: "instagram" as SocialNetwork,
+      name: "Instagram",
+      handle: "@wualityagency",
+      href: "https://www.instagram.com/wualityagency/",
+      icon: "/media/ui/instagram.svg",
+      bio: "Creadores de caminos digitales hacia el éxito",
+      cta: "Seguir en Instagram",
+      soon: "Primeros posts, muy pronto",
+    },
+  ],
+  posts: [] as string[],
+  /** Aviso en lugar del post cuando no se han aceptado las cookies: los reproductores las ponen. */
+  consent: {
+    body: "Esta publicación se carga desde {red}, que usa sus propias cookies.",
+    load: "Ver aquí",
+    open: "Abrir en {red}",
+  },
+};
+
 export const faq = {
   title: "Preguntas frecuentes",
   cta: { label: "Sigues con dudas?", button: "Agenda con nosotros" },
@@ -496,9 +545,9 @@ export const footer = {
   legal: "Wuality Agency © 2025 Todos los derechos reservados",
   links: ["Cookies", "Privacidad"],
   socials: [
-    { name: "Instagram", icon: "/media/ui/instagram.svg", href: "#" },
+    { name: "Instagram", icon: "/media/ui/instagram.svg", href: "https://www.instagram.com/wualityagency/" },
     { name: "Mail", icon: "/media/ui/mail.svg", href: "#" },
-    { name: "TikTok", icon: "/media/ui/tiktok.svg", href: "#" },
+    { name: "TikTok", icon: "/media/ui/tiktok.svg", href: "https://www.tiktok.com/@wualityagency" },
   ],
 };
 

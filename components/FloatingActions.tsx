@@ -5,7 +5,8 @@ import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useState } from "react";
 import { chat, cookies } from "@/lib/content";
 
-const STORAGE_KEY = "wuality:cookie-consent";
+export const STORAGE_KEY = "wuality:cookie-consent";
+export const CONSENT_EVENT = "wuality:consent";
 
 export default function FloatingActions() {
   const [consent, setConsent] = useState<string | null>("pending");
@@ -46,6 +47,8 @@ export default function FloatingActions() {
     }
     setConsent(value);
     setCookieOpen(false);
+    // Los posts incrustados de "Últimos posts" esperan a esta decisión para cargarse.
+    window.dispatchEvent(new CustomEvent(CONSENT_EVENT, { detail: value }));
   };
 
   return (

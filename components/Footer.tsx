@@ -59,6 +59,7 @@ export default function Footer() {
                 <a
                   href={s.href}
                   aria-label={s.name}
+                  {...(s.href.startsWith("http") && { target: "_blank", rel: "noopener noreferrer" })}
                   className="flex size-[clamp(48px,4.17vw,80px)] items-center justify-center rounded-full border border-muted transition-colors duration-400 hover:border-bone hover:bg-card"
                 >
                   <Image src={s.icon} alt="" width={32} height={32} className="size-[40%]" />
