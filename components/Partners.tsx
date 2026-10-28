@@ -27,6 +27,9 @@ export default function Partners() {
                 alt={p.name}
                 width={p.w}
                 height={p.h}
+                // El slider mueve las fichas con transform: con carga diferida, las que
+                // entran desde fuera se pedían tarde y el logo aparecía de golpe.
+                loading="eager"
                 /**
                  * Mismo peso visual para todos: el ancho crece con la raíz de la
                  * proporción, así un logo muy alargado (Atlassian, 8:1) no se ve
