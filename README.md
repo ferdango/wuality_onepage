@@ -140,8 +140,13 @@ El diseño usa **Charlie Display** (licencia Atlassian, sin webfont pública). L
 carga **Figtree** vía `next/font`, que es la sustituta de proporciones más cercanas
 y garantiza el mismo render en todos los equipos.
 
-La línea "only one effect" usa **Chau Philomene One**, que sí está en Google Fonts
-y se carga tal cual. Su métrica difiere un poco de la del archivo, así que el
+La línea "only one effect" usa **Chau Philomene One**, la misma del Figma.
+
+Las dos van en el repo (`app/fonts/`, subconjunto latino, con sus licencias OFL) y
+se cargan con `next/font/local`. No se piden a Google Fonts al compilar: Google
+empezó a servir Figtree con URLs que Turbopack no resuelve y el build fallaba.
+
+La métrica de Chau Philomene One difiere un poco de la del archivo, así que el
 tamaño del claim se acota además al ancho disponible (`--claim` en `Models.tsx`):
 en desktop da los 220px del Figma y en móvil llena el ancho sin recortarse.
 

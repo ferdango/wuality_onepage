@@ -1,24 +1,30 @@
 import type { Metadata, Viewport } from "next";
-import { Chau_Philomene_One, Figtree } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import { site } from "@/lib/seo";
 
 /**
+ * Las fuentes van en el repo (app/fonts, con sus licencias OFL) y no se piden a
+ * Google Fonts en cada build: Google empezó a servir Figtree con URLs con
+ * parámetros (`/l/font?kit=…`) que Turbopack no sabe resolver, y el build
+ * fallaba sin que cambiara nada del código. Son el subconjunto latino, que
+ * cubre español e inglés.
+ *
  * El diseño usa Charlie Display (tipografía licenciada de Atlassian, no disponible
  * como webfont pública). Se declara primero en la cascada para que, si la licencia
  * está instalada, se use la original; Figtree es el sustituto de proporciones y
- * peso más cercanos.
+ * peso más cercanos. Es variable: un solo archivo para los pesos 400 a 800.
  */
-const wuality = Figtree({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
+const wuality = localFont({
+  src: "./fonts/figtree-latin-wght.woff2",
+  weight: "400 800",
   variable: "--font-wuality",
   display: "swap",
 });
 
-/** "only one effect" usa esta tipografía en el Figma; sí está en Google Fonts. */
-const chau = Chau_Philomene_One({
-  subsets: ["latin"],
+/** "only one effect" usa esta tipografía en el Figma. */
+const chau = localFont({
+  src: "./fonts/chau-philomene-one-latin.woff2",
   weight: "400",
   variable: "--font-chau-raw",
   display: "swap",
