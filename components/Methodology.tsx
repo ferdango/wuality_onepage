@@ -5,7 +5,8 @@ import { motion, useMotionValueEvent, useReducedMotion, useScroll } from "motion
 import { useRef, useState } from "react";
 import MethodCycle from "./ui/MethodCycle";
 import SectionTitle from "./ui/SectionTitle";
-import { methodology } from "@/lib/content";
+import { useContent } from "./LangProvider";
+import type { methodology } from "@/lib/content";
 import { FIGURE_SIZE } from "@/lib/figures";
 
 type Card = (typeof methodology)[number];
@@ -60,6 +61,7 @@ function MethodCard({ card, active = true }: { card: Card; active?: boolean }) {
 }
 
 export default function Methodology() {
+  const { methodology, ui } = useContent();
   const reduced = useReducedMotion();
   const pin = useRef<HTMLDivElement>(null);
   const [step, setStep] = useState(0);
@@ -92,7 +94,7 @@ export default function Methodology() {
         {/* El header es fijo: el bloque anclado tiene que empezar por debajo de él. */}
         <div className="sticky top-0 flex h-[100svh] flex-col justify-center overflow-hidden pb-[clamp(16px,3vw,48px)] pt-[calc(var(--header-h)+clamp(8px,1.5vw,24px))]">
           <SectionTitle className="mb-[clamp(0.75rem,2.5vw,3rem)]">
-            ¿Cómo lo logramos?
+            {ui.methodology.title}
           </SectionTitle>
 
           {/* Desktop: diagrama con las cuatro tarjetas alrededor; sólo se enciende la del pilar en curso */}

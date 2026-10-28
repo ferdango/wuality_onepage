@@ -5,16 +5,20 @@ import Link from "next/link";
 import HorizontalScroll from "./ui/HorizontalScroll";
 import Reveal from "./ui/Reveal";
 import type { BlogItem } from "@/lib/content";
+import { blogPath } from "@/lib/i18n";
+import { useContent, useLang } from "./LangProvider";
 
 /**
  * Tarjeta de post. Los de vídeo llevan el icono de YouTube y son clicables
  * enteros; los de texto, foto, fecha, titular y botón "Leer nota".
  */
 export function BlogCard({ item }: { item: BlogItem }) {
+  const { ui } = useContent();
+  const href = blogPath(useLang(), item.slug);
   if (item.type === "video") {
     return (
       <Link
-        href={`/blog/${item.slug}/`}
+        href={href}
         className="group relative block aspect-[4/5] overflow-hidden rounded-[clamp(14px,1.25vw,24px)]"
       >
         <Image
@@ -28,7 +32,7 @@ export function BlogCard({ item }: { item: BlogItem }) {
 
         <Image
           src="/media/ui/youtube.svg"
-          alt="YouTube"
+          alt={ui.blog.youtube}
           width={40}
           height={28}
           className="absolute right-4 top-4 h-6 w-auto"
@@ -60,7 +64,7 @@ export function BlogCard({ item }: { item: BlogItem }) {
           {item.title}
         </h3>
         <Link
-          href={`/blog/${item.slug}/`}
+          href={href}
           className="mt-4 w-fit rounded-full border border-bone/30 px-6 py-2.5 text-[clamp(12px,0.8333vw,16px)] font-semibold text-bone transition-colors duration-300 hover:border-blue hover:text-blue"
         >
           {item.cta}

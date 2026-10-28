@@ -5,7 +5,11 @@ import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useState, type FormEvent } from "react";
 import BrandPattern, { type Piece } from "./ui/BrandPattern";
 import SectionTitle from "./ui/SectionTitle";
-import { dialCodes, meeting } from "@/lib/content";
+import { useContent } from "./LangProvider";
+import { meeting as meetingConfig } from "@/lib/content";
+import { fill, type Content } from "@/lib/i18n";
+
+type MeetingText = Content["ui"]["meeting"];
 
 type Step = "platform" | "form" | "calendar" | "done";
 
@@ -25,8 +29,9 @@ const MEETING_PATTERN: Piece[] = [
 ];
 
 type Field = {
-  name: string;
-  placeholder: string;
+  name: "nombre" | "celular" | "email";
+  /** Clave del texto del campo en `ui.meeting`. */
+  label: "name" | "phone" | "email";
   icon: string;
   type: "text" | "tel" | "email";
   autoComplete: string;
@@ -35,9 +40,9 @@ type Field = {
 };
 
 const fields: Field[] = [
-  { name: "nombre", placeholder: "Nombres y apellidos", icon: "/media/ui/user.svg", type: "text", autoComplete: "name" },
-  { name: "celular", placeholder: "Celular", icon: "/media/ui/whatsapp.svg", type: "tel", autoComplete: "tel", hasDialCode: true },
-  { name: "email", placeholder: "Correo electrónico", icon: "/media/ui/mail-field.svg", type: "email", autoComplete: "email" },
+  { name: "nombre", label: "name", icon: "/media/ui/user.svg", type: "text", autoComplete: "name" },
+  { name: "celular", label: "phone", icon: "/media/ui/whatsapp.svg", type: "tel", autoComplete: "tel", hasDialCode: true },
+  { name: "email", label: "email", icon: "/media/ui/mail-field.svg", type: "email", autoComplete: "email" },
 ];
 
 const pad = (n: number) => String(n).padStart(2, "0");
@@ -48,10 +53,10 @@ function localToday() {
   return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
 }
 
-/** "2026-09-30" → "martes, 30 de septiembre de 2026", para el correo y la confirmación. */
-function readableDate(iso: string) {
+/** "2026-09-30" → "martes, 30 de septiembre de 2026" (o en inglés), para el correo y la confirmación. */
+function readableDate(iso: string, locale = "es") {
   const [y, m, d] = iso.split("-").map(Number);
-  return new Date(y, m - 1, d).toLocaleDateString("es", {
+  return new Date(y, m - 1, d).toLocaleDateString(locale, {
     weekday: "long",
     day: "numeric",
     month: "long",
@@ -76,27 +81,27 @@ type Request = {
  * `ctz`: así Google las lee en la zona horaria del visitante, que es en la que
  * las eligió.
  */
-function calendarUrl(r: Request) {
+function calendarUrl(r: Request, t: MeetingText) {
   const [y, m, d] = r.fecha.split("-").map(Number);
   const [hh, mm] = r.hora.split(":").map(Number);
   const start = new Date(y, m - 1, d, hh, mm);
-  const end = new Date(start.getTime() + meeting.durationMin * 60_000);
+  const end = new Date(start.getTime() + meetingConfig.durationMin * 60_000);
   const stamp = (t: Date) =>
     `${t.getFullYear()}${pad(t.getMonth() + 1)}${pad(t.getDate())}T${pad(t.getHours())}${pad(t.getMinutes())}00`;
 
   const params = new URLSearchParams({
     action: "TEMPLATE",
-    text: `Reunión con Wuality — ${r.nombre}`,
+    text: fill(t.eventTitle, { name: r.nombre }),
     dates: `${stamp(start)}/${stamp(end)}`,
     ctz: r.zona,
     location: "Google Meet",
-    add: meeting.inbox,
+    add: meetingConfig.inbox,
     details: [
-      "Primera reunión solicitada desde la web de Wuality.",
+      t.eventDetails,
       "",
-      `Nombre: ${r.nombre}`,
-      `Celular: ${r.celular}`,
-      `Correo: ${r.email}`,
+      `${t.eventName}: ${r.nombre}`,
+      `${t.eventPhone}: ${r.celular}`,
+      `${t.eventEmail}: ${r.email}`,
     ].join("\n"),
   });
   return `https://calendar.google.com/calendar/render?${params}`;
@@ -107,8 +112,9 @@ function calendarUrl(r: Request) {
  * también cuando el buzón aún no está activado; eso lo dice en `success`, así
  * que se comprueba el cuerpo y no sólo el código.
  */
-async function sendToInbox(r: Request) {
-  const res = await fetch(meeting.mailEndpoint, {
+/** El correo es para el equipo, así que va siempre en español; lleva el idioma del visitante. */
+async function sendToInbox(r: Request, lang: string) {
+  const res = await fetch(meetingConfig.mailEndpoint, {
     method: "POST",
     headers: { "Content-Type": "application/json", Accept: "application/json" },
     body: JSON.stringify({
@@ -122,6 +128,7 @@ async function sendToInbox(r: Request) {
       Correo: r.email,
       Fecha: readableDate(r.fecha),
       Hora: `${r.hora} (${r.zona})`,
+      Idioma: lang === "en" ? "Inglés" : "Español",
       Origen: window.location.href,
     }),
   });
@@ -132,6 +139,8 @@ async function sendToInbox(r: Request) {
 }
 
 export default function Meeting() {
+  const { meeting, dialCodes, ui } = useContent();
+  const t = ui.meeting;
   const [step, setStep] = useState<Step>("platform");
   const [platform, setPlatform] = useState(meeting.options[0].id);
   const [accepted, setAccepted] = useState(true);
@@ -155,7 +164,7 @@ export default function Meeting() {
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!accepted) {
-      setError("Necesitamos que aceptes la Política de Privacidad para continuar.");
+      setError(t.privacyError);
       return;
     }
     setError("");
@@ -178,10 +187,10 @@ export default function Meeting() {
        * evento de envío el navegador lo deja pasar; después de un `await` ya no
        * sería un gesto del usuario y lo bloquearía como ventana emergente.
        */
-      const calendar = calendarUrl(request);
+      const calendar = calendarUrl(request, t);
       window.open(calendar, "_blank", "noopener");
       // Copia por correo, para que la solicitud no se pierda si el visitante no llega a guardar el evento.
-      sendToInbox(request).catch(() => {});
+      sendToInbox(request, t.dateLocale).catch(() => {});
       setSent({ request, calendar });
       setStep("done");
       return;
@@ -189,11 +198,11 @@ export default function Meeting() {
 
     setSending(true);
     try {
-      await sendToInbox(request);
+      await sendToInbox(request, t.dateLocale);
       setSent({ request });
       setStep("done");
     } catch {
-      setError(`No pudimos enviar tu solicitud. Escríbenos a ${meeting.inbox} y la agendamos contigo.`);
+      setError(fill(t.sendError, { inbox: meeting.inbox }));
     } finally {
       setSending(false);
     }
@@ -233,7 +242,7 @@ export default function Meeting() {
               transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
               className="flex flex-col gap-3"
             >
-              <div role="radiogroup" aria-label="Plataforma para la reunión" className="flex gap-3">
+              <div role="radiogroup" aria-label={t.platform} className="flex gap-3">
                 {meeting.options.map((opt) => {
                   const selected = platform === opt.id;
                   return (
@@ -272,7 +281,7 @@ export default function Meeting() {
                 onClick={onContinue}
                 className="flex items-center justify-center rounded-[32px] border border-[#616083] bg-surface py-5 text-[length:var(--fs-xs)] font-bold text-bone transition-colors duration-300 hover:border-blue hover:bg-blue/10 hover:text-blue"
               >
-                Continuar
+                {t.continue}
               </button>
             </motion.div>
           )}
@@ -293,7 +302,7 @@ export default function Meeting() {
                 className="mx-auto flex items-center gap-2 text-[length:var(--fs-xs)] text-bone transition-opacity duration-300 hover:opacity-70"
               >
                 <Image src="/media/ui/arrow-back.svg" alt="" width={24} height={24} className="size-6" />
-                volver
+                {t.back}
               </button>
 
               <div className="flex flex-col gap-3">
@@ -301,7 +310,7 @@ export default function Meeting() {
                   const selected = dialCodes.find((c) => c.code === dial) ?? dialCodes[0];
                   return (
                     <label key={f.name} className="relative block">
-                      <span className="sr-only">{f.placeholder}</span>
+                      <span className="sr-only">{t[f.label]}</span>
 
                       {f.hasDialCode && (
                         /**
@@ -311,7 +320,7 @@ export default function Meeting() {
                          */
                         <span className="absolute inset-y-px left-px z-10 flex w-[142px] items-center gap-1 rounded-l-[48px] bg-[#141d21] pl-[52px] pr-2">
                           <select
-                            aria-label="Prefijo del país"
+                            aria-label={t.dial}
                             value={dial}
                             onChange={(e) => setDial(e.target.value)}
                             /**
@@ -362,7 +371,7 @@ export default function Meeting() {
                         type={f.type}
                         required
                         autoComplete={f.autoComplete}
-                        placeholder={f.placeholder}
+                        placeholder={t[f.label]}
                         className={`h-[70px] w-full rounded-[48px] border border-[#616083] bg-surface pr-5 text-[length:var(--fs-xs)] text-[#f7f7ff] outline-none transition-colors duration-300 placeholder:text-[#f7f7ff]/55 focus:border-blue ${
                           f.hasDialCode ? "pl-[158px]" : "pl-[57px]"
                         }`}
@@ -374,7 +383,7 @@ export default function Meeting() {
                 {/* Cuándo: de aquí sale el evento de Google Calendar y la hora que llega en el correo */}
                 <div className="grid grid-cols-2 gap-3">
                   <label className="relative block">
-                    <span className="sr-only">Fecha de la reunión</span>
+                    <span className="sr-only">{t.date}</span>
                     <input
                       name="fecha"
                       type="date"
@@ -384,7 +393,7 @@ export default function Meeting() {
                     />
                   </label>
                   <label className="relative block">
-                    <span className="sr-only">Hora de la reunión</span>
+                    <span className="sr-only">{t.time}</span>
                     <input
                       name="hora"
                       type="time"
@@ -396,9 +405,9 @@ export default function Meeting() {
                 </div>
                 <p className="px-6 text-left text-[clamp(11px,0.73vw,13px)] text-muted">
                   {isMeet
-                    ? "Te abriremos Google Calendar con la reunión lista para guardar."
-                    : "Te enviaremos el enlace de Zoom a tu correo."}{" "}
-                  Hora de tu zona horaria.
+                    ? t.hintMeet
+                    : t.hintZoom}{" "}
+                  {t.hintZone}
                 </p>
               </div>
 
@@ -419,7 +428,7 @@ export default function Meeting() {
                   )}
                 </span>
                 <span className="text-[length:var(--fs-xs)] font-light text-[#f7f7ff]">
-                  He leído y acepto la Política de Privacidad y protección de datos*
+                  {t.privacy}
                 </span>
               </label>
 
@@ -444,7 +453,7 @@ export default function Meeting() {
                 disabled={sending}
                 className="h-[65px] w-full rounded-xl bg-blue/15 text-[length:var(--fs-xs)] font-bold text-blue transition-colors duration-300 hover:bg-blue/25 disabled:cursor-wait disabled:opacity-60"
               >
-                {sending ? "Enviando…" : isMeet ? "Agendar en Google Calendar" : "Quiero una reunión"}
+                {sending ? t.sending : isMeet ? t.submitMeet : t.submitZoom}
               </button>
             </motion.form>
           )}
@@ -464,12 +473,12 @@ export default function Meeting() {
                 className="mx-auto flex items-center gap-2 text-[length:var(--fs-xs)] text-bone transition-opacity duration-300 hover:opacity-70"
               >
                 <Image src="/media/ui/arrow-back.svg" alt="" width={24} height={24} className="size-6" />
-                volver
+                {t.back}
               </button>
               {/* La agenda de citas de hola@wuality.agency: Google gestiona huecos, enlace de Meet y confirmaciones. */}
               <iframe
                 src={meeting.bookingUrl}
-                title="Agenda una reunión con Wuality en Google Calendar"
+                title={t.bookingTitle}
                 className="h-[640px] w-full rounded-[24px] border-0 bg-white"
               />
               <a
@@ -478,7 +487,7 @@ export default function Meeting() {
                 rel="noopener noreferrer"
                 className="text-[length:var(--fs-xs)] font-bold text-blue hover:underline"
               >
-                Abrir la agenda en Google Calendar
+                {t.bookingOpen}
               </a>
             </motion.div>
           )}
@@ -491,12 +500,14 @@ export default function Meeting() {
               transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
               className="rounded-[32px] border border-[#616083] bg-surface p-10 text-center"
             >
-              <p className="text-[length:var(--fs-h4)] font-bold text-bone">¡Listo!</p>
+              <p className="text-[length:var(--fs-h4)] font-bold text-bone">{t.done}</p>
               {sent.calendar ? (
                 <>
                   <p className="mt-3 text-[length:var(--fs-xs)] text-ash">
-                    Te abrimos Google Calendar con la reunión del {readableDate(sent.request.fecha)} a las{" "}
-                    {sent.request.hora}. Guárdala para que nos llegue la invitación.
+                    {fill(t.doneMeet, {
+                      date: readableDate(sent.request.fecha, t.dateLocale),
+                      time: sent.request.hora,
+                    })}
                   </p>
                   <a
                     href={sent.calendar}
@@ -504,13 +515,16 @@ export default function Meeting() {
                     rel="noopener noreferrer"
                     className="mt-6 inline-flex rounded-xl bg-blue/15 px-6 py-3 text-[length:var(--fs-xs)] font-bold text-blue transition-colors duration-300 hover:bg-blue/25"
                   >
-                    Abrir Google Calendar
+                    {t.openCalendar}
                   </a>
                 </>
               ) : (
                 <p className="mt-3 text-[length:var(--fs-xs)] text-ash">
-                  Recibimos tu solicitud para el {readableDate(sent.request.fecha)} a las {sent.request.hora}. Te
-                  enviaremos el enlace de Zoom a {sent.request.email}.
+                  {fill(t.doneZoom, {
+                    date: readableDate(sent.request.fecha, t.dateLocale),
+                    time: sent.request.hora,
+                    email: sent.request.email,
+                  })}
                 </p>
               )}
               <button
@@ -521,7 +535,7 @@ export default function Meeting() {
                 }}
                 className="mt-6 block w-full text-[length:var(--fs-xs)] font-bold text-blue hover:underline"
               >
-                Agendar otra
+                {t.again}
               </button>
             </motion.div>
           )}

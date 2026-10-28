@@ -4,7 +4,7 @@ import Logo from "@/components/ui/Logo";
 
 export const metadata: Metadata = {
   title: "Página no encontrada",
-  description: "La página que buscas no existe o ya no está disponible en Wuality.",
+  description: "La página que buscas no existe o ya no está disponible en Wuality. This page doesn't exist.",
   // Next ya añade un noindex al 404, pero el layout pide index: sin esto, el
   // HTML llevaría las dos órdenes a la vez.
   robots: { index: false, follow: true },
@@ -27,21 +27,34 @@ export default function NotFound() {
         <Logo href="/" />
       </div>
 
+      {/* GitHub Pages sirve este 404 para cualquier ruta, sea del español o de /en: va en los dos idiomas. */}
       <div>
         <p className="text-[length:var(--fs-sm)] font-semibold uppercase tracking-[0.12em] text-muted">Error 404</p>
         <h1 className="h-section dotted mt-4 text-bone">Esta página no existe</h1>
         <p className="mx-auto mt-5 max-w-[40ch] text-balance text-[length:var(--fs-lead)] leading-snug text-ash">
           Puede que el enlace esté mal escrito o que la página ya no esté aquí.
         </p>
-        <Link
-          href="/"
-          className="group mx-auto mt-[clamp(28px,2.9vw,56px)] flex w-fit items-center gap-4 rounded-full border border-bone/30 px-8 py-4 text-[length:var(--fs-sm)] font-semibold text-bone transition-colors duration-300 hover:border-blue hover:text-blue"
-        >
-          Volver al inicio
-          <svg viewBox="0 0 24 24" className="size-5 transition-transform duration-400 group-hover:translate-x-1" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-            <path d="M4 12h15M13 6l6 6-6 6" />
-          </svg>
-        </Link>
+        <p lang="en" className="mx-auto mt-3 max-w-[40ch] text-balance text-[length:var(--fs-sm)] leading-snug text-muted">
+          This page doesn&apos;t exist. The link may be mistyped or the page may have moved.
+        </p>
+        <div className="mt-[clamp(28px,2.9vw,56px)] flex flex-wrap justify-center gap-3">
+          <Link
+            href="/"
+            className="group flex w-fit items-center gap-4 rounded-full border border-bone/30 px-8 py-4 text-[length:var(--fs-sm)] font-semibold text-bone transition-colors duration-300 hover:border-blue hover:text-blue"
+          >
+            Volver al inicio
+            <svg viewBox="0 0 24 24" className="size-5 transition-transform duration-400 group-hover:translate-x-1" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+              <path d="M4 12h15M13 6l6 6-6 6" />
+            </svg>
+          </Link>
+          <Link
+            href="/en/"
+            lang="en"
+            className="flex w-fit items-center rounded-full px-6 py-4 text-[length:var(--fs-sm)] font-semibold text-ash transition-colors duration-300 hover:text-blue"
+          >
+            Back to home
+          </Link>
+        </div>
       </div>
     </main>
   );

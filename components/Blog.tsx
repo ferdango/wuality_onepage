@@ -1,10 +1,13 @@
+"use client";
+
 import BlogRail from "./BlogRail";
-import { blog } from "@/lib/content";
+import { useContent } from "./LangProvider";
 
 export default function Blog() {
+  const { blog, ui } = useContent();
   return (
     <section id="blog" className="bg-ink">
-      <BlogRail title={blog.title} items={blog.items} ariaLabel="Artículos y episodios de Wuality" />
+      <BlogRail title={blog.title} items={blog.items} ariaLabel={ui.blog.label} />
     </section>
   );
 }

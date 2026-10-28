@@ -5,17 +5,24 @@ import { AnimatePresence, motion, useScroll, useSpring } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import Logo from "./ui/Logo";
 import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 import MenuOverlay from "./MenuOverlay";
-import { languages, nav } from "@/lib/content";
+import { useContent, useLang } from "./LangProvider";
+import { switchPath } from "@/lib/i18n";
 
 /**
- * `linkBase` antepone la ruta del home a los anclajes. Vacío en la portada, "/"
- * en una ruta interna como un artículo, donde esas secciones no existen.
+ * `linkBase` antepone la ruta del home a los anclajes. Vacío en la portada; en
+ * una ruta interna como un artículo, el home de su idioma ("/" o "/en/"), donde
+ * están esas secciones.
  */
 export default function Header({ linkBase = "" }: { linkBase?: string }) {
+  const { nav, languages, ui } = useContent();
+  const lang = useLang();
+  const router = useRouter();
+  const pathname = usePathname();
+  const current = languages.find((l) => l.lang === lang) ?? languages[0];
   const [menuOpen, setMenuOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
-  const [lang, setLang] = useState(languages[0].code);
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState<string>("");
   const langRef = useRef<HTMLDivElement>(null);
@@ -49,7 +56,7 @@ export default function Header({ linkBase = "" }: { linkBase?: string }) {
     );
     sections.forEach((s) => observer.observe(s));
     return () => observer.disconnect();
-  }, []);
+  }, [nav]);
 
   // Cierra el selector de idioma al hacer clic fuera.
   useEffect(() => {
@@ -114,30 +121,29 @@ export default function Header({ linkBase = "" }: { linkBase?: string }) {
                 className="flex items-center gap-3 text-[length:var(--fs-sm)] font-semibold text-bone"
               >
                 <Image
-                  // La bandera sigue al idioma elegido; antes iba fija a España.
-                  src={languages.find((l) => l.code === lang)?.flag ?? languages[0].flag}
+                  src={current.flag}
                   alt=""
                   width={32}
                   height={32}
                   className="size-[clamp(22px,1.6667vw,32px)] rounded-full object-cover"
                 />
-                {lang}
+                {current.code}
               </button>
 
               <AnimatePresence>
                 {langOpen && (
                   <motion.ul
                     role="listbox"
-                    aria-label="Idioma y región"
+                    aria-label={ui.header.language}
                     initial={{ opacity: 0, y: -8, scale: 0.97 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: -8, scale: 0.97 }}
                     transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
                     className="absolute right-0 top-[calc(100%+18px)] w-[252px] rounded-3xl bg-card/95 p-4 shadow-2xl shadow-black/50 backdrop-blur-xl"
                   >
-                    <li className="px-3 pb-3 text-[15px] font-bold text-blue">Idioma y región</li>
+                    <li className="px-3 pb-3 text-[15px] font-bold text-blue">{ui.header.language}</li>
                     {languages.map((l) => {
-                      const selected = l.code === lang;
+                      const selected = l.lang === lang;
                       return (
                         <li key={l.code}>
                           <button
@@ -145,8 +151,9 @@ export default function Header({ linkBase = "" }: { linkBase?: string }) {
                             role="option"
                             aria-selected={selected}
                             onClick={() => {
-                              setLang(l.code);
                               setLangOpen(false);
+                              // La misma página en el otro idioma, y en la misma sección si había ancla.
+                              if (!selected) router.push(`${switchPath(pathname, l.lang)}${window.location.hash}`);
                             }}
                             className={`flex w-full items-center justify-between rounded-2xl px-3 py-2.5 text-left transition-colors duration-200 ${
                               selected ? "bg-ink" : "hover:bg-ink/60"
@@ -173,7 +180,7 @@ export default function Header({ linkBase = "" }: { linkBase?: string }) {
             <button
               type="button"
               onClick={() => setMenuOpen(true)}
-              aria-label="Abrir menú"
+              aria-label={ui.header.openMenu}
               aria-expanded={menuOpen}
               className="group flex size-[clamp(40px,2.917vw,56px)] items-center justify-center rounded-full border border-bone/60 transition-colors duration-300 hover:border-red hover:bg-red"
             >

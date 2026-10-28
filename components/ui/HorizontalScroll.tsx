@@ -2,6 +2,7 @@
 
 import { motion, useMotionTemplate, useScroll } from "motion/react";
 import { Children, useEffect, useRef, useState, type ReactNode } from "react";
+import { useContent } from "../LangProvider";
 
 /**
  * Riel horizontal guiado por el scroll vertical. La sección se queda fija, el
@@ -33,6 +34,7 @@ export default function HorizontalScroll({
   gap?: string;
   ariaLabel: string;
 }) {
+  const { ui } = useContent();
   const pin = useRef<HTMLDivElement>(null);
   const stage = useRef<HTMLDivElement>(null);
   const head = useRef<HTMLDivElement>(null);
@@ -85,7 +87,7 @@ export default function HorizontalScroll({
         <div
           ref={viewport}
           role="region"
-          aria-roledescription="carrusel"
+          aria-roledescription={ui.carousel.role}
           aria-label={ariaLabel}
           // Ni el riel ni la barra encogen: si el bloque pasa del alto, el flex los aplastaba.
           className="mt-[clamp(20px,2.2vw,44px)] shrink-0"

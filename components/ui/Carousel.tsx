@@ -11,6 +11,8 @@ import {
 } from "react";
 import Dots from "./Dots";
 import useDragScroll from "./useDragScroll";
+import { useContent } from "../LangProvider";
+import { fill } from "@/lib/i18n";
 
 type Props = {
   children: ReactNode;
@@ -51,6 +53,7 @@ export default function Carousel({
   ariaLabel,
   onActiveChange,
 }: Props) {
+  const { ui } = useContent();
   const railRef = useRef<HTMLDivElement>(null);
   const slides = useMemo(() => Children.toArray(children), [children]);
   const count = slides.length;
@@ -209,7 +212,7 @@ export default function Carousel({
       <div
         ref={railRef}
         role="region"
-        aria-roledescription="carrusel"
+        aria-roledescription={ui.carousel.role}
         aria-label={ariaLabel}
         tabIndex={0}
         onKeyDown={(e) => {
@@ -224,7 +227,7 @@ export default function Carousel({
               key={`${copy}-${i}`}
               className={`shrink-0 snap-start ${slideClassName}`}
               aria-roledescription="slide"
-              aria-label={`${i + 1} de ${count}`}
+              aria-label={fill(ui.carousel.slide, { n: i + 1, total: count })}
               // Deja que el contenido del slide reaccione a estar activo (ver .pop-on-active).
               data-active={copy * count + i === domIndex ? "true" : undefined}
             >

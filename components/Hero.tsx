@@ -10,7 +10,7 @@ import {
 import { useRef } from "react";
 import BrandPattern, { type Piece } from "./ui/BrandPattern";
 import LockScreen from "./ui/LockScreen";
-import { hero } from "@/lib/content";
+import { useContent } from "./LangProvider";
 
 /** Parte del recorrido que ocupa la subida inicial del teléfono. */
 const RISE = 0.22;
@@ -59,6 +59,7 @@ const HERO_DESKTOP: Piece[] = [
 ];
 
 export default function Hero() {
+  const { hero } = useContent();
   const ref = useRef<HTMLDivElement>(null);
   const reduced = useReducedMotion();
 

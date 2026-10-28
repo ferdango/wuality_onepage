@@ -49,6 +49,25 @@ entre etiquetas y añade al `<head>` una línea que los retira mientras el
 navegador lee la página. En cada build comprueba con `parse5` que el documento
 resultante es idéntico al original sin formato.
 
+## Idiomas (español e inglés)
+
+- **Rutas:** el español vive en la raíz (`/`, `/proyectos/…`, `/blog/…`) y el
+  inglés bajo `/en` (`/en/`, `/en/projects/…`, `/en/blog/…`). Las páginas de
+  ambos idiomas usan los mismos componentes (`components/pages/`), que reciben
+  el idioma.
+- **Textos:** `lib/content.ts` es el diccionario español y define la forma;
+  `lib/content.en.ts` es el inglés y TypeScript obliga a que tenga los mismos
+  campos. Imágenes, colores y enlaces se heredan del español. Los textos de
+  interfaz (botones, etiquetas, avisos) están en `ui`.
+- **Componentes:** los de cliente leen el idioma con `useContent()`
+  (`components/LangProvider.tsx`); los de servidor reciben `lang`.
+- **Selector:** lleva a la misma página en el otro idioma (y a la misma
+  sección, si hay ancla). Para añadir un texto nuevo, ponlo en los dos
+  diccionarios.
+- **SEO:** cada idioma tiene su canonical, sus `hreflang` (con `x-default` al
+  español), su `og:locale` y sus datos estructurados; el sitemap lista las dos
+  versiones de cada página.
+
 ## SEO
 
 Todo sale de `lib/seo.ts`:

@@ -1,7 +1,8 @@
 import Link from "next/link";
 import Image from "@/components/ui/Img";
 import Reveal from "./ui/Reveal";
-import { projects, reviews } from "@/lib/content";
+import type { projects } from "@/lib/content";
+import { getContent, projectPath, type Lang } from "@/lib/i18n";
 
 type Project = (typeof projects)[number];
 
@@ -96,7 +97,8 @@ function BrandBlock({ project }: { project: Project }) {
   );
 }
 
-export default function CaseStudyPage({ project, next }: { project: Project; next: Project }) {
+export default function CaseStudyPage({ project, next, lang }: { project: Project; next: Project; lang: Lang }) {
+  const { reviews, ui } = getContent(lang);
   // La cita sólo aparece si hay una reseña real de alguien de ese cliente.
   const quote = reviews.items.find((r) => r.role.includes(project.name));
   const [first, second, third] = project.chapters;
@@ -136,7 +138,7 @@ export default function CaseStudyPage({ project, next }: { project: Project; nex
       >
         <div className="grid gap-8 border-t border-line pt-[clamp(24px,2.1vw,40px)] sm:grid-cols-2">
           <div>
-            <Label>Servicios</Label>
+            <Label>{ui.caseStudy.services}</Label>
             <ul className="mt-4 space-y-2">
               {project.tags.map((t) => (
                 <li key={t} className="text-[clamp(1rem,1.05vw,1.25rem)] text-bone">
@@ -146,19 +148,19 @@ export default function CaseStudyPage({ project, next }: { project: Project; nex
             </ul>
           </div>
           <div>
-            <Label>Cliente</Label>
+            <Label>{ui.caseStudy.client}</Label>
             {/* La placa del dossier ya es el logotipo sobre su color. */}
             <Image src={project.logo} alt={project.name} className="mt-4 h-[clamp(44px,3.6vw,64px)] w-auto rounded-xl" />
           </div>
           {project.sector && (
             <div>
-              <Label>Sector</Label>
+              <Label>{ui.caseStudy.sector}</Label>
               <p className="mt-4 text-[clamp(1rem,1.05vw,1.25rem)] text-bone">{project.sector}</p>
             </div>
           )}
           {project.site && (
             <div>
-              <Label>Web</Label>
+              <Label>{ui.caseStudy.web}</Label>
               <a
                 href={`https://${project.site}/`}
                 target="_blank"
@@ -228,11 +230,11 @@ export default function CaseStudyPage({ project, next }: { project: Project; nex
       {/* Siguiente caso */}
       <Reveal className={`${WIDE} mt-[clamp(40px,5.2vw,100px)]`} style={{ maxWidth: 1600 }}>
         <Link
-          href={`/proyectos/${next.slug}/`}
+          href={projectPath(lang, next.slug)}
           className="group relative flex items-end justify-between gap-6 overflow-hidden rounded-[clamp(16px,1.7vw,32px)] border border-line bg-surface p-[clamp(24px,3vw,56px)] transition-colors duration-500 hover:border-bone/30"
         >
           <span>
-            <Label>Siguiente caso</Label>
+            <Label>{ui.caseStudy.next}</Label>
             <span className="mt-3 block text-[clamp(2rem,4.2vw,5rem)] font-bold leading-none tracking-[-0.025em] text-bone">
               {next.name}
             </span>

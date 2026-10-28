@@ -13,11 +13,14 @@ import {
 import { useCallback, useEffect, useRef, useState } from "react";
 import Reveal from "./ui/Reveal";
 import SectionTitle from "./ui/SectionTitle";
-import { projects } from "@/lib/content";
+import { useContent, useLang } from "./LangProvider";
+import { projects as projectsEs } from "@/lib/content";
+import { fill, projectPath } from "@/lib/i18n";
 
-type Project = (typeof projects)[number];
+type Project = (typeof projectsEs)[number];
 
-const N = projects.length;
+// La cartera es la misma en los dos idiomas: el número de tramos es fijo.
+const N = projectsEs.length;
 
 /**
  * Scroll que consume cada proyecto mientras el panel está anclado. Eran 70 con
@@ -73,6 +76,7 @@ function Chip({ label, tone = "light" }: { label: string; tone?: "light" | "dark
 /* ------------------------------------------------------------------------ */
 
 function FeaturedDesktop() {
+  const { projects } = useContent();
   const reduced = useReducedMotion();
   const pin = useRef<HTMLDivElement>(null);
   const column = useRef<HTMLDivElement>(null);
@@ -255,11 +259,13 @@ function ProjectCard({
   reduced: boolean;
   ref: (el: HTMLAnchorElement | null) => void;
 }) {
+  const { ui } = useContent();
+  const lang = useLang();
   return (
     <Link
       ref={ref}
-      href={`/proyectos/${project.slug}/`}
-      aria-label={`Ver el caso de ${project.name}`}
+      href={projectPath(lang, project.slug)}
+      aria-label={fill(ui.projects.open, { name: project.name })}
       className="relative block h-[var(--card)] w-full shrink-0 cursor-none overflow-hidden rounded-[clamp(14px,1.25vw,24px)] text-left outline-none focus-visible:ring-4 focus-visible:ring-bone"
     >
       <Image src={project.shot} alt="" fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover" />
@@ -300,14 +306,16 @@ function ProjectCard({
 /* ------------------------------------------------------------------------ */
 
 function FeaturedMobile() {
+  const { projects, ui } = useContent();
+  const lang = useLang();
   return (
     <div className="shell lg:hidden">
       <div className="flex flex-col gap-4 rounded-[28px] bg-[#101617] p-4">
         {projects.map((project) => (
           <Reveal key={project.slug} y={24}>
             <Link
-              href={`/proyectos/${project.slug}/`}
-              aria-label={`Ver el caso de ${project.name}`}
+              href={projectPath(lang, project.slug)}
+              aria-label={fill(ui.projects.open, { name: project.name })}
               className="relative block aspect-[552/415] w-full overflow-hidden rounded-[20px] text-left"
             >
               <Image src={project.shot} alt="" fill sizes="92vw" className="object-cover" />
@@ -330,9 +338,10 @@ function FeaturedMobile() {
 }
 
 export default function Projects() {
+  const { ui } = useContent();
   return (
     <section id="work" className="bg-ink pb-[var(--section-y)] pt-[calc(var(--section-y)*1.6)]">
-      <SectionTitle className="mb-[clamp(2rem,4.2vw,5rem)]">Nuestros proyectos</SectionTitle>
+      <SectionTitle className="mb-[clamp(2rem,4.2vw,5rem)]">{ui.projects.title}</SectionTitle>
       <FeaturedDesktop />
       <FeaturedMobile />
     </section>

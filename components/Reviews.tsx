@@ -3,7 +3,7 @@
 import Image from "@/components/ui/Img";
 import HorizontalScroll from "./ui/HorizontalScroll";
 import Reveal from "./ui/Reveal";
-import { reviews } from "@/lib/content";
+import { useContent } from "./LangProvider";
 
 /**
  * Ancho de cada tarjeta, acotado también por el alto libre del riel
@@ -15,10 +15,11 @@ const CARD =
   "w-[min(80vw,calc(var(--rail-h)*0.814))] sm:w-[min(44vw,calc(var(--rail-h)*0.814))] lg:w-[min(28.5vw,calc(var(--rail-h)*0.814))]";
 
 export default function Reviews() {
+  const { reviews, ui } = useContent();
   return (
     <section id="reviews" className="bg-ink">
       <HorizontalScroll
-        ariaLabel="Opiniones de clientes"
+        ariaLabel={ui.reviews.label}
         slideClassName={CARD}
         gap="gap-4 lg:gap-8"
         header={

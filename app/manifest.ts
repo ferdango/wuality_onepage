@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { site } from "@/lib/seo";
+import { site, siteText } from "@/lib/seo";
 
 export const dynamic = "force-static";
 
@@ -11,7 +11,7 @@ export default function manifest(): MetadataRoute.Manifest {
     name: site.title,
     short_name: site.name,
     description: site.description,
-    lang: site.language,
+    lang: siteText.es.language,
     start_url: `${BASE}/`,
     scope: `${BASE}/`,
     display: "standalone",

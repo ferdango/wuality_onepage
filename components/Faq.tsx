@@ -4,9 +4,10 @@ import Image from "@/components/ui/Img";
 import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
 import SectionTitle from "./ui/SectionTitle";
-import { faq } from "@/lib/content";
+import { useContent } from "./LangProvider";
 
 export default function Faq() {
+  const { faq } = useContent();
   const [open, setOpen] = useState(0);
 
   return (

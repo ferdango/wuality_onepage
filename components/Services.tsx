@@ -4,9 +4,11 @@ import Image from "@/components/ui/Img";
 import { useMotionValueEvent, useScroll } from "motion/react";
 import { useCallback, useRef, useState } from "react";
 import SectionTitle from "./ui/SectionTitle";
-import { services } from "@/lib/content";
+import { useContent } from "./LangProvider";
+import { services as servicesEs } from "@/lib/content";
 
-const N = services.length;
+// Los dos idiomas tienen los mismos servicios: el número es fijo.
+const N = servicesEs.length;
 
 /** Scroll que consume cada servicio mientras la sección está anclada. */
 const STEP_SVH = 55;
@@ -39,12 +41,13 @@ function textStyle(isActive: boolean): React.CSSProperties {
 }
 
 function Cta() {
+  const { ui } = useContent();
   return (
     <a
       href="#contacto"
       className="group flex items-center gap-4 rounded-full border border-bone/30 px-8 py-4 text-[length:var(--fs-sm)] font-semibold text-bone transition-colors duration-300 hover:border-blue hover:text-blue"
     >
-      Consulta aquí
+      {ui.services.cta}
       <svg viewBox="0 0 24 24" className="size-5 transition-transform duration-400 group-hover:translate-x-1" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
         <path d="M4 12h15M13 6l6 6-6 6" />
       </svg>
@@ -53,6 +56,7 @@ function Cta() {
 }
 
 export default function Services() {
+  const { services, ui } = useContent();
   const pin = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
 
@@ -97,7 +101,7 @@ export default function Services() {
       >
         {/* El header es fijo: el bloque anclado empieza por debajo de él. */}
         <div className="sticky top-0 flex h-[100svh] flex-col overflow-hidden pb-[clamp(16px,2.5vw,44px)] pt-[calc(var(--header-h)+clamp(12px,2vw,36px))]">
-          <SectionTitle className="mb-[clamp(1.25rem,3vw,3.5rem)] shrink-0">Lo que hacemos</SectionTitle>
+          <SectionTitle className="mb-[clamp(1.25rem,3vw,3.5rem)] shrink-0">{ui.services.title}</SectionTitle>
 
           {/* Desktop: lista + imagen sincronizada. La imagen ocupa el alto libre en vez de su proporción. */}
           <div className="hidden min-h-0 flex-1 items-center lg:flex">
@@ -191,7 +195,7 @@ export default function Services() {
               href="#contacto"
               className="block shrink-0 bg-[#0b1a2e] py-4 text-center text-[length:var(--fs-body)] font-bold text-blue transition-colors duration-300 active:bg-[#10233c]"
             >
-              Consulta aquí
+              {ui.services.cta}
             </a>
 
             {/* Por dónde se va */}

@@ -182,6 +182,11 @@ async function formatFile(file) {
   if (/<style[\s>]/i.test(html)) throw new Error(`${rel}: hay CSS en un <style> dentro del HTML.`);
   const sheets = [...html.matchAll(/<link[^>]+rel="stylesheet"[^>]*href="([^"]+)"/g)].map((m) => m[1]);
 
+  // 0. Idioma: el layout raíz es uno solo y escribe lang="es"; las páginas de
+  //    /en llevan su idioma en el HTML que leen los buscadores. React no
+  //    corrige atributos al hidratar, y LangProvider lo mantiene en el cliente.
+  if (rel.split(path.sep)[0] === "en") html = html.replace(/<html lang="es"/, '<html lang="en"');
+
   // 1. Guardián, justo detrás del <meta charset> para que éste siga siendo lo primero.
   const original = parse(html, { sourceCodeLocationInfo: true });
   assertNoFormatLikeText(original, rel);

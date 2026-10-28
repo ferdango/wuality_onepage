@@ -1,7 +1,8 @@
 import Link from "next/link";
 import Image from "@/components/ui/Img";
 import Reveal from "./ui/Reveal";
-import { blog, type BlogItem } from "@/lib/content";
+import type { BlogItem } from "@/lib/content";
+import { blogPath, fill, getContent, type Content, type Lang } from "@/lib/i18n";
 
 /**
  * Columna de lectura. El gutter va por fuera del ancho máximo —de ahí el
@@ -80,16 +81,16 @@ function Byline({ item, centered = false }: { item: BlogItem; centered?: boolean
 }
 
 /** Columna de compartir del Figma: vertical en desktop, en fila bajo la foto en móvil. */
-function ShareRail() {
+function ShareRail({ t }: { t: Content }) {
   return (
     <aside className="flex shrink-0 flex-row items-center gap-4 lg:w-[66px] lg:flex-col">
-      <p className="text-[0.875rem] text-[rgba(247,255,247,0.85)]">{blog.share}</p>
+      <p className="text-[0.875rem] text-[rgba(247,255,247,0.85)]">{t.blog.share}</p>
       <ul className="flex flex-row gap-3 lg:flex-col">
         {SHARE.map((s) => (
           <li key={s.label}>
             <a
               href="#"
-              aria-label={`Compartir en ${s.label}`}
+              aria-label={fill(t.ui.blog.shareOn, { red: s.label })}
               className={`flex size-[clamp(48px,4.2vw,64px)] items-center justify-center rounded-[32px] border transition-transform duration-400 ease-wuality hover:scale-105 ${
                 s.accent
                   ? "border-[rgba(247,255,247,0.4)] bg-[#2f9442]"
@@ -105,7 +106,8 @@ function ShareRail() {
   );
 }
 
-export default function Article({ item, next }: { item: BlogItem; next: BlogItem }) {
+export default function Article({ item, next, lang }: { item: BlogItem; next: BlogItem; lang: Lang }) {
+  const t = getContent(lang);
   if (item.type === "video") {
     return (
       <article className="pb-0 pt-[calc(var(--header-h)+clamp(32px,5.3vw,80px))]">
@@ -126,7 +128,7 @@ export default function Article({ item, next }: { item: BlogItem; next: BlogItem
             href={item.video}
             target="_blank"
             rel="noopener noreferrer"
-            aria-label={`Ver el vídeo: ${item.title}`}
+            aria-label={fill(t.ui.blog.watch, { title: item.title })}
             className="group relative block aspect-[1024/580] w-full overflow-hidden rounded-[clamp(16px,2.1vw,32px)]"
           >
             <Image
@@ -172,7 +174,7 @@ export default function Article({ item, next }: { item: BlogItem; next: BlogItem
         className={`${COL} mt-[clamp(24px,2.6vw,40px)] flex flex-col gap-[clamp(20px,2.6vw,40px)] lg:flex-row lg:items-start lg:gap-10`}
         style={colMax(768)}
       >
-        <ShareRail />
+        <ShareRail t={t} />
 
         <div className="flex flex-1 flex-col items-end gap-[clamp(24px,2.6vw,40px)]">
           <div
@@ -190,10 +192,10 @@ export default function Article({ item, next }: { item: BlogItem; next: BlogItem
           </div>
 
           <Link
-            href={`/blog/${next.slug}/`}
+            href={blogPath(lang, next.slug)}
             className="group flex h-12 items-center justify-center gap-3 rounded-lg border border-bone px-4 py-3 text-[0.875rem] font-bold text-bone transition-colors duration-400 hover:bg-bone/10"
           >
-            {blog.next}
+            {t.blog.next}
             <Image
               src="/media/ui/next-line.svg"
               alt=""

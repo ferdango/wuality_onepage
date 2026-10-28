@@ -3,12 +3,14 @@
 import Image from "@/components/ui/Img";
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useState } from "react";
-import { chat, cookies } from "@/lib/content";
+import { useContent } from "./LangProvider";
+import { fill } from "@/lib/i18n";
 
 export const STORAGE_KEY = "wuality:cookie-consent";
 export const CONSENT_EVENT = "wuality:consent";
 
 export default function FloatingActions() {
+  const { chat, cookies, ui } = useContent();
   const [consent, setConsent] = useState<string | null>("pending");
   const [cookieOpen, setCookieOpen] = useState(false);
   const [teaserOpen, setTeaserOpen] = useState(false);
@@ -57,7 +59,7 @@ export default function FloatingActions() {
       <button
         type="button"
         onClick={() => setCookieOpen((v) => !v)}
-        aria-label="Preferencias de cookies"
+        aria-label={ui.floating.cookies}
         aria-expanded={cookieOpen}
         className="fixed bottom-[clamp(16px,1.67vw,32px)] left-[clamp(16px,1.67vw,32px)] z-50 flex size-[clamp(44px,3.33vw,64px)] items-center justify-center rounded-full bg-bone shadow-xl shadow-black/40 transition-transform duration-400 ease-wuality hover:scale-110"
       >
@@ -105,7 +107,7 @@ export default function FloatingActions() {
           href={chat.href}
           target="_blank"
           rel="noopener noreferrer"
-          aria-label={`Escribir por WhatsApp al ${chat.phone}`}
+          aria-label={fill(ui.floating.whatsapp, { phone: chat.phone })}
           className="relative flex size-[clamp(48px,3.75vw,72px)] items-center justify-center rounded-full bg-[#25d366] shadow-xl shadow-black/40 transition-transform duration-400 ease-wuality hover:scale-110"
         >
           <Image src="/media/ui/wa.svg" alt="" width={48} height={48} className="size-[55%]" />
@@ -127,7 +129,7 @@ export default function FloatingActions() {
             exit={{ opacity: 0, y: 24 }}
             transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
             role="dialog"
-            aria-label="Aviso de cookies"
+            aria-label={ui.floating.banner}
             className="fixed bottom-[clamp(74px,6.5vw,110px)] left-[clamp(16px,1.67vw,32px)] z-50 w-[min(346px,calc(100vw-2rem))] rounded-[20px] bg-[#f7f7f7] p-6 text-left text-[#1a1a1a] shadow-2xl shadow-black/40"
           >
             <Image src="/media/ui/cookie.svg" alt="" width={48} height={48} className="size-10" />
@@ -153,7 +155,9 @@ export default function FloatingActions() {
             </div>
             {consent && (
               <p className="mt-4 text-[12px] text-[#666]">
-                Preferencia guardada: {consent === "accepted" ? "aceptadas" : "rechazadas"}.
+                {fill(ui.floating.saved, {
+                  choice: consent === "accepted" ? ui.floating.accepted : ui.floating.rejected,
+                })}
               </p>
             )}
           </motion.div>

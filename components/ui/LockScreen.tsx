@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "@/components/ui/Img";
+import { useContent } from "../LangProvider";
 
 /**
  * Pantalla del iPhone del hero: el mockup de fondo de pantalla del manual de
@@ -68,10 +71,11 @@ function StatusIcons() {
 }
 
 export default function LockScreen() {
+  const { ui } = useContent();
   return (
     <div
       role="img"
-      aria-label="Pantalla de bloqueo con el fondo de marca de Wuality"
+      aria-label={ui.hero.screen}
       className="absolute inset-0 overflow-hidden bg-black [container-type:size]"
     >
       {/* Fondo de pantalla */}
@@ -131,7 +135,7 @@ export default function LockScreen() {
             22:30
           </span>
           <span className="leading-none text-white/75" style={{ fontSize: dw(0.04), marginTop: dh(0.012) }}>
-            martes, 31 de julio
+            {ui.hero.date}
           </span>
         </div>
 

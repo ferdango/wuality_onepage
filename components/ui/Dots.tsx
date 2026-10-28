@@ -1,5 +1,8 @@
 "use client";
 
+import { useContent } from "../LangProvider";
+import { fill } from "@/lib/i18n";
+
 /** Indicador del diseño: puntos grises y una píldora blanca para el activo. */
 export default function Dots({
   count,
@@ -12,6 +15,7 @@ export default function Dots({
   onSelect?: (i: number) => void;
   className?: string;
 }) {
+  const { ui } = useContent();
   return (
     <div className={`flex items-center justify-center gap-2 ${className}`} role="tablist">
       {Array.from({ length: count }).map((_, i) => {
@@ -22,7 +26,7 @@ export default function Dots({
             type="button"
             role="tab"
             aria-selected={active}
-            aria-label={`Ir al slide ${i + 1}`}
+            aria-label={fill(ui.carousel.goTo, { n: i + 1 })}
             onClick={() => onSelect?.(i)}
             className={`h-2 rounded-full transition-all duration-500 ease-wuality ${
               active ? "w-10 bg-bone" : "w-2 bg-muted/60 hover:bg-muted"

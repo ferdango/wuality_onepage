@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { blog, chat, faq, footer, projects, social, type BlogItem } from "./content";
+import { chat, footer, social, type BlogItem, type projects } from "./content";
+import { blogPath, getContent, localePath, projectPath, type Lang } from "./i18n";
 
 type Project = (typeof projects)[number];
 
@@ -22,14 +23,31 @@ export const site = {
   title: "Wuality — Agencia de transformación digital en Lima, Perú",
   description:
     "Agencia de innovación y tecnología en Lima, Perú: branding, diseño UX/UI, desarrollo web y de apps, estrategia con IA, SEO y paid media. Agenda una reunión.",
-  locale: "es_PE",
-  language: "es-PE",
   email: footer.email,
   phone: chat.phone,
   logo: "/media/brand/wuality-horizontal-red.png",
   ogImage: { url: "/og/wuality.jpg", width: 1200, height: 630, alt: "Wuality — Innovación que conecta" },
   sameAs: social.profiles.map((p) => p.href),
 } as const;
+
+/** Título, descripción e idioma del sitio en cada lengua. */
+export const siteText: Record<Lang, { title: string; description: string; locale: string; language: string; ogAlt: string }> = {
+  es: {
+    title: site.title,
+    description: site.description,
+    locale: "es_PE",
+    language: "es-PE",
+    ogAlt: "Wuality — Innovación que conecta",
+  },
+  en: {
+    title: "Wuality — Digital transformation agency in Lima, Peru",
+    description:
+      "Innovation and technology agency in Lima, Peru: branding, UX/UI design, web and app development, AI-driven strategy, SEO and paid media. Book a meeting.",
+    locale: "en_US",
+    language: "en",
+    ogAlt: "Wuality — Innovation that connects",
+  },
+};
 
 /** URL absoluta de una ruta del sitio ("/blog/x/" → "https://…/wuality_onepage/blog/x/"). */
 export const abs = (path = "/") => `${site.url}${path.startsWith("/") ? path : `/${path}`}`;
@@ -42,10 +60,14 @@ export function clip(text: string, max = 158) {
 }
 
 type PageMeta = {
+  lang: Lang;
   /** Título sin la marca: la plantilla del layout le añade "| Wuality". */
   title?: string;
   description: string;
-  /** Ruta canónica, con barra final (el sitio se exporta con trailingSlash). */
+  /**
+   * Ruta de la página en español, con barra final (el sitio se exporta con
+   * trailingSlash). La del idioma pedido y las alternativas salen de ella.
+   */
   path: string;
   image?: { url: string; width: number; height: number; alt: string };
   type?: "website" | "article";
@@ -56,28 +78,38 @@ type PageMeta = {
  * Metadatos completos de una página. Next combina los del layout y la página
  * clave a clave (sin mezclar el interior), así que una página que define
  * `openGraph` pierde los del layout: por eso aquí se rellena todo cada vez.
+ *
+ * `alternates.languages` son las etiquetas hreflang: cada página apunta a su
+ * versión en el otro idioma, y `x-default` a la española.
  */
-export function pageMeta({ title, description, path, image = site.ogImage, type = "website", article }: PageMeta): Metadata {
-  const fullTitle = title ? `${title} | ${site.name}` : site.title;
+export function pageMeta({ lang, title, description, path, image, type = "website", article }: PageMeta): Metadata {
+  const text = siteText[lang];
+  const img = image ?? { ...site.ogImage, alt: text.ogAlt };
+  const fullTitle = title ? `${title} | ${site.name}` : text.title;
+  const url = localePath(lang, path);
   return {
-    ...(title && { title }),
+    title: title ?? { absolute: text.title },
     description,
-    alternates: { canonical: path },
+    alternates: {
+      canonical: url,
+      languages: { "es-PE": localePath("es", path), en: localePath("en", path), "x-default": localePath("es", path) },
+    },
     openGraph: {
       type,
       siteName: site.name,
-      locale: site.locale,
-      url: path,
+      locale: text.locale,
+      alternateLocale: lang === "es" ? siteText.en.locale : siteText.es.locale,
+      url,
       title: fullTitle,
       description,
-      images: [image],
+      images: [img],
       ...(type === "article" && article),
     },
     twitter: {
       card: "summary_large_image",
       title: fullTitle,
       description,
-      images: [{ url: image.url, alt: image.alt }],
+      images: [{ url: img.url, alt: img.alt }],
     },
   };
 }
@@ -89,7 +121,8 @@ export function pageMeta({ title, description, path, image = site.ogImage, type 
 const ORG_ID = abs("/#organization");
 const SITE_ID = abs("/#website");
 
-export function organization() {
+/** La organización es una sola en los dos idiomas: mismo @id, descripción del idioma de la página. */
+export function organization(lang: Lang = "es") {
   return {
     "@type": "Organization",
     "@id": ORG_ID,
@@ -99,7 +132,7 @@ export function organization() {
     logo: { "@type": "ImageObject", url: abs(site.logo), width: 1300, height: 400 },
     image: abs(site.ogImage.url),
     slogan: site.slogan,
-    description: site.description,
+    description: siteText[lang].description,
     email: site.email,
     telephone: site.phone.replace(/\s+/g, ""),
     address: { "@type": "PostalAddress", addressLocality: "Lima", addressCountry: "PE" },
@@ -109,7 +142,7 @@ export function organization() {
       contactType: "sales",
       email: site.email,
       telephone: site.phone.replace(/\s+/g, ""),
-      availableLanguage: ["es"],
+      availableLanguage: ["es", "en"],
     },
     sameAs: site.sameAs,
   };
@@ -123,45 +156,49 @@ function breadcrumb(items: { name: string; path: string }[]) {
 }
 
 /** Home: la organización, el sitio, la página, la cartera y las preguntas frecuentes. */
-export function homeGraph() {
+export function homeGraph(lang: Lang) {
+  const { projects, faq, ui } = getContent(lang);
+  const text = siteText[lang];
+  const home = abs(localePath(lang, "/"));
   return {
     "@context": "https://schema.org",
     "@graph": [
-      organization(),
+      organization(lang),
       {
         "@type": "WebSite",
         "@id": SITE_ID,
         url: abs("/"),
         name: site.name,
-        description: site.description,
-        inLanguage: site.language,
+        description: siteText.es.description,
+        inLanguage: [siteText.es.language, siteText.en.language],
         publisher: { "@id": ORG_ID },
       },
       {
         "@type": "WebPage",
-        "@id": abs("/#webpage"),
-        url: abs("/"),
-        name: site.title,
-        description: site.description,
-        inLanguage: site.language,
+        "@id": `${home}#webpage`,
+        url: home,
+        name: text.title,
+        description: text.description,
+        inLanguage: text.language,
         isPartOf: { "@id": SITE_ID },
         about: { "@id": ORG_ID },
         primaryImageOfPage: { "@type": "ImageObject", url: abs(site.ogImage.url) },
       },
       {
         "@type": "ItemList",
-        "@id": abs("/#work"),
-        name: "Nuestros proyectos",
+        "@id": `${home}#work`,
+        name: ui.projects.title,
         itemListElement: projects.map((p, i) => ({
           "@type": "ListItem",
           position: i + 1,
           name: p.name,
-          url: abs(`/proyectos/${p.slug}/`),
+          url: abs(projectPath(lang, p.slug)),
         })),
       },
       {
         "@type": "FAQPage",
-        "@id": abs("/#faq"),
+        "@id": `${home}#faq`,
+        inLanguage: text.language,
         mainEntity: faq.items.map((it) => ({
           "@type": "Question",
           name: it.q,
@@ -176,29 +213,38 @@ export function homeGraph() {
 /* Casos y artículos                                                         */
 /* ------------------------------------------------------------------------ */
 
-export function projectTitle(p: Project) {
+const CRUMBS: Record<Lang, { home: string; projects: string; blog: string }> = {
+  es: { home: "Inicio", projects: "Proyectos", blog: "Blog" },
+  en: { home: "Home", projects: "Work", blog: "Blog" },
+};
+
+export function projectTitle(p: Project, lang: Lang) {
   // El sufijo "| Wuality" suma 10: se añade el segundo servicio sólo si cabe en ~60.
-  const two = `Caso ${p.name}: ${p.tags[0]} y ${p.tags[1]}`;
-  return two.length <= 50 ? two : `Caso ${p.name}: ${p.tags[0]}`;
+  const [a, b] = p.tags;
+  const two = lang === "es" ? `Caso ${p.name}: ${a} y ${b}` : `${p.name} case study: ${a} and ${b}`;
+  if (two.length <= 50) return two;
+  return lang === "es" ? `Caso ${p.name}: ${a}` : `${p.name} case study: ${a}`;
 }
 
 export function projectDescription(p: Project) {
   return clip(`${p.headline}. ${p.chapters[0].body}`);
 }
 
-export function projectGraph(p: Project) {
+export function projectGraph(p: Project, lang: Lang) {
+  const url = abs(projectPath(lang, p.slug));
+  const home = localePath(lang, "/");
   return {
     "@context": "https://schema.org",
     "@graph": [
       {
         "@type": "CreativeWork",
-        "@id": abs(`/proyectos/${p.slug}/#caso`),
+        "@id": `${url}#caso`,
         name: `${p.name}: ${p.headline}`,
         headline: p.headline,
         description: projectDescription(p),
-        url: abs(`/proyectos/${p.slug}/`),
+        url,
         image: abs(`/og/${p.slug}.jpg`),
-        inLanguage: site.language,
+        inLanguage: siteText[lang].language,
         genre: p.tags.join(", "),
         keywords: [...p.tags, p.sector].join(", "),
         creator: { "@id": ORG_ID },
@@ -210,11 +256,11 @@ export function projectGraph(p: Project) {
         },
       },
       breadcrumb([
-        { name: "Inicio", path: "/" },
-        { name: "Proyectos", path: "/#work" },
-        { name: p.name, path: `/proyectos/${p.slug}/` },
+        { name: CRUMBS[lang].home, path: home },
+        { name: CRUMBS[lang].projects, path: `${home}#work` },
+        { name: p.name, path: projectPath(lang, p.slug) },
       ]),
-      organization(),
+      organization(lang),
     ],
   };
 }
@@ -231,16 +277,19 @@ export function blogImage(item: BlogItem) {
   return { url: `/og/${file}`, width: 1200, height: 630, alt: item.title };
 }
 
-export function blogDescription(item: BlogItem) {
+export function blogDescription(item: BlogItem, lang: Lang) {
+  if ("lead" in item && item.lead) return clip(item.lead);
   return clip(
-    "lead" in item && item.lead
-      ? item.lead
-      : `${item.title}: episodio de ${item.category} en el blog de Wuality sobre transformación digital, diseño y tecnología.`,
+    lang === "es"
+      ? `${item.title}: episodio de ${item.category} en el blog de Wuality sobre transformación digital, diseño y tecnología.`
+      : `${item.title}: a ${item.category} episode on the Wuality blog about digital transformation, design and technology.`,
   );
 }
 
-export function articleGraph(item: BlogItem) {
-  const url = abs(`/blog/${item.slug}/`);
+export function articleGraph(item: BlogItem, lang: Lang) {
+  const { blog } = getContent(lang);
+  const url = abs(blogPath(lang, item.slug));
+  const home = localePath(lang, "/");
   return {
     "@context": "https://schema.org",
     "@graph": [
@@ -248,23 +297,23 @@ export function articleGraph(item: BlogItem) {
         "@type": "BlogPosting",
         "@id": `${url}#articulo`,
         headline: item.title,
-        description: blogDescription(item),
+        description: blogDescription(item, lang),
         url,
         mainEntityOfPage: url,
         image: abs(blogImage(item).url),
         datePublished: isoDate(item.publishedAt),
-        inLanguage: site.language,
+        inLanguage: siteText[lang].language,
         articleSection: item.category,
         author: { "@type": "Person", name: item.author.name },
         publisher: { "@id": ORG_ID },
-        isPartOf: { "@type": "Blog", name: blog.title, url: abs("/#blog") },
+        isPartOf: { "@type": "Blog", name: blog.title, url: abs(`${home}#blog`) },
       },
       breadcrumb([
-        { name: "Inicio", path: "/" },
-        { name: "Blog", path: "/#blog" },
-        { name: item.title, path: `/blog/${item.slug}/` },
+        { name: CRUMBS[lang].home, path: home },
+        { name: CRUMBS[lang].blog, path: `${home}#blog` },
+        { name: item.title, path: blogPath(lang, item.slug) },
       ]),
-      organization(),
+      organization(lang),
     ],
   };
 }

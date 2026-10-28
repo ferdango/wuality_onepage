@@ -2,9 +2,10 @@
 
 import Image from "@/components/ui/Img";
 import { motion, useReducedMotion } from "motion/react";
-import { clients } from "@/lib/content";
+import { useContent } from "./LangProvider";
 
 export default function Clients() {
+  const { clients } = useContent();
   const reduced = useReducedMotion();
 
   return (

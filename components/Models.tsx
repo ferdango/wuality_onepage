@@ -3,9 +3,10 @@
 import Image from "@/components/ui/Img";
 import { motion, useMotionTemplate, useReducedMotion, useScroll, useTransform } from "motion/react";
 import { useRef } from "react";
-import { models } from "@/lib/content";
+import { useContent } from "./LangProvider";
 
 export default function Models() {
+  const { models } = useContent();
   const claimRef = useRef<HTMLDivElement>(null);
   const stackRef = useRef<HTMLDivElement>(null);
   const reduced = useReducedMotion();
@@ -52,12 +53,12 @@ export default function Models() {
             "--shift": reduced ? 0 : shift,
             /**
              * 220px sobre el lienzo de 1920 del Figma, es decir 11.458vw.
-             * El segundo `min` acota el tamaño al ancho disponible: "only one
-             * effect" es la línea más larga (~6em en Chau Philomene One) y sin
-             * ese tope se sale de pantalla en móvil, donde el nodo del Figma
-             * usa una variante más estrecha que la de Google Fonts.
+             * El segundo `min` acota el tamaño al ancho disponible con `fit`,
+             * el ancho en em de la línea más larga de cada idioma ("only one
+             * effect" ~6em; "un mismo compromiso" ~9em en Chau Philomene One).
+             * Sin ese tope se sale de pantalla en móvil.
              */
-            "--claim": "min(clamp(4rem, 11.458vw, 13.75rem), calc((100vw - 2 * var(--gutter)) / 6))",
+            "--claim": `min(clamp(4rem, 11.458vw, 13.75rem), calc((100vw - 2 * var(--gutter)) / ${models.fit}))`,
           } as React.CSSProperties
         }
       >

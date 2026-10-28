@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
 import Image from "./Img";
+import { useContent } from "../LangProvider";
 
 /**
  * Logotipo horizontal de marca, versión roja sobre fondo oscuro. Sale del
@@ -7,8 +10,9 @@ import Image from "./Img";
  * para que el degradado de la esfera se apoye limpio sobre cualquier fondo.
  */
 export default function Logo({ href = "#top" }: { href?: string }) {
+  const { ui } = useContent();
   return (
-    <Link href={href} className="group flex items-center" aria-label="Wuality — inicio">
+    <Link href={href} className="group flex items-center" aria-label={ui.header.home}>
       <Image
         src="/media/brand/wuality-horizontal-red.png"
         alt="Wuality"

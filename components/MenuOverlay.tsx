@@ -3,12 +3,11 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useState } from "react";
 import Logo from "./ui/Logo";
-import { nav } from "@/lib/content";
 import { withBase } from "@/lib/href";
+import { useContent } from "./LangProvider";
 
-/** Orden del menú overlay en el Figma (distinto al del header). */
-const menuOrder = ["About Wuality", "Services", "Work", "Reviews", "Blog"] as const;
-const items = menuOrder.map((label) => nav.find((n) => n.label === label)!);
+/** Orden del menú overlay en el Figma (distinto al del header), por ancla: el texto cambia con el idioma. */
+const menuOrder = ["#edu", "#services", "#work", "#reviews", "#blog"];
 
 export default function MenuOverlay({
   open,
@@ -20,6 +19,8 @@ export default function MenuOverlay({
   /** Igual que en Header: desde una ruta interna los anclajes vuelven al home. */
   linkBase?: string;
 }) {
+  const { nav, ui } = useContent();
+  const items = menuOrder.map((href) => nav.find((n) => n.href === href)!);
   const [hovered, setHovered] = useState<number | null>(0);
 
   // Bloquea el scroll del body y cierra con Escape.
@@ -45,14 +46,14 @@ export default function MenuOverlay({
           transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
           role="dialog"
           aria-modal="true"
-          aria-label="Menú principal"
+          aria-label={ui.menu.label}
         >
           <div className="shell flex h-[var(--header-h)] items-center justify-between pt-2">
-            <Logo />
+            <Logo href={linkBase || "#top"} />
             <button
               type="button"
               onClick={onClose}
-              aria-label="Cerrar menú"
+              aria-label={ui.menu.close}
               className="flex size-[clamp(40px,2.917vw,56px)] items-center justify-center rounded-full border border-bone/60 text-bone transition-colors duration-300 hover:border-red hover:bg-red hover:text-white"
             >
               <svg viewBox="0 0 24 24" className="size-[45%]" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
@@ -67,7 +68,7 @@ export default function MenuOverlay({
           >
             {items.map((item, i) => (
               <motion.a
-                key={item.label}
+                key={item.href}
                 href={withBase(`${linkBase}${item.href}`)}
                 onClick={onClose}
                 onMouseEnter={() => setHovered(i)}

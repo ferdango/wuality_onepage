@@ -3,16 +3,17 @@
 import Image from "@/components/ui/Img";
 import Carousel from "./ui/Carousel";
 import SectionTitle from "./ui/SectionTitle";
-import { partners } from "@/lib/content";
+import { useContent } from "./LangProvider";
 
 export default function Partners() {
+  const { partners, ui } = useContent();
   return (
     <section className="bg-ink py-[calc(var(--section-y)*1.4)]">
-      <SectionTitle className="mb-[clamp(2rem,3.3vw,4rem)]">Partners digitales</SectionTitle>
+      <SectionTitle className="mb-[clamp(2rem,3.3vw,4rem)]">{ui.partners.title}</SectionTitle>
 
       <div>
         <Carousel
-          ariaLabel="Partners digitales de Wuality"
+          ariaLabel={ui.partners.label}
           railClassName="px-[var(--gutter)] scroll-pl-[var(--gutter)]"
           autoPlayMs={4200}
           slideClassName="w-[70%] sm:w-[45%] lg:w-[calc(20%-1.2rem)]"

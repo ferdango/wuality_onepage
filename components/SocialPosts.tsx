@@ -7,9 +7,11 @@ import Reveal from "./ui/Reveal";
 import SectionTitle from "./ui/SectionTitle";
 import useDragScroll from "./ui/useDragScroll";
 import { CONSENT_EVENT, STORAGE_KEY } from "./FloatingActions";
-import { social, type SocialNetwork } from "@/lib/content";
+import { useContent } from "./LangProvider";
+import { social as socialEs, type SocialNetwork } from "@/lib/content";
+import { fill } from "@/lib/i18n";
 
-type Profile = (typeof social.profiles)[number];
+type Profile = (typeof socialEs.profiles)[number];
 
 type Post = {
   network: SocialNetwork;
@@ -43,7 +45,8 @@ function toPost(url: string): Post | null {
   return null;
 }
 
-const profileOf = (network: SocialNetwork) => social.profiles.find((p) => p.network === network)!;
+// Nombre e icono de cada red: iguales en los dos idiomas.
+const profileOf = (network: SocialNetwork) => socialEs.profiles.find((p) => p.network === network)!;
 const withNetwork = (text: string, network: SocialNetwork) => text.replace("{red}", profileOf(network).name);
 
 /**
@@ -167,6 +170,7 @@ function useInstagramHeight(frame: HTMLIFrameElement | null) {
 }
 
 function PostCard({ post, accepted }: { post: Post; accepted: boolean }) {
+  const { social, ui } = useContent();
   const profile = profileOf(post.network);
   const [asked, setAsked] = useState(false);
   const [frame, setFrame] = useState<HTMLIFrameElement | null>(null);
@@ -200,7 +204,7 @@ function PostCard({ post, accepted }: { post: Post; accepted: boolean }) {
           <iframe
             ref={setFrame}
             src={post.embed}
-            title={`Publicación de ${profile.handle} en ${profile.name}`}
+            title={fill(ui.social.post, { handle: profile.handle, red: profile.name })}
             loading="lazy"
             allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
             allowFullScreen
@@ -231,6 +235,7 @@ function PostCard({ post, accepted }: { post: Post; accepted: boolean }) {
 }
 
 function Header() {
+  const { social } = useContent();
   return (
     <>
       <SectionTitle>{social.title}</SectionTitle>
@@ -251,6 +256,7 @@ function Header() {
  * diminutos en portátiles de 720px.
  */
 function PostsRail({ posts, accepted }: { posts: Post[]; accepted: boolean }) {
+  const { ui } = useContent();
   const rail = useRef<HTMLUListElement>(null);
   const [edges, setEdges] = useState({ start: true, end: true });
   useDragScroll(rail);
@@ -284,7 +290,7 @@ function PostsRail({ posts, accepted }: { posts: Post[]; accepted: boolean }) {
 
   return (
     <div className="mt-[clamp(2rem,3.3vw,4rem)]">
-      <div role="region" aria-roledescription="carrusel" aria-label="Últimas publicaciones en TikTok e Instagram">
+      <div role="region" aria-roledescription={ui.carousel.role} aria-label={ui.social.rail}>
         <ul
           ref={rail}
           className="no-scrollbar flex cursor-grab snap-x snap-mandatory scroll-px-[var(--gutter)] items-start gap-4 overflow-x-auto overscroll-x-contain px-[var(--gutter)] active:cursor-grabbing lg:gap-6"
@@ -305,7 +311,7 @@ function PostsRail({ posts, accepted }: { posts: Post[]; accepted: boolean }) {
               type="button"
               onClick={() => step(dir)}
               disabled={dir < 0 ? edges.start : edges.end}
-              aria-label={dir < 0 ? "Posts anteriores" : "Posts siguientes"}
+              aria-label={dir < 0 ? ui.social.prev : ui.social.next}
               className="grid size-12 place-items-center rounded-full border border-bone/30 text-bone transition-colors duration-300 hover:border-blue hover:text-blue disabled:pointer-events-none disabled:opacity-30"
             >
               <Arrow className={`size-5 ${dir < 0 ? "rotate-180" : ""}`} />
@@ -318,6 +324,7 @@ function PostsRail({ posts, accepted }: { posts: Post[]; accepted: boolean }) {
 }
 
 export default function SocialPosts() {
+  const { social } = useContent();
   const accepted = useCookiesAccepted();
   const posts = social.posts.map(toPost).filter((p): p is Post => p !== null);
 

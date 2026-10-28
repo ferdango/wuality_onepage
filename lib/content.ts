@@ -1,20 +1,26 @@
 /**
- * Contenido de la one-page, tal como está escrito en el Figma "Wuality Web"
- * (página "UI Desktop", frames 9:2 desktop y 1573:153 mobile).
+ * Contenido de la one-page en español: es el diccionario que define la forma
+ * de todos los textos. `content.en.ts` tiene la versión en inglés con la misma
+ * forma (el tipo lo exige) y `lib/i18n.ts` elige uno u otro según la ruta.
+ *
+ * La base es el Figma "Wuality Web" (página "UI Desktop", frames 9:2 desktop y
+ * 1573:153 mobile); servicios, modelos y casos salen del Dossier Comercial 2026.
  */
 
-export const nav = [
-  { label: "About Wuality", short: "About", href: "#edu" },
-  { label: "Work", short: "Work", href: "#work" },
-  { label: "Services", short: "Services", href: "#services" },
-  { label: "Reviews", short: "Reviews", href: "#reviews" },
-  { label: "Blog", short: "Blog", href: "#blog" },
-] as const;
+export type NavItem = { label: string; short: string; href: string };
 
-export const languages = [
-  { code: "ES", name: "Español - América Latina", region: "Perú", flag: "/media/ui/flag-es.png" },
-  { code: "EN", name: "English", region: "USA", flag: "/media/ui/flag-us.svg" },
-  { code: "RU", name: "Ruso", region: "Russian", flag: "/media/ui/flag-ru.svg" },
+export const nav: NavItem[] = [
+  { label: "Sobre Wuality", short: "Nosotros", href: "#edu" },
+  { label: "Proyectos", short: "Proyectos", href: "#work" },
+  { label: "Servicios", short: "Servicios", href: "#services" },
+  { label: "Reseñas", short: "Reseñas", href: "#reviews" },
+  { label: "Blog", short: "Blog", href: "#blog" },
+];
+
+/** Idiomas del selector. `lang` es el de la ruta (ver lib/i18n.ts). */
+export const languages: { lang: "es" | "en"; code: string; name: string; region: string; flag: string }[] = [
+  { lang: "es", code: "ES", name: "Español - América Latina", region: "Perú", flag: "/media/ui/flag-es.png" },
+  { lang: "en", code: "EN", name: "English", region: "USA", flag: "/media/ui/flag-us.svg" },
 ];
 
 export const hero = {
@@ -22,20 +28,21 @@ export const hero = {
   words: ["Innovamos", "Conectamos"],
 };
 
+/** Nombres de servicio en inglés también en español, como en el dossier; el detalle va traducido. */
 export const services = [
   {
     title: "Brand Identity",
-    items: "Culture / Visual communication / Identity / Value proposition",
+    items: "Cultura / Comunicación visual / Identidad / Propuesta de valor",
     image: "/media/work/services-nike.jpg",
   },
   {
     title: "Create Digital Products",
-    items: "UX-UI / Product management / Front-End /Back-End / Apps",
+    items: "UX/UI / Product management / Front-end / Back-end / Apps",
     image: "/media/work/proj-nu.jpg",
   },
   {
     title: "Strategy & AI-Driven Insights",
-    items: "Accesibility / Customer journey / Research / Trends",
+    items: "Accesibilidad / Customer journey / Research / Tendencias",
     image: "/media/work/proj-backus.jpg",
   },
   {
@@ -256,7 +263,7 @@ export const methodology = [
     fig: "esfera-amarilla",
     tagColor: "#fbbd1d",
     tagText: "#05080a",
-    title: "User-centric design",
+    title: "Diseño centrado en el usuario",
     titleColor: "#fbbd1d",
     body: "Ponemos a tus usuarios en el centro de todo lo que creamos",
     pos: { top: "15%", left: "13%" },
@@ -282,7 +289,7 @@ export const methodology = [
     pos: { bottom: "7%", left: "13%" },
   },
   {
-    tag: "Kayzen",
+    tag: "Kaizen",
     fig: "cinta-magenta",
     // Magenta y no verde: la paleta de figuras de la marca no tiene verde, y el
     // nodo del diagrama tiene que coincidir con el color de su tarjeta.
@@ -354,20 +361,26 @@ export const clients = [
   { name: "Bialy", logo: "/media/logos/c-bialy.svg" },
 ];
 
+/** Titular y textos del dossier (p. 6, "Dos modelos, un mismo compromiso"). */
 export const models = {
-  line1: "Two models",
-  line2: "only one effect",
+  line1: "Dos modelos",
+  line2: "un mismo compromiso",
+  /**
+   * Ancho de la línea más larga, en múltiplos del tamaño de letra: el titular
+   * se acota a (ancho útil / fit) para que nunca se salga de la pantalla.
+   */
+  fit: 9,
   cards: [
     {
       title: "Partners Model",
-      body: "Do you have specific project requirements? Try us on for size with a scope-based project built on a defined scope of work.",
+      body: "Nos integramos como tu equipo digital extendido: un roadmap continuo con prioridades que se ajustan a tu negocio.",
       cta: "Descubre más",
       bg: "#007afc",
       image: "/media/work/models-team.jpg",
     },
     {
       title: "Project-based Model",
-      body: "Do you have specific project requirements? Try us on for size with a scope-based project built on a defined scope of work.",
+      body: "Un alcance definido, con cronograma, entregables e inversión cerrados desde el inicio.",
       cta: "Descubre más",
       bg: "#095c50",
       image: "/media/work/models-team.jpg",
@@ -500,7 +513,9 @@ export const meeting = {
  * Es copia de maqueta, como el lorem ipsum del FAQ: los cinco posts comparten
  * el mismo cuerpo hasta que haya textos reales.
  */
-const articleDemoBody = [
+export type ArticleBlock = { type: "p" | "h2"; text: string };
+
+const articleDemoBody: ArticleBlock[] = [
   {
     type: "p",
     text: "Sin lugar a dudas, el fraude financiero es una práctica que amenaza las organizaciones bancarias desde hace décadas y, sin embargo, evoluciona constantemente obligando a las empresas a desarrollarse con ellas para fortalecer las vulnerabilidades, procesos e, incluso la fuerza humana para sobrellevar estos riesgos.",
@@ -518,9 +533,9 @@ const articleDemoBody = [
     type: "p",
     text: "Es una práctica fraudulenta que perjudica a las instituciones financieras y suele ser difícil de detectar sin un sistema de monitoreo avanzado.",
   },
-] as const;
+];
 
-const articleAuthor = { name: "José Quinteros", avatar: "/media/people/a1.jpg" } as const;
+const articleAuthor = { name: "José Quinteros", avatar: "/media/people/a1.jpg" };
 
 const articleLead =
   "Conoce cómo el fraude financiero impacta a personas y empresas y cómo un sistema tecnológico puede mitigar este riesgo efectivamente en tu negocio.";
@@ -647,4 +662,79 @@ export const cookies = {
   link: "Administrar las cookies y obtener más información",
   accept: "Aceptar",
   reject: "Rechazar",
+};
+
+/**
+ * Textos de interfaz: botones, etiquetas y avisos que no son contenido de una
+ * sección. `{nombre}` se rellena con `fill()` (lib/i18n.ts).
+ */
+export const ui = {
+  header: { home: "Wuality — inicio", openMenu: "Abrir menú", language: "Idioma y región" },
+  menu: { label: "Menú principal", close: "Cerrar menú" },
+  hero: { screen: "Pantalla de bloqueo con el fondo de marca de Wuality", date: "martes, 31 de julio" },
+  services: { title: "Lo que hacemos", cta: "Consulta aquí" },
+  projects: { title: "Nuestros proyectos", open: "Ver el caso de {name}" },
+  partners: { title: "Partners digitales", label: "Partners digitales de Wuality" },
+  methodology: {
+    title: "¿Cómo lo logramos?",
+    cycle: "Ciclo de trabajo iterativo de Wuality. Arrástralo o usa las flechas para girarlo.",
+  },
+  reviews: { label: "Opiniones de clientes" },
+  blog: {
+    label: "Artículos y episodios de Wuality",
+    related: "Artículos relacionados",
+    shareOn: "Compartir en {red}",
+    watch: "Ver el vídeo: {title}",
+    youtube: "YouTube",
+  },
+  social: {
+    rail: "Últimas publicaciones en TikTok e Instagram",
+    post: "Publicación de {handle} en {red}",
+    prev: "Posts anteriores",
+    next: "Posts siguientes",
+  },
+  carousel: { role: "carrusel", slide: "{n} de {total}", goTo: "Ir al slide {n}" },
+  caseStudy: { services: "Servicios", client: "Cliente", sector: "Sector", web: "Web", next: "Siguiente caso" },
+  meeting: {
+    platform: "Plataforma para la reunión",
+    continue: "Continuar",
+    back: "volver",
+    dial: "Prefijo del país",
+    name: "Nombres y apellidos",
+    phone: "Celular",
+    email: "Correo electrónico",
+    date: "Fecha de la reunión",
+    time: "Hora de la reunión",
+    hintMeet: "Te abriremos Google Calendar con la reunión lista para guardar.",
+    hintZoom: "Te enviaremos el enlace de Zoom a tu correo.",
+    hintZone: "Hora de tu zona horaria.",
+    privacy: "He leído y acepto la Política de Privacidad y protección de datos*",
+    privacyError: "Necesitamos que aceptes la Política de Privacidad para continuar.",
+    sendError: "No pudimos enviar tu solicitud. Escríbenos a {inbox} y la agendamos contigo.",
+    sending: "Enviando…",
+    submitMeet: "Agendar en Google Calendar",
+    submitZoom: "Quiero una reunión",
+    bookingTitle: "Agenda una reunión con Wuality en Google Calendar",
+    bookingOpen: "Abrir la agenda en Google Calendar",
+    done: "¡Listo!",
+    doneMeet: "Te abrimos Google Calendar con la reunión del {date} a las {time}. Guárdala para que nos llegue la invitación.",
+    openCalendar: "Abrir Google Calendar",
+    doneZoom: "Recibimos tu solicitud para el {date} a las {time}. Te enviaremos el enlace de Zoom a {email}.",
+    again: "Agendar otra",
+    eventTitle: "Reunión con Wuality — {name}",
+    eventDetails: "Primera reunión solicitada desde la web de Wuality.",
+    eventName: "Nombre",
+    eventPhone: "Celular",
+    eventEmail: "Correo",
+    /** Idioma de las fechas legibles ("martes, 30 de septiembre de 2026"). */
+    dateLocale: "es",
+  },
+  floating: {
+    cookies: "Preferencias de cookies",
+    banner: "Aviso de cookies",
+    whatsapp: "Escribir por WhatsApp al {phone}",
+    saved: "Preferencia guardada: {choice}.",
+    accepted: "aceptadas",
+    rejected: "rechazadas",
+  },
 };

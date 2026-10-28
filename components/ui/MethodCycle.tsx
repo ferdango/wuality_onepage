@@ -4,6 +4,7 @@ import Image from "@/components/ui/Img";
 import { useReducedMotion } from "motion/react";
 import { useCallback, useEffect, useRef } from "react";
 import { FIGURE_SIZE } from "@/lib/figures";
+import { useContent } from "../LangProvider";
 
 /**
  * Normaliza un incremento de ángulo al rango (-180, 180]. Sin esto, cruzar el
@@ -48,6 +49,7 @@ export default function MethodCycle({
   /** Figura resaltada; las demás se apagan. */
   activeFig?: string;
 }) {
+  const { ui } = useContent();
   const wheel = useRef<HTMLDivElement>(null);
   const angle = useRef(0);
   const velocity = useRef(0);
@@ -186,7 +188,7 @@ export default function MethodCycle({
     <div
       ref={wheel}
       role="img"
-      aria-label="Ciclo de trabajo iterativo de Wuality. Arrástralo o usa las flechas para girarlo."
+      aria-label={ui.methodology.cycle}
       tabIndex={0}
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}

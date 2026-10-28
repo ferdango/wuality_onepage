@@ -1,7 +1,7 @@
 import Image from "@/components/ui/Img";
 import BrandPattern, { type Piece } from "./ui/BrandPattern";
 import Reveal from "./ui/Reveal";
-import { footer } from "@/lib/content";
+import { getContent, type Lang } from "@/lib/i18n";
 
 /**
  * Las figuras viven sólo en los 108px del padding inferior, no por todo el
@@ -19,7 +19,8 @@ const FOOTER_PATTERN: Piece[] = [
   { fig: "cinta-fria", x: 92, y: 48, w: 9, cap: 72, rotate: 10, opacity: 0.5 },
 ];
 
-export default function Footer() {
+export default function Footer({ lang }: { lang: Lang }) {
+  const { footer } = getContent(lang);
   return (
     <footer className="relative overflow-hidden bg-surface pb-[108px]">
       <BrandPattern className="top-auto h-[108px]" pieces={FOOTER_PATTERN} />
