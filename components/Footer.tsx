@@ -1,8 +1,9 @@
+import Link from "next/link";
 import Image from "@/components/ui/Img";
 import BrandPattern, { type Piece } from "./ui/BrandPattern";
 import Reveal from "./ui/Reveal";
 import CookieSettingsButton from "./CookieSettingsButton";
-import { fill, getContent, type Lang } from "@/lib/i18n";
+import { fill, getContent, privacyPath, type Lang } from "@/lib/i18n";
 
 /**
  * Las figuras viven sólo en los 108px del padding inferior, no por todo el
@@ -21,7 +22,7 @@ const FOOTER_PATTERN: Piece[] = [
 ];
 
 export default function Footer({ lang }: { lang: Lang }) {
-  const { footer } = getContent(lang);
+  const { footer, company } = getContent(lang);
   return (
     <footer className="relative overflow-hidden bg-surface pb-[108px]">
       <BrandPattern className="top-auto h-[108px]" pieces={FOOTER_PATTERN} />
@@ -73,7 +74,7 @@ export default function Footer({ lang }: { lang: Lang }) {
       </div>
 
       <div className="shell relative mt-[clamp(28px,2.1vw,40px)] flex flex-col-reverse items-center gap-4 text-center lg:flex-row lg:justify-between lg:text-left">
-        <p className="text-[length:var(--fs-xs)] text-muted">{fill(footer.legal, { year: new Date().getFullYear() })}</p>
+        <p className="text-[length:var(--fs-xs)] text-muted">{fill(footer.legal, { year: new Date().getFullYear(), ruc: company.ruc })}</p>
         <div className="flex flex-wrap items-center justify-center gap-[clamp(16px,1.46vw,28px)] text-[length:var(--fs-xs)]">
           <a href={`mailto:${footer.email}`} className="text-bone transition-opacity duration-300 hover:opacity-70">
             {footer.email}
@@ -82,10 +83,9 @@ export default function Footer({ lang }: { lang: Lang }) {
             label={footer.cookies}
             className="text-muted transition-colors duration-300 hover:text-bone"
           />
-          {/* La política de privacidad aún no tiene página (pendiente en el README). */}
-          <a href="#" className="text-muted transition-colors duration-300 hover:text-bone">
+          <Link href={privacyPath(lang)} className="text-muted transition-colors duration-300 hover:text-bone">
             {footer.privacy}
-          </a>
+          </Link>
         </div>
       </div>
     </footer>

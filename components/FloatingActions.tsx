@@ -1,10 +1,11 @@
 "use client";
 
 import Image from "@/components/ui/Img";
+import Link from "next/link";
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useState } from "react";
-import { useContent } from "./LangProvider";
-import { fill } from "@/lib/i18n";
+import { useContent, useLang } from "./LangProvider";
+import { fill, privacyPath } from "@/lib/i18n";
 
 export const STORAGE_KEY = "wuality:cookie-consent";
 export const CONSENT_EVENT = "wuality:consent";
@@ -13,6 +14,7 @@ export const OPEN_COOKIES_EVENT = "wuality:open-cookies";
 
 export default function FloatingActions() {
   const { chat, cookies, ui } = useContent();
+  const lang = useLang();
   const [consent, setConsent] = useState<string | null>("pending");
   const [cookieOpen, setCookieOpen] = useState(false);
   const [teaserOpen, setTeaserOpen] = useState(false);
@@ -158,6 +160,9 @@ export default function FloatingActions() {
           >
             <Image src="/media/ui/cookie.svg" alt="" width={48} height={48} className="size-10" />
             <p className="mt-5 text-[15px] leading-relaxed">{cookies.body}</p>
+            <Link href={`${privacyPath(lang)}#cookies`} className="mt-3 inline-block text-[15px] text-[#0b5cad] underline">
+              {cookies.more}
+            </Link>
             <div className="mt-6 flex gap-3">
               <button
                 type="button"

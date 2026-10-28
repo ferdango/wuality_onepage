@@ -255,12 +255,17 @@ export const projects = [
   },
 ];
 
+/**
+ * Logos de partners en blanco, sobre transparente y sin margen (Atlassian es el
+ * SVG oficial). `w` y `h` son su tamaño real: con ellos Partners.tsx iguala el
+ * peso visual de logos muy alargados y de logos casi cuadrados.
+ */
 export const partners = [
-  { name: "Atlassian", logo: "/media/logos/p-atlassian.png" },
-  { name: "Meta Business Partner", logo: "/media/logos/p-meta.png" },
-  { name: "WordPress VIP Silver Agency Partner", logo: "/media/logos/p-wpvip.png" },
-  { name: "Google Cloud", logo: "/media/logos/p-googlecloud.png" },
-  { name: "Spotify Advertising Certified Partner", logo: "/media/logos/p-spotify.png" },
+  { name: "Atlassian", logo: "/media/logos/p-atlassian.svg", w: 532, h: 66 },
+  { name: "Meta Business Partner", logo: "/media/logos/p-meta.png", w: 691, h: 238 },
+  { name: "WordPress VIP Silver Agency Partner", logo: "/media/logos/p-wpvip.png", w: 709, h: 259 },
+  { name: "Google Cloud", logo: "/media/logos/p-googlecloud.png", w: 496, h: 78 },
+  { name: "Spotify Advertising Certified Partner", logo: "/media/logos/p-spotify.png", w: 698, h: 186 },
 ];
 
 export const methodology = [
@@ -424,9 +429,6 @@ export const clients = [
   { name: "KingBuilder", logo: "/media/logos/c-kingbuilder.png" },
   { name: "TEC & SEG", logo: "/media/logos/c-tec-seg.png" },
   { name: "IEP Eusebio Arróniz", logo: "/media/logos/c-eusebio.svg" },
-  { name: "Civitatis", logo: "/media/logos/c-civitatis.png" },
-  { name: "Backus", logo: "/media/logos/c-backus.png" },
-  { name: "Verisure", logo: "/media/logos/c-verisure.png" },
   { name: "Entel", logo: "/media/logos/c-entel.svg" },
   { name: "Fishbox", logo: "/media/logos/c-fishbox.svg" },
   { name: "Sodel", logo: "/media/logos/c-sodel.svg" },
@@ -597,6 +599,16 @@ export const blog = {
   related: "Más ideas para ti",
 };
 
+/**
+ * Datos de la empresa: razón social según SUNARP, nombre comercial y RUC. Los
+ * usan el pie, la política de privacidad y los datos estructurados.
+ */
+export const company = {
+  legalName: "WUALITY S.A.C.",
+  tradeName: "Wuality Agency",
+  ruc: "20607495743",
+};
+
 export const footer = {
   name: "Wuality: Agencia de Innovación & Tecnología",
   /**
@@ -622,7 +634,7 @@ export const footer = {
   ],
   email: "hola@wuality.agency",
   /** `{year}` es el año del build: así el pie no se queda atrás. */
-  legal: "Wuality Agency © {year} Todos los derechos reservados",
+  legal: "Wuality Agency © {year} · RUC {ruc} · Todos los derechos reservados",
   cookies: "Cookies",
   privacy: "Privacidad",
   socials: [
@@ -647,6 +659,7 @@ export const cookies = {
    * posts", que traen sus propias cookies. No hay analítica ni publicidad.
    */
   body: "Usamos el almacenamiento de tu navegador para que la web funcione y recuerde tu elección. Si aceptas, también cargaremos las publicaciones de TikTok e Instagram, que pueden usar sus propias cookies.",
+  more: "Más información",
   accept: "Aceptar",
   reject: "Rechazar",
 };
@@ -697,7 +710,9 @@ export const ui = {
     hintMeet: "Te abriremos Google Calendar con la reunión lista para guardar.",
     hintZoom: "Te enviaremos el enlace de Zoom a tu correo.",
     hintZone: "Hora de tu zona horaria.",
-    privacy: "He leído y acepto la Política de Privacidad y protección de datos*",
+    /** `{link}` es el enlace a la política (`privacyLink`), que se abre en otra pestaña. */
+    privacy: "He leído y acepto la {link}*",
+    privacyLink: "Política de Privacidad y protección de datos",
     privacyError: "Necesitamos que aceptes la Política de Privacidad para continuar.",
     sendError: "No pudimos enviar tu solicitud. Escríbenos a {inbox} y la agendamos contigo.",
     sending: "Enviando…",

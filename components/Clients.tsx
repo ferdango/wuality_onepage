@@ -10,23 +10,26 @@ export default function Clients() {
 
   return (
     <section className="bg-ink pb-[calc(var(--section-y)*1.4)]">
-      {/* Dos columnas en móvil y cinco en desktop: entran todos sin scroll lateral. */}
-      <div className="shell grid grid-cols-2 gap-3 lg:grid-cols-5 lg:gap-[clamp(6px,0.52vw,10px)]">
+      {/**
+       * Dos columnas en móvil y cuatro en desktop: entran todos sin scroll
+       * lateral y, con 16 logos, ninguna fila queda a medias.
+       */}
+      <div className="shell grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-[clamp(6px,0.52vw,10px)]">
         {clients.map((c, i) => (
           <motion.div
             key={c.name}
             initial={reduced ? false : { opacity: 0, y: 18 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.5, delay: (i % 5) * 0.06, ease: [0.22, 1, 0.36, 1] }}
-            className="group flex aspect-[384/230] items-center justify-center rounded-[clamp(10px,0.83vw,16px)] border border-line bg-ink transition-colors duration-500 hover:border-bone/20 hover:bg-card"
+            transition={{ duration: 0.5, delay: (i % 4) * 0.06, ease: [0.22, 1, 0.36, 1] }}
+            className="group flex aspect-[384/230] items-center lg:aspect-[2/1] justify-center rounded-[clamp(10px,0.83vw,16px)] border border-line bg-ink transition-colors duration-500 hover:border-bone/20 hover:bg-card"
           >
             <div className="relative h-[46%] w-[62%]">
               <Image
                 src={c.logo}
                 alt={c.name}
                 fill
-                sizes="(max-width: 1024px) 50vw, 20vw"
+                sizes="(max-width: 1024px) 50vw, 25vw"
                 /**
                  * En reposo van en escala de grises y recuperan su color al
                  * pasar el cursor o al mantener pulsado (`active`, que es lo

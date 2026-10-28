@@ -171,7 +171,7 @@ propósito: en algunas máquinas la familia resuelve a su variante oblicua.
 | Partners | Slider en bucle que avanza solo, de uno en uno (`components/ui/LoopSlider.tsx`, con `transform`: igual en todos los navegadores). Se pausa con el cursor, con el foco, con la pestaña oculta y con su botón de pausa; con "reducir movimiento" no avanza solo |
 | Metodología | Diagrama con tarjetas que entran escalonadas; en mobile, carrusel |
 | Reviews | Riel de testimonios de quienes dirigen las marcas de la cartera: ficha de la marca (logo sobre su color) y cita en amarillo. Sólo se publican los aprobados (ver abajo) |
-| Clientes | Retícula de 2 columnas en móvil y 5 en desktop, sin scroll lateral, con las marcas de la cartera primero. Los logos van en escala de grises y recuperan su color al pasar el cursor o al mantener pulsado |
+| Clientes | Retícula de 2 columnas en móvil y 4 en desktop, sin scroll lateral, con las marcas de la cartera primero. Los logos van en escala de grises y recuperan su color al pasar el cursor o al mantener pulsado |
 | Two models | Las dos líneas entran desde lados opuestos con el scroll, al tamaño del Figma (220px sobre el lienzo de 1920) |
 | Modelos | Las dos tarjetas se apilan al bajar: cada una queda fija un poco más abajo que la anterior y la de atrás se encoge y se oscurece |
 | FAQ | Acordeón de apertura única con icono +/− y altura animada |
@@ -187,6 +187,17 @@ Contraste y áreas táctiles (WCAG 2.2 AA): el azul de marca (`--color-blue`) da
 y el de marca queda para fondos y bordes. La tarjeta "Partners Model" va en
 `#0066d6` para que el texto blanco llegue a 5,4:1. Los puntos de los carruseles
 se ven de 8px pero responden en 24px, y los inactivos van en `#5b6466` (3,3:1).
+
+## Política de privacidad y cookies
+
+`/privacidad/` y `/en/privacy/` (`components/pages/PrivacyPage.tsx`, textos en
+`lib/legal.ts`). La enlazan el pie, el aviso de cookies ("Más información", a la
+sección `#cookies`) y la casilla del formulario de reunión. Describe lo que hace
+la web hoy: formulario por FormSubmit, Google Calendar/Meet o Zoom, WhatsApp,
+decisión de cookies en `localStorage` y posts de TikTok e Instagram sólo si se
+aceptan, sin analítica. Si se añade analítica, píxeles o un CRM, hay que
+actualizarla. Los datos de la empresa (razón social, nombre comercial, RUC)
+están en `company` de `lib/content.ts`.
 
 ## Blog
 
@@ -278,8 +289,6 @@ Cosas que el Figma deja como placeholder y conviene reemplazar antes de publicar
   y `approved: true`. En producción sólo salen los aprobados (sin ninguno, la
   sección y "Reseñas" en el menú no se publican); en `npm run dev` se ven todos,
   marcados como borrador.
-- **Privacidad**: el enlace "Privacidad" del pie y la casilla del formulario de
-  reunión remiten a una política de privacidad que aún no existe.
 - **Modelos en móvil**: el Figma los muestra como carrusel con dots. Aquí se
   apilan igual que en desktop, por pedido explícito; si prefieres el carrusel del
   diseño, es volver a la versión anterior del componente.

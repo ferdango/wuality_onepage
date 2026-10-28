@@ -7,7 +7,8 @@ import { abs, isoDate } from "@/lib/seo";
 export const dynamic = "force-static";
 
 /**
- * sitemap.xml: home, los nueve casos y los artículos, en español y en inglés.
+ * sitemap.xml: home, los nueve casos, los artículos y la política de privacidad,
+ * en español y en inglés.
  * Cada URL lleva sus alternativas de idioma (xhtml:link hreflang), igual que
  * las etiquetas del <head>.
  */
@@ -36,5 +37,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
         priority: 0.6,
       }),
     ),
+    ...entry("/privacidad/", { lastModified: now, changeFrequency: "yearly", priority: 0.2 }),
   ];
 }

@@ -5,9 +5,10 @@ import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useState, type FormEvent } from "react";
 import BrandPattern, { type Piece } from "./ui/BrandPattern";
 import SectionTitle from "./ui/SectionTitle";
-import { useContent } from "./LangProvider";
+import Link from "next/link";
+import { useContent, useLang } from "./LangProvider";
 import { meeting as meetingConfig } from "@/lib/content";
-import { fill, type Content } from "@/lib/i18n";
+import { fill, privacyPath, type Content } from "@/lib/i18n";
 
 type MeetingText = Content["ui"]["meeting"];
 
@@ -140,6 +141,7 @@ async function sendToInbox(r: Request, lang: string) {
 
 export default function Meeting() {
   const { meeting, dialCodes, ui } = useContent();
+  const lang = useLang();
   const t = ui.meeting;
   const [step, setStep] = useState<Step>("platform");
   const [platform, setPlatform] = useState(meeting.options[0].id);
@@ -428,7 +430,16 @@ export default function Meeting() {
                   )}
                 </span>
                 <span className="text-[length:var(--fs-xs)] font-light text-[#f7f7ff]">
-                  {t.privacy}
+                  {t.privacy.split("{link}")[0]}
+                  {/* En otra pestaña, para no perder lo que ya se escribió en el formulario. */}
+                  <Link
+                    href={privacyPath(lang)}
+                    target="_blank"
+                    className="underline underline-offset-2 hover:text-sky"
+                  >
+                    {t.privacyLink}
+                  </Link>
+                  {t.privacy.split("{link}")[1]}
                 </span>
               </label>
 

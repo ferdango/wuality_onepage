@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { chat, footer, social, type BlogItem, type projects } from "./content";
+import { chat, company, footer, social, type BlogItem, type projects } from "./content";
 import { blogPath, getContent, localePath, projectPath, type Lang } from "./i18n";
 
 type Project = (typeof projects)[number];
@@ -17,7 +17,7 @@ type Project = (typeof projects)[number];
 export const site = {
   url: (process.env.NEXT_PUBLIC_SITE_URL ?? "https://ferdango.github.io/wuality_onepage").replace(/\/+$/, ""),
   name: "Wuality",
-  legalName: "WUALITY S.A.C.",
+  legalName: company.legalName,
   /** Lema de marca (manual de identidad y dossier comercial). */
   slogan: "Innovación que conecta",
   title: "Wuality — Agencia de transformación digital en Lima, Perú",
@@ -128,6 +128,8 @@ export function organization(lang: Lang = "es") {
     "@id": ORG_ID,
     name: site.name,
     legalName: site.legalName,
+    alternateName: company.tradeName,
+    taxID: company.ruc,
     url: abs("/"),
     logo: { "@type": "ImageObject", url: abs(site.logo), width: 1300, height: 400 },
     image: abs(site.ogImage.url),

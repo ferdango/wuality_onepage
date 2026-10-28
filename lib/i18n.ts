@@ -15,16 +15,18 @@ const dictionaries: Record<Lang, Content> = { es, en };
 
 export const getContent = (lang: Lang): Content => dictionaries[lang];
 
-/** Segmento de los casos en cada idioma. */
-const PROJECTS: Record<Lang, string> = { es: "proyectos", en: "projects" };
+/** Primer segmento de ruta que cambia de nombre en inglés (los demás, como /blog/, se quedan igual). */
+const SEGMENTS: Record<string, string> = { proyectos: "projects", privacidad: "privacy" };
+const FIRST_SEGMENT = /^\/([^/]+)\//;
 
 /**
  * Ruta de una página en un idioma, a partir de su ruta en español:
- * "/" → "/en/", "/proyectos/x/" → "/en/projects/x/", "/blog/x/" → "/en/blog/x/".
+ * "/" → "/en/", "/proyectos/x/" → "/en/projects/x/", "/blog/x/" → "/en/blog/x/",
+ * "/privacidad/" → "/en/privacy/".
  */
 export function localePath(lang: Lang, path = "/") {
   if (lang === "es") return path;
-  const translated = path.replace(/^\/proyectos\//, `/${PROJECTS.en}/`);
+  const translated = path.replace(FIRST_SEGMENT, (m, seg: string) => (seg in SEGMENTS ? `/${SEGMENTS[seg]}/` : m));
   return `/en${translated === "/" ? "/" : translated}`;
 }
 
@@ -32,10 +34,15 @@ export function localePath(lang: Lang, path = "/") {
 export function switchPath(pathname: string, to: Lang) {
   const path = pathname.endsWith("/") ? pathname : `${pathname}/`;
   const spanish = path.startsWith("/en/")
-    ? path.slice(3).replace(new RegExp(`^/${PROJECTS.en}/`), `/${PROJECTS.es}/`)
+    ? path.slice(3).replace(FIRST_SEGMENT, (m, seg: string) => {
+        const es = Object.keys(SEGMENTS).find((k) => SEGMENTS[k] === seg);
+        return es ? `/${es}/` : m;
+      })
     : path;
   return localePath(to, spanish || "/");
 }
+
+export const privacyPath = (lang: Lang) => localePath(lang, "/privacidad/");
 
 export const projectPath = (lang: Lang, slug: string) => localePath(lang, `/proyectos/${slug}/`);
 export const blogPath = (lang: Lang, slug: string) => localePath(lang, `/blog/${slug}/`);

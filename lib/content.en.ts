@@ -357,10 +357,12 @@ export const blog = {
   related: "More ideas for you",
 };
 
+export const company = es.company;
+
 export const footer = {
   ...es.footer,
   name: "Wuality: Innovation & Technology Agency",
-  legal: "Wuality Agency © {year} All rights reserved",
+  legal: "Wuality Agency © {year} · RUC {ruc} · All rights reserved",
   cookies: "Cookies",
   privacy: "Privacy",
 };
@@ -373,6 +375,7 @@ export const chat = {
 
 export const cookies = {
   body: "We use your browser's storage so the site works and remembers your choice. If you accept, we'll also load the TikTok and Instagram posts, which may use their own cookies.",
+  more: "Learn more",
   accept: "Accept",
   reject: "Reject",
 };
@@ -419,7 +422,8 @@ export const ui: typeof es.ui = {
     hintMeet: "We'll open Google Calendar with the meeting ready to save.",
     hintZoom: "We'll send the Zoom link to your email.",
     hintZone: "Time in your time zone.",
-    privacy: "I have read and accept the Privacy and Data Protection Policy*",
+    privacy: "I have read and accept the {link}*",
+    privacyLink: "Privacy and Data Protection Policy",
     privacyError: "Please accept the Privacy Policy to continue.",
     sendError: "We couldn't send your request. Email us at {inbox} and we'll schedule it with you.",
     sending: "Sending…",
