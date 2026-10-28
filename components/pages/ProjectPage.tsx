@@ -38,7 +38,7 @@ export default function ProjectPage({ slug, lang }: { slug: string; lang: Lang }
       <JsonLd data={projectGraph(project, lang)} />
       {/* En una ruta interna los anclajes del menú vuelven al home de su idioma. */}
       <Header linkBase={localePath(lang, "/")} />
-      <main>
+      <main id="main" tabIndex={-1} className="outline-none">
         <CaseStudyPage project={project} next={next} lang={lang} />
         {/* La referencia cierra el caso con el formulario de contacto: aquí, el de la web. */}
         <Meeting />

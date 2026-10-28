@@ -100,7 +100,8 @@ function BrandBlock({ project }: { project: Project }) {
 export default function CaseStudyPage({ project, next, lang }: { project: Project; next: Project; lang: Lang }) {
   const { reviews, ui } = getContent(lang);
   // La cita sólo aparece si hay una reseña real de alguien de ese cliente.
-  const quote = reviews.items.find((r) => r.role.includes(project.name));
+  // El testimonio de quien dirige la marca, si se publica (ver content.ts › reviews).
+  const quote = reviews.items.find((r) => r.project === project.slug);
   const [first, second, third] = project.chapters;
 
   return (
@@ -199,16 +200,21 @@ export default function CaseStudyPage({ project, next, lang }: { project: Projec
                 {quote.quote}
               </blockquote>
               <figcaption className="mt-[clamp(18px,1.7vw,32px)] flex items-center gap-4">
-                <Image
-                  src={quote.avatar}
-                  alt=""
-                  width={52}
-                  height={52}
-                  className="size-[clamp(40px,2.7vw,52px)] rounded-full object-cover"
-                />
+                {/* La ficha de la marca en lugar de una foto: el logo sobre su color. */}
+                <span
+                  className="relative block size-[clamp(44px,3vw,56px)] shrink-0 overflow-hidden rounded-xl"
+                  style={{ backgroundColor: project.bg }}
+                >
+                  <Image src={project.logo} alt="" fill sizes="56px" className="object-contain p-1" />
+                </span>
                 <span>
-                  <span className="block text-[clamp(1rem,1vw,1.125rem)] font-semibold text-bone">{quote.name}</span>
+                  <span className="block text-[clamp(1rem,1vw,1.125rem)] font-semibold text-bone">
+                    {quote.name || reviews.pendingName}
+                  </span>
                   <span className="block text-[clamp(0.9375rem,0.95vw,1.0625rem)] text-muted">{quote.role}</span>
+                  {!quote.approved && (
+                    <span className="mt-1 block text-[0.8125rem] font-semibold text-yellow">{reviews.draft}</span>
+                  )}
                 </span>
               </figcaption>
             </figure>

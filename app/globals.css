@@ -54,6 +54,17 @@
     -webkit-tap-highlight-color: transparent;
   }
 
+  /**
+   * Foco visible igual en todo el sitio y sólo con teclado (:focus-visible): el
+   * anillo por defecto del navegador apenas se veía sobre la tinta. Lo que
+   * define su propio foco (anillos con `ring`, `outline-none`) va en la capa de
+   * utilidades y manda sobre ésta.
+   */
+  :focus-visible {
+    outline: 2px solid var(--color-sky);
+    outline-offset: 3px;
+  }
+
   html {
     scroll-behavior: smooth;
     background: var(--color-ink);

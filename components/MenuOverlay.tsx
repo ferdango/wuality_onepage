@@ -20,7 +20,8 @@ export default function MenuOverlay({
   linkBase?: string;
 }) {
   const { nav, ui } = useContent();
-  const items = menuOrder.map((href) => nav.find((n) => n.href === href)!);
+  // Sólo las secciones que se publican ("Reseñas" puede no estar, ver content.ts › nav).
+  const items = menuOrder.flatMap((href) => nav.find((n) => n.href === href) ?? []);
   const [hovered, setHovered] = useState<number | null>(0);
 
   // Bloquea el scroll del body y cierra con Escape.

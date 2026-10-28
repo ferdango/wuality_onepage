@@ -15,7 +15,10 @@ const CARD =
   "w-[min(80vw,calc(var(--rail-h)*0.814))] sm:w-[min(44vw,calc(var(--rail-h)*0.814))] lg:w-[min(28.5vw,calc(var(--rail-h)*0.814))]";
 
 export default function Reviews() {
-  const { reviews, ui } = useContent();
+  const { reviews, projects, ui } = useContent();
+  // Sin testimonios publicables no hay sección (y el menú tampoco la enlaza).
+  if (!reviews.items.length) return null;
+  const brand = (slug: string) => projects.find((p) => p.slug === slug)!;
   return (
     <section id="reviews" className="bg-ink">
       <HorizontalScroll
@@ -33,58 +36,54 @@ export default function Reviews() {
                 {reviews.subtitle}
               </p>
             </Reveal>
-
-            <Reveal delay={0.14}>
-              <div className="mt-[clamp(16px,1.6vw,30px)] flex items-center gap-4">
-                <div className="flex -space-x-3">
-                  {reviews.avatars.map((a, i) => (
-                    <Image
-                      key={a + i}
-                      src={a}
-                      alt=""
-                      width={48}
-                      height={48}
-                      className="size-[clamp(34px,2.5vw,48px)] rounded-full border-2 border-ink object-cover"
-                    />
-                  ))}
-                </div>
-                <span className="text-[length:var(--fs-sm)] text-ash">{reviews.count}</span>
-              </div>
-            </Reveal>
           </div>
         }
       >
         {/**
-         * Tarjetas de la referencia: por cada cliente, su foto y a continuación
-         * su cita sobre amarillo de marca, con el nombre y el cargo al pie. Las
-         * dos miden lo mismo, así que el riel se lee como una tira continua.
+         * Tarjetas de la referencia: por cada testimonio, la ficha de la marca
+         * (su logo sobre su color, en lugar de una foto) y a continuación la
+         * cita sobre amarillo de marca, con el nombre y el cargo al pie. Las dos
+         * miden lo mismo, así que el riel se lee como una tira continua.
          */}
-        {reviews.items.flatMap((r) => [
-          <figure
-            key={`${r.name}-foto`}
-            className="relative aspect-[570/700] w-full overflow-hidden rounded-[clamp(10px,0.7vw,14px)] bg-card"
-          >
-            <Image
-              src={r.avatar}
-              alt={r.name}
-              fill
-              sizes="(max-width: 640px) 80vw, (max-width: 1024px) 44vw, 29vw"
-              className="object-cover"
-            />
-          </figure>,
-          <blockquote
-            key={`${r.name}-cita`}
-            className="flex aspect-[570/700] w-full flex-col justify-between rounded-[clamp(10px,0.7vw,14px)] bg-yellow p-[clamp(20px,1.9vw,36px)] text-ink"
-          >
-            <p className="text-[clamp(1rem,1.25vw,1.5rem)] leading-[1.35]">{r.quote}</p>
-            <footer>
-              <p className="text-[clamp(1.5rem,1.8vw,2.125rem)] font-semibold leading-tight tracking-[-0.01em]">
-                {r.name}
-              </p>
-              <p className="mt-[clamp(8px,0.8vw,16px)] text-[length:var(--fs-sm)]">{r.role}</p>
-            </footer>
-          </blockquote>,
-        ])}
+        {reviews.items.flatMap((r) => {
+          const p = brand(r.project);
+          return [
+            <figure
+              key={`${r.project}-marca`}
+              className="relative flex aspect-[570/700] w-full items-center justify-center overflow-hidden rounded-[clamp(10px,0.7vw,14px)]"
+              style={{ backgroundColor: p.bg }}
+            >
+              <div className="relative h-[34%] w-[78%]">
+                <Image
+                  src={p.logo}
+                  alt={p.name}
+                  fill
+                  sizes="(max-width: 640px) 64vw, (max-width: 1024px) 35vw, 23vw"
+                  className="object-contain"
+                />
+              </div>
+            </figure>,
+            <blockquote
+              key={`${r.project}-cita`}
+              className="flex aspect-[570/700] w-full flex-col justify-between gap-6 rounded-[clamp(10px,0.7vw,14px)] bg-yellow p-[clamp(20px,1.9vw,36px)] text-ink"
+            >
+              <div>
+                {!r.approved && (
+                  <p className="mb-4 inline-block rounded-full bg-ink px-3 py-1 text-[0.75rem] font-semibold text-yellow">
+                    {reviews.draft}
+                  </p>
+                )}
+                <p className="text-[clamp(1rem,1.15vw,1.375rem)] leading-[1.4]">{r.quote}</p>
+              </div>
+              <footer>
+                <p className="text-[clamp(1.25rem,1.5vw,1.875rem)] font-semibold leading-tight tracking-[-0.01em]">
+                  {r.name || reviews.pendingName}
+                </p>
+                <p className="mt-[clamp(6px,0.6vw,12px)] text-[length:var(--fs-sm)]">{r.role}</p>
+              </footer>
+            </blockquote>,
+          ];
+        })}
       </HorizontalScroll>
     </section>
   );

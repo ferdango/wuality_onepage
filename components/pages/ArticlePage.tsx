@@ -54,7 +54,7 @@ export default function ArticlePage({ slug, lang }: { slug: string; lang: Lang }
       <JsonLd data={articleGraph(item, lang)} />
       {/* En una ruta interna los anclajes del menú vuelven al home de su idioma. */}
       <Header linkBase={localePath(lang, "/")} />
-      <main>
+      <main id="main" tabIndex={-1} className="outline-none">
         <Article item={item} next={next} lang={lang} />
         <section className="bg-ink">
           <BlogRail title={blog.related} items={related} ariaLabel={ui.blog.related} />

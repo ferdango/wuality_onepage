@@ -8,6 +8,8 @@ import { fill } from "@/lib/i18n";
 
 export const STORAGE_KEY = "wuality:cookie-consent";
 export const CONSENT_EVENT = "wuality:consent";
+/** Lo dispara el enlace "Cookies" del pie para volver a abrir el aviso. */
+export const OPEN_COOKIES_EVENT = "wuality:open-cookies";
 
 export default function FloatingActions() {
   const { chat, cookies, ui } = useContent();
@@ -30,6 +32,21 @@ export default function FloatingActions() {
       return () => clearTimeout(t);
     }
   }, []);
+
+  // El enlace "Cookies" del pie reabre el aviso para cambiar la decisión.
+  useEffect(() => {
+    const open = () => setCookieOpen(true);
+    window.addEventListener(OPEN_COOKIES_EVENT, open);
+    return () => window.removeEventListener(OPEN_COOKIES_EVENT, open);
+  }, []);
+
+  // Escape cierra el aviso, como cualquier diálogo.
+  useEffect(() => {
+    if (!cookieOpen) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setCookieOpen(false);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [cookieOpen]);
 
   // El globo del diseño solo aparece donde hay hover real: en táctil el tap
   // debe abrir WhatsApp directamente, sin un paso intermedio.
@@ -55,16 +72,23 @@ export default function FloatingActions() {
 
   return (
     <>
-      {/* Botón de cookies (abajo izquierda) */}
-      <button
-        type="button"
-        onClick={() => setCookieOpen((v) => !v)}
-        aria-label={ui.floating.cookies}
-        aria-expanded={cookieOpen}
-        className="fixed bottom-[clamp(16px,1.67vw,32px)] left-[clamp(16px,1.67vw,32px)] z-50 flex size-[clamp(44px,3.33vw,64px)] items-center justify-center rounded-full bg-bone shadow-xl shadow-black/40 transition-transform duration-400 ease-wuality hover:scale-110"
-      >
-        <Image src="/media/ui/cookie.svg" alt="" width={32} height={32} className="size-[58%]" />
-      </button>
+      {/**
+       * Botón de cookies (abajo izquierda). Sólo mientras no hay decisión o con
+       * el aviso abierto: después tapaba contenido en móvil sin aportar nada, y
+       * la decisión se puede cambiar desde "Cookies" en el pie. Arranca oculto
+       * ("pending") para no asomar un instante a quien ya decidió.
+       */}
+      {(consent === null || cookieOpen) && (
+        <button
+          type="button"
+          onClick={() => setCookieOpen((v) => !v)}
+          aria-label={ui.floating.cookies}
+          aria-expanded={cookieOpen}
+          className="fixed bottom-[clamp(16px,1.67vw,32px)] left-[clamp(16px,1.67vw,32px)] z-50 flex size-[clamp(44px,3.33vw,64px)] items-center justify-center rounded-full bg-bone shadow-xl shadow-black/40 transition-transform duration-400 ease-wuality hover:scale-110"
+        >
+          <Image src="/media/ui/cookie.svg" alt="" width={32} height={32} className="size-[58%]" />
+        </button>
+      )}
 
       {/* WhatsApp (abajo derecha): el botón lleva directo al chat */}
       <div
@@ -134,9 +158,6 @@ export default function FloatingActions() {
           >
             <Image src="/media/ui/cookie.svg" alt="" width={48} height={48} className="size-10" />
             <p className="mt-5 text-[15px] leading-relaxed">{cookies.body}</p>
-            <a href="#" className="mt-3 block text-[15px] text-[#0070ba] underline">
-              {cookies.link}
-            </a>
             <div className="mt-6 flex gap-3">
               <button
                 type="button"

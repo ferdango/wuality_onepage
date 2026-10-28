@@ -10,7 +10,8 @@ import { posts } from "./blog";
 
 export type NavItem = { label: string; short: string; href: string };
 
-export const nav: NavItem[] = [
+/** Menú completo; `nav` (más abajo) quita las secciones que no se publican. */
+const navItems: NavItem[] = [
   { label: "Sobre Wuality", short: "Nosotros", href: "#edu" },
   { label: "Proyectos", short: "Proyectos", href: "#work" },
   { label: "Servicios", short: "Servicios", href: "#services" },
@@ -307,58 +308,129 @@ export const methodology = [
   },
 ];
 
-export const reviews = {
-  title: "Lo que dicen nuestros clientes",
-  subtitle:
-    "Escucha qué dicen las grandes organizaciones y las empresas emergentes que prefieren Wuality",
-  avatars: ["/media/people/a1.jpg", "/media/people/a2.jpg", "/media/people/a3.jpg"],
-  count: "+20 reviews",
-  items: [
-    {
-      name: "Carlos Camura",
-      role: "CEO, Deploya.io",
-      avatar: "/media/people/a1.jpg",
-      date: "20 Mar, 2025",
-      quote:
-        "“Antes, nuestro equipo consideraba que Atlassian era un conjunto de herramientas individuales... Ahora, Wuality ha sido fundamental para la colaboración, la productividad y la visibilidad.”",
-    },
-    {
-      name: "Lucía Ferrer",
-      role: "Head of Product, Civitatis",
-      avatar: "/media/people/a2.jpg",
-      date: "12 Feb, 2025",
-      quote:
-        "“Wuality entendió el negocio antes de tocar una sola pantalla. El rediseño se tradujo en menos fricción en el checkout y un equipo que por fin habla el mismo idioma.”",
-    },
-    {
-      name: "Diego Salas",
-      role: "CTO, Backus",
-      avatar: "/media/people/a3.jpg",
-      date: "03 Ene, 2025",
-      quote:
-        "“Pasamos de entregas trimestrales a despliegues semanales. La gestión ágil de Wuality convirtió la incertidumbre en resultados visibles desde el primer sprint.”",
-    },
-    {
-      name: "Ana Quiroz",
-      role: "Marketing Lead, Entel",
-      avatar: "/media/people/a4.jpg",
-      date: "28 Nov, 2024",
-      quote:
-        "“El acompañamiento no terminó en el lanzamiento. La mejora continua es real: cada mes medimos, aprendemos y ajustamos con ellos.”",
-    },
-  ],
+/**
+ * Testimonios de quienes dirigen las marcas de la cartera, uno por caso.
+ *
+ * Los textos son borradores que redactó Wuality a partir de cada proyecto y
+ * tienen que aprobarlos sus firmantes antes de publicarse: publicar una cita
+ * atribuida a un cliente sin su visto bueno sería un testimonio inventado. Para
+ * publicar uno, pon el nombre de quien firma y `approved: true`.
+ *
+ * En producción sólo salen los aprobados (si no hay ninguno, la sección y su
+ * entrada del menú no se publican). En `npm run dev` se ven todos, marcados
+ * como borrador, para revisarlos.
+ */
+export type Testimonial = {
+  /** Slug del caso en `projects`: de ahí salen el logo y el color de la ficha. */
+  project: string;
+  /** Quien firma. Vacío hasta que apruebe el texto. */
+  name: string;
+  role: string;
+  quote: string;
+  approved: boolean;
 };
 
+const testimonials: Testimonial[] = [
+  {
+    project: "grupo-tinbet",
+    name: "",
+    role: "CEO, Grupo Tinbet",
+    quote:
+      "“Necesitábamos que tres negocios muy distintos se presentaran como un solo grupo sin perder su personalidad. Wuality lo resolvió con un sistema de marca claro y una web que hoy usamos para hablar con aliados, autoridades y talento. Entendieron el negocio antes de diseñar una sola pieza.”",
+    approved: false,
+  },
+  {
+    project: "afiliados-tinbet",
+    name: "",
+    role: "CEO, Tinbet",
+    quote:
+      "“Queríamos que un creador entendiera nuestro programa de afiliados en segundos, y eso es lo que logra la landing: comisiones claras, pasos simples y cero letra chica. Wuality cuidó cada detalle, desde la velocidad de carga hasta el aviso de juego responsable.”",
+    approved: false,
+  },
+  {
+    project: "peruana-en-rusia",
+    name: "",
+    role: "Fundadora y CEO, Peruana en Rusia",
+    quote:
+      "“Acompañar a un estudiante desde la primera duda hasta el día del viaje era una cadena de correos y chats. Con el portal que diseñó Wuality, cada postulante sabe en qué paso está y nuestro equipo aprueba cada etapa desde un solo lugar. Y la marca transmite justo lo que somos: un cruce seguro.”",
+    approved: false,
+  },
+  {
+    project: "sunqu-journeys",
+    name: "",
+    role: "CEO, Sunqu Journeys",
+    quote:
+      "“No queríamos vender paquetes, queríamos contar el Perú desde la emoción. Wuality convirtió esa idea en un símbolo, un patrón y una web donde cada viajero elige su viaje por lo que quiere sentir. Todo cuenta la misma historia, de la flota a la pantalla.”",
+    approved: false,
+  },
+  {
+    project: "tuku-travel",
+    name: "",
+    role: "CEO, Tuku Travel",
+    quote:
+      "“Nuestros clientes ahora encuentran todo antes de reservar: fotos, itinerario día a día, qué incluye y cuánto cuesta. Wuality ordenó nuestro catálogo y nos dio una tienda en línea que actualizamos nosotros mismos, con una ruleta promocional que le da vida a nuestras campañas.”",
+    approved: false,
+  },
+  {
+    project: "kingbuilder",
+    name: "",
+    role: "CEO, KingBuilder",
+    quote:
+      "“En minería la confianza lo es todo, y nuestra marca tenía que transmitir la misma solidez que nuestras obras. Wuality entendió el sector desde el primer día: una identidad sobria, un catálogo técnico ordenado y una ruta de cotización clara para nuestros clientes.”",
+    approved: false,
+  },
+  {
+    project: "tec-seg",
+    name: "",
+    role: "CEO, TEC & SEG",
+    quote:
+      "“Nuestra marca vive en la calle: en las camionetas, en los uniformes, en la puerta de cada obra. Wuality diseñó un sistema que se reconoce de lejos y que el equipo lleva con orgullo. El escudo con el felino ya es parte de cómo nos ven nuestros clientes.”",
+    approved: false,
+  },
+  {
+    project: "iep-eusebio-arroniz",
+    name: "",
+    role: "Dirección general, IEP Eusebio Arróniz",
+    quote:
+      "“Las familias nos hacían siempre las mismas preguntas: cómo es la admisión, cómo enseñamos en cada nivel, cómo comunicarse con el colegio. Wuality diseñó una web que las responde con claridad y con la calidez que queremos transmitir como comunidad educativa.”",
+    approved: false,
+  },
+];
+
+/** En desarrollo se ven también los borradores, para revisarlos antes de pedir la aprobación. */
+const showDrafts = process.env.NODE_ENV === "development";
+
+export const reviews = {
+  title: "Lo que dicen nuestros clientes",
+  subtitle: "Quienes lideran las marcas con las que trabajamos cuentan cómo fue construir con Wuality.",
+  /** Rótulo de los textos aún sin aprobar (sólo se ven en desarrollo). */
+  draft: "Borrador · pendiente de aprobación",
+  pendingName: "Nombre por confirmar",
+  items: testimonials.filter((t) => t.approved || showDrafts),
+};
+
+/** El menú sólo enlaza a "Reseñas" si la sección se publica. */
+export const nav: NavItem[] = navItems.filter((n) => n.href !== "#reviews" || reviews.items.length > 0);
+
+/**
+ * Primero las marcas de la cartera (sus logos en blanco y color sobre
+ * transparente, sacados de las fichas de cada caso) y después el resto.
+ */
 export const clients = [
+  { name: "Grupo Tinbet", logo: "/media/logos/c-grupo-tinbet.png" },
+  { name: "Peruana en Rusia", logo: "/media/logos/c-peruanarusia.png" },
+  { name: "Sunqu Journeys", logo: "/media/logos/c-sunqu-journeys.png" },
+  { name: "Tuku Travel", logo: "/media/logos/c-tuku-travel.png" },
+  { name: "KingBuilder", logo: "/media/logos/c-kingbuilder.png" },
+  { name: "TEC & SEG", logo: "/media/logos/c-tec-seg.png" },
+  { name: "IEP Eusebio Arróniz", logo: "/media/logos/c-eusebio.svg" },
   { name: "Civitatis", logo: "/media/logos/c-civitatis.png" },
   { name: "Backus", logo: "/media/logos/c-backus.png" },
   { name: "Verisure", logo: "/media/logos/c-verisure.png" },
-  { name: "Peruana en Rusia", logo: "/media/logos/c-peruanarusia.png" },
   { name: "Entel", logo: "/media/logos/c-entel.svg" },
   { name: "Fishbox", logo: "/media/logos/c-fishbox.svg" },
   { name: "Sodel", logo: "/media/logos/c-sodel.svg" },
   { name: "Chargy Power", logo: "/media/logos/c-chargy.svg" },
-  { name: "Eusebio Arroniz", logo: "/media/logos/c-eusebio.svg" },
   { name: "Protein Food", logo: "/media/logos/c-proteinfood.svg" },
   { name: "Plan International", logo: "/media/logos/c-plan.svg" },
   { name: "Mifruta", logo: "/media/logos/c-mifruta.svg" },
@@ -549,8 +621,10 @@ export const footer = {
     { text: "Together", color: "#ff1a30" },
   ],
   email: "hola@wuality.agency",
-  legal: "Wuality Agency © 2025 Todos los derechos reservados",
-  links: ["Cookies", "Privacidad"],
+  /** `{year}` es el año del build: así el pie no se queda atrás. */
+  legal: "Wuality Agency © {year} Todos los derechos reservados",
+  cookies: "Cookies",
+  privacy: "Privacidad",
   socials: [
     { name: "Instagram", icon: "/media/ui/instagram.svg", href: "https://www.instagram.com/wualityagency/" },
     { name: "Mail", icon: "/media/ui/mail.svg", href: "#" },
@@ -573,7 +647,6 @@ export const cookies = {
    * posts", que traen sus propias cookies. No hay analítica ni publicidad.
    */
   body: "Usamos el almacenamiento de tu navegador para que la web funcione y recuerde tu elección. Si aceptas, también cargaremos las publicaciones de TikTok e Instagram, que pueden usar sus propias cookies.",
-  link: "Administrar las cookies y obtener más información",
   accept: "Aceptar",
   reject: "Rechazar",
 };
@@ -583,7 +656,7 @@ export const cookies = {
  * sección. `{nombre}` se rellena con `fill()` (lib/i18n.ts).
  */
 export const ui = {
-  header: { home: "Wuality — inicio", openMenu: "Abrir menú", language: "Idioma y región" },
+  header: { home: "Wuality — inicio", openMenu: "Abrir menú", language: "Idioma y región", skip: "Saltar al contenido" },
   menu: { label: "Menú principal", close: "Cerrar menú" },
   hero: { screen: "Pantalla de bloqueo con el fondo de marca de Wuality", date: "martes, 31 de julio" },
   services: { title: "Lo que hacemos", cta: "Consulta aquí" },
@@ -600,6 +673,8 @@ export const ui = {
     shareOn: "Compartir en {red}",
     watch: "Ver el vídeo: {title}",
     youtube: "YouTube",
+    readingTime: "{min} min de lectura",
+    read: "Leer: {title}",
   },
   social: {
     rail: "Últimas publicaciones en TikTok e Instagram",
@@ -607,7 +682,7 @@ export const ui = {
     prev: "Posts anteriores",
     next: "Posts siguientes",
   },
-  carousel: { role: "carrusel", slide: "{n} de {total}", goTo: "Ir al slide {n}" },
+  carousel: { role: "carrusel", slide: "{n} de {total}", goTo: "Ir al slide {n}", pause: "Pausar el carrusel", play: "Reanudar el carrusel" },
   caseStudy: { services: "Servicios", client: "Cliente", sector: "Sector", web: "Web", next: "Siguiente caso" },
   meeting: {
     platform: "Plataforma para la reunión",

@@ -75,6 +75,14 @@ export default function Header({ linkBase = "" }: { linkBase?: string }) {
 
   return (
     <>
+      {/* Primer elemento con foco: salta el menú y lleva directo al contenido (WCAG 2.4.1). */}
+      <a
+        href="#main"
+        className="fixed left-4 top-4 z-[100] -translate-y-[200%] rounded-full bg-bone px-5 py-3 text-[0.9375rem] font-semibold text-ink transition-transform duration-300 focus:translate-y-0"
+      >
+        {ui.header.skip}
+      </a>
+
       <motion.div
         className="fixed inset-x-0 top-0 z-[80] h-[3px] origin-left bg-red"
         style={{ scaleX: progress }}

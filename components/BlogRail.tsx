@@ -6,11 +6,14 @@ import HorizontalScroll from "./ui/HorizontalScroll";
 import Reveal from "./ui/Reveal";
 import type { BlogItem } from "@/lib/content";
 import { blogPath } from "@/lib/i18n";
+import { isoDate } from "@/lib/seo";
 import { useContent, useLang } from "./LangProvider";
 
 /**
- * Tarjeta de post. Los de vídeo llevan el icono de YouTube y son clicables
- * enteros; los de texto, foto, fecha, titular y botón "Leer nota".
+ * Tarjeta de post. Los de vídeo llevan el icono de YouTube; los de texto, foto,
+ * fecha, titular y botón "Leer nota". Las dos son clicables enteras: el enlace
+ * del titular se estira sobre toda la tarjeta (`after:inset-0`), así hay un solo
+ * enlace por post para el lector de pantalla y el "Leer nota" es sólo visual.
  */
 export function BlogCard({ item }: { item: BlogItem }) {
   const { ui } = useContent();
@@ -40,14 +43,16 @@ export function BlogCard({ item }: { item: BlogItem }) {
 
         <div className="absolute inset-x-0 bottom-0 p-[clamp(12px,1.05vw,20px)]">
           <h3 className="text-[length:var(--fs-xs)] font-bold text-white">{item.title}</h3>
-          <time className="mt-1 block text-[clamp(10px,0.63vw,12px)] text-white/70">{item.date}</time>
+          <time dateTime={isoDate(item.publishedAt)} className="mt-1 block text-[clamp(10px,0.63vw,12px)] text-white/70">
+            {item.date}
+          </time>
         </div>
       </Link>
     );
   }
 
   return (
-    <article className="group flex h-full flex-col rounded-[clamp(14px,1.25vw,24px)] bg-surface p-[clamp(8px,0.63vw,12px)]">
+    <article className="group relative flex h-full flex-col rounded-[clamp(14px,1.25vw,24px)] bg-surface p-[clamp(8px,0.63vw,12px)] transition-colors duration-300 hover:bg-card has-[a:focus-visible]:outline-2 has-[a:focus-visible]:outline-offset-2 has-[a:focus-visible]:outline-sky">
       <div className="relative aspect-[16/11] w-full overflow-hidden rounded-[clamp(10px,0.83vw,16px)]">
         <Image
           src={item.image}
@@ -59,16 +64,20 @@ export function BlogCard({ item }: { item: BlogItem }) {
       </div>
 
       <div className="flex flex-1 flex-col p-[clamp(8px,0.63vw,12px)]">
-        <time className="text-[clamp(11px,0.7292vw,14px)] text-muted">{item.date}</time>
+        <time dateTime={isoDate(item.publishedAt)} className="text-[clamp(11px,0.7292vw,14px)] text-muted">
+          {item.date}
+        </time>
         <h3 className="mt-1 flex-1 text-[length:var(--fs-body)] font-extrabold leading-snug text-bone">
-          {item.title}
+          <Link href={href} className="outline-none after:absolute after:inset-0 after:rounded-[inherit]">
+            {item.title}
+          </Link>
         </h3>
-        <Link
-          href={href}
-          className="mt-4 w-fit rounded-full border border-bone/30 px-6 py-2.5 text-[clamp(12px,0.8333vw,16px)] font-semibold text-bone transition-colors duration-300 hover:border-blue hover:text-sky"
+        <span
+          aria-hidden
+          className="mt-4 w-fit rounded-full border border-bone/30 px-6 py-2.5 text-[clamp(12px,0.8333vw,16px)] font-semibold text-bone transition-colors duration-300 group-hover:border-blue group-hover:text-sky"
         >
           {item.cta}
-        </Link>
+        </span>
       </div>
     </article>
   );

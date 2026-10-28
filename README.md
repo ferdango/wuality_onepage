@@ -168,16 +168,16 @@ propósito: en algunas máquinas la familia resuelve a su variante oblicua.
 | Nuestros proyectos | Carrusel con swipe, arrastre, teclado y dots. Avanza solo cada 5s y el detalle de abajo sigue al proyecto en curso; al hacer clic, además, lleva la vista hasta él |
 | Todos los carruseles | Bucle infinito con avance automático, que se pausa al pasar el cursor, al enfocar, al tocar o si la pestaña no está visible. Arrastre con mouse vía `useDragScroll`: desactiva el snap durante el gesto, lo restaura al soltar y suprime el click posterior para que soltar sobre una tarjeta no la active |
 | Caso de estudio | Muestra el proyecto elegido arriba: al hacer clic en una tarjeta se ancla aquí y el contenido cambia con una transición. Acordeón de capítulos con altura animada |
-| Partners | Carrusel con autoplay que se pausa al interactuar o si la pestaña no está visible |
+| Partners | Slider en bucle que avanza solo, de uno en uno (`components/ui/LoopSlider.tsx`, con `transform`: igual en todos los navegadores). Se pausa con el cursor, con el foco, con la pestaña oculta y con su botón de pausa; con "reducir movimiento" no avanza solo |
 | Metodología | Diagrama con tarjetas que entran escalonadas; en mobile, carrusel |
-| Reviews | Carrusel de testimonios con stack de avatares; el emoji de la tarjeta activa da un pulso al entrar |
-| Clientes | Retícula de 2 columnas en móvil y 5 en desktop, sin scroll lateral. Los logos van en escala de grises y recuperan su color al pasar el cursor o al mantener pulsado |
+| Reviews | Riel de testimonios de quienes dirigen las marcas de la cartera: ficha de la marca (logo sobre su color) y cita en amarillo. Sólo se publican los aprobados (ver abajo) |
+| Clientes | Retícula de 2 columnas en móvil y 5 en desktop, sin scroll lateral, con las marcas de la cartera primero. Los logos van en escala de grises y recuperan su color al pasar el cursor o al mantener pulsado |
 | Two models | Las dos líneas entran desde lados opuestos con el scroll, al tamaño del Figma (220px sobre el lienzo de 1920) |
 | Modelos | Las dos tarjetas se apilan al bajar: cada una queda fija un poco más abajo que la anterior y la de atrás se encoge y se oscurece |
 | FAQ | Acordeón de apertura única con icono +/− y altura animada |
 | Agenda una reunión | Sección de 90vh. Flujo de 2 pasos: elección de plataforma (Meet/Zoom) → "Continuar" → formulario con selector de prefijo internacional, validación y estado de confirmación |
 | Blog | Carrusel con un artículo por caso de la cartera; admite también tarjetas de video |
-| Flotantes | El botón de WhatsApp enlaza directo al chat de `+51 966 461 384` (número en `lib/content.ts`); el globo del diseño aparece al pasar el cursor, solo donde hay hover real. Botón de cookies con banner; la decisión se guarda en `localStorage` |
+| Flotantes | El botón de WhatsApp enlaza directo al chat de `+51 966 461 384` (número en `lib/content.ts`); el globo del diseño aparece al pasar el cursor, solo donde hay hover real. Botón de cookies con banner mientras no hay decisión; después se oculta y "Cookies" en el pie reabre el aviso. La decisión se guarda en `localStorage` |
 
 Todo respeta `prefers-reduced-motion`: las animaciones de entrada y las ligadas al
 scroll se desactivan y el contenido se muestra en su estado final.
@@ -272,13 +272,14 @@ cabe en el ancho del campo, y las opciones sí llevan color.
 
 Cosas que el Figma deja como placeholder y conviene reemplazar antes de publicar:
 
-- **FAQ**: las tres preguntas y respuestas son *lorem ipsum* en el diseño.
-- **Reviews**: en el Figma las cuatro tarjetas repiten el mismo testimonio; aquí se
-  completaron con variantes coherentes. Reemplazar por los reales.
-- **Casos de estudio**: el Figma trae un solo caso ("Meltwater" en desktop,
-  "Starbucks LLC" en mobile) y no corresponde a ninguno de los cuatro proyectos
-  del carrusel. Como cada tarjeta ahora abre su propio caso, escribí un texto de
-  relleno por proyecto en `lib/content.ts`. Hay que reemplazarlos por los reales.
+- **Testimonios**: hay un borrador por marca de la cartera en `lib/content.ts`
+  (`reviews`), redactado por Wuality a partir de cada proyecto. Antes de
+  publicarlo, quien firma tiene que aprobar el texto: entonces se pone su nombre
+  y `approved: true`. En producción sólo salen los aprobados (sin ninguno, la
+  sección y "Reseñas" en el menú no se publican); en `npm run dev` se ven todos,
+  marcados como borrador.
+- **Privacidad**: el enlace "Privacidad" del pie y la casilla del formulario de
+  reunión remiten a una política de privacidad que aún no existe.
 - **Modelos en móvil**: el Figma los muestra como carrusel con dots. Aquí se
   apilan igual que en desktop, por pedido explícito; si prefieres el carrusel del
   diseño, es volver a la versión anterior del componente.

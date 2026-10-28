@@ -1,7 +1,8 @@
 import Image from "@/components/ui/Img";
 import BrandPattern, { type Piece } from "./ui/BrandPattern";
 import Reveal from "./ui/Reveal";
-import { getContent, type Lang } from "@/lib/i18n";
+import CookieSettingsButton from "./CookieSettingsButton";
+import { fill, getContent, type Lang } from "@/lib/i18n";
 
 /**
  * Las figuras viven sólo en los 108px del padding inferior, no por todo el
@@ -72,16 +73,19 @@ export default function Footer({ lang }: { lang: Lang }) {
       </div>
 
       <div className="shell relative mt-[clamp(28px,2.1vw,40px)] flex flex-col-reverse items-center gap-4 text-center lg:flex-row lg:justify-between lg:text-left">
-        <p className="text-[length:var(--fs-xs)] text-muted">{footer.legal}</p>
+        <p className="text-[length:var(--fs-xs)] text-muted">{fill(footer.legal, { year: new Date().getFullYear() })}</p>
         <div className="flex flex-wrap items-center justify-center gap-[clamp(16px,1.46vw,28px)] text-[length:var(--fs-xs)]">
           <a href={`mailto:${footer.email}`} className="text-bone transition-opacity duration-300 hover:opacity-70">
             {footer.email}
           </a>
-          {footer.links.map((l) => (
-            <a key={l} href="#" className="text-muted transition-colors duration-300 hover:text-bone">
-              {l}
-            </a>
-          ))}
+          <CookieSettingsButton
+            label={footer.cookies}
+            className="text-muted transition-colors duration-300 hover:text-bone"
+          />
+          {/* La política de privacidad aún no tiene página (pendiente en el README). */}
+          <a href="#" className="text-muted transition-colors duration-300 hover:text-bone">
+            {footer.privacy}
+          </a>
         </div>
       </div>
     </footer>

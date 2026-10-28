@@ -17,7 +17,7 @@ function withTexts<T extends object>(base: readonly T[], texts: Partial<T>[]): T
   return base.map((item, i) => ({ ...item, ...texts[i] }));
 }
 
-export const nav: NavItem[] = [
+const navItems: NavItem[] = [
   { label: "About Wuality", short: "About", href: "#edu" },
   { label: "Work", short: "Work", href: "#work" },
   { label: "Services", short: "Services", href: "#services" },
@@ -196,33 +196,64 @@ export const methodology = withTexts(es.methodology, [
   },
 ]);
 
+/** Testimonios en inglés, por caso (ver los borradores en content.ts). */
+const testimonialsEn: Record<string, { role: string; quote: string }> = {
+  "grupo-tinbet": {
+    role: "CEO, Grupo Tinbet",
+    quote:
+      "“We needed three very different businesses to present themselves as one group without losing their personality. Wuality solved it with a clear brand system and a website we now use to talk to partners, authorities and talent. They understood the business before designing a single piece.”",
+  },
+  "afiliados-tinbet": {
+    role: "CEO, Tinbet",
+    quote:
+      "“We wanted a creator to understand our affiliate program in seconds, and that's what the landing page achieves: clear commissions, simple steps and zero fine print. Wuality took care of every detail, from loading speed to the responsible gaming notice.”",
+  },
+  "peruana-en-rusia": {
+    role: "Founder & CEO, Peruana en Rusia",
+    quote:
+      "“Guiding a student from their first question to the day they fly used to be a chain of emails and chats. With the portal Wuality designed, every applicant knows which step they're on and our team approves each stage from one place. And the brand conveys exactly who we are: a safe crossing.”",
+  },
+  "sunqu-journeys": {
+    role: "CEO, Sunqu Journeys",
+    quote:
+      "“We didn't want to sell packages; we wanted to tell Peru's story through emotion. Wuality turned that idea into a symbol, a pattern and a website where every traveler chooses their trip by what they want to feel. Everything tells the same story, from the fleet to the screen.”",
+  },
+  "tuku-travel": {
+    role: "CEO, Tuku Travel",
+    quote:
+      "“Our customers now find everything before booking: photos, a day-by-day itinerary, what's included and how much it costs. Wuality organized our catalog and gave us an online store we update ourselves, with a promotional wheel that brings our campaigns to life.”",
+  },
+  kingbuilder: {
+    role: "CEO, KingBuilder",
+    quote:
+      "“In mining, trust is everything, and our brand had to convey the same solidity as our projects. Wuality understood the sector from day one: a sober identity, an organized technical catalog and a clear quote path for our clients.”",
+  },
+  "tec-seg": {
+    role: "CEO, TEC & SEG",
+    quote:
+      "“Our brand lives on the street: on our pickups, on our uniforms, at the gate of every site. Wuality designed a system that's recognizable from afar and that the team wears with pride. The shield with the feline is now part of how our clients see us.”",
+  },
+  "iep-eusebio-arroniz": {
+    role: "Head of School, IEP Eusebio Arróniz",
+    quote:
+      "“Families always asked us the same questions: how admissions work, how we teach at each level, how to reach the school. Wuality designed a website that answers them clearly and with the warmth we want to convey as a school community.”",
+  },
+};
+
 export const reviews = {
   ...es.reviews,
   title: "What our clients say",
-  subtitle: "Hear what large organizations and emerging companies that choose Wuality have to say",
-  items: withTexts(es.reviews.items, [
-    {
-      date: "Mar 20, 2025",
-      quote:
-        "“Our team used to see Atlassian as a set of separate tools... Now, Wuality has been key to our collaboration, productivity and visibility.”",
-    },
-    {
-      date: "Feb 12, 2025",
-      quote:
-        "“Wuality understood the business before touching a single screen. The redesign meant less friction at checkout and a team that finally speaks the same language.”",
-    },
-    {
-      date: "Jan 3, 2025",
-      quote:
-        "“We went from quarterly releases to weekly deployments. Wuality's agile management turned uncertainty into visible results from the very first sprint.”",
-    },
-    {
-      date: "Nov 28, 2024",
-      quote:
-        "“Their support didn't end at launch. Continuous improvement is real: every month we measure, learn and adjust together.”",
-    },
-  ]),
+  subtitle: "The people who lead the brands we work with share what building with Wuality was like.",
+  draft: "Draft · pending approval",
+  pendingName: "Name to be confirmed",
+  items: es.reviews.items.map((t) => {
+    const texts = testimonialsEn[t.project];
+    if (!texts) throw new Error(`content.en: falta la traducción del testimonio de ${t.project}`);
+    return { ...t, ...texts };
+  }),
 };
+
+export const nav: NavItem[] = navItems.filter((n) => n.href !== "#reviews" || reviews.items.length > 0);
 
 export const clients = es.clients;
 
@@ -329,8 +360,9 @@ export const blog = {
 export const footer = {
   ...es.footer,
   name: "Wuality: Innovation & Technology Agency",
-  legal: "Wuality Agency © 2025 All rights reserved",
-  links: ["Cookies", "Privacy"],
+  legal: "Wuality Agency © {year} All rights reserved",
+  cookies: "Cookies",
+  privacy: "Privacy",
 };
 
 export const chat = {
@@ -341,13 +373,12 @@ export const chat = {
 
 export const cookies = {
   body: "We use your browser's storage so the site works and remembers your choice. If you accept, we'll also load the TikTok and Instagram posts, which may use their own cookies.",
-  link: "Manage cookies and learn more",
   accept: "Accept",
   reject: "Reject",
 };
 
 export const ui: typeof es.ui = {
-  header: { home: "Wuality — home", openMenu: "Open menu", language: "Language and region" },
+  header: { home: "Wuality — home", openMenu: "Open menu", language: "Language and region", skip: "Skip to content" },
   menu: { label: "Main menu", close: "Close menu" },
   hero: { screen: "Lock screen with the Wuality brand wallpaper", date: "Tuesday, 31 July" },
   services: { title: "What we do", cta: "Get in touch" },
@@ -364,6 +395,8 @@ export const ui: typeof es.ui = {
     shareOn: "Share on {red}",
     watch: "Watch the video: {title}",
     youtube: "YouTube",
+    readingTime: "{min} min read",
+    read: "Read: {title}",
   },
   social: {
     rail: "Latest posts on TikTok and Instagram",
@@ -371,7 +404,7 @@ export const ui: typeof es.ui = {
     prev: "Previous posts",
     next: "Next posts",
   },
-  carousel: { role: "carousel", slide: "{n} of {total}", goTo: "Go to slide {n}" },
+  carousel: { role: "carousel", slide: "{n} of {total}", goTo: "Go to slide {n}", pause: "Pause the carousel", play: "Resume the carousel" },
   caseStudy: { services: "Services", client: "Client", sector: "Industry", web: "Website", next: "Next case" },
   meeting: {
     platform: "Meeting platform",

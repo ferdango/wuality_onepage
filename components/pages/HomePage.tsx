@@ -26,7 +26,7 @@ export default function HomePage({ lang }: { lang: Lang }) {
     <LangProvider lang={lang}>
       <JsonLd data={homeGraph(lang)} />
       <Header />
-      <main>
+      <main id="main" tabIndex={-1} className="outline-none">
         <Hero />
         <Services />
         <Projects />
