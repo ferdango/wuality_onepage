@@ -19,8 +19,11 @@ type Project = (typeof projects)[number];
 
 const N = projects.length;
 
-/** Scroll que consume cada proyecto mientras el panel está anclado. */
-const STEP_SVH = 70;
+/**
+ * Scroll que consume cada proyecto mientras el panel está anclado. Eran 70 con
+ * cuatro proyectos; con los trece de la cartera el panel se hacía eterno.
+ */
+const STEP_SVH = 50;
 
 function SearchIcon() {
   return (
@@ -193,11 +196,11 @@ function FeaturedDesktop() {
                     <button
                       type="button"
                       onClick={() => goTo(i)}
-                      className={`text-left text-[length:var(--fs-h2)] font-semibold leading-none tracking-[-0.02em] transition-[color,translate] duration-500 ease-wuality ${
+                      className={`whitespace-nowrap text-left text-[length:var(--fs-h2)] font-semibold leading-none tracking-[-0.02em] transition-[color,translate] duration-500 ease-wuality ${
                         i === active ? "translate-x-[0.18em] text-bone" : "text-[#4a5253] hover:text-ash"
                       }`}
                     >
-                      {project.name}
+                      {project.short ?? project.name}
                     </button>
                   </li>
                 ))}
@@ -282,9 +285,14 @@ function ProjectCard({
           {project.headline}
         </span>
         <span className="flex items-end justify-between gap-4">
-          <span className="relative h-[clamp(20px,1.7vw,32px)] w-[clamp(90px,8vw,150px)]">
-            <Image src={project.logo} alt={project.name} fill sizes="150px" className="object-contain object-left" />
-          </span>
+          {project.badge ? (
+            // Placa de color del dossier: el logotipo ya trae su fondo de marca.
+            <Image src={project.logo} alt={project.name} className="h-[clamp(30px,2.6vw,50px)] w-auto rounded-[clamp(6px,0.5vw,10px)]" />
+          ) : (
+            <span className="relative h-[clamp(20px,1.7vw,32px)] w-[clamp(90px,8vw,150px)]">
+              <Image src={project.logo} alt={project.name} fill sizes="150px" className="object-contain object-left" />
+            </span>
+          )}
           <Chip label={project.tags[0]} tone="dark" />
         </span>
       </span>
@@ -315,7 +323,7 @@ function FeaturedMobile() {
               <span className="absolute inset-x-0 bottom-0 p-[18px]">
                 <span className="block text-[13px] text-white/85">[{project.tags.slice(1).join(" · ")}]</span>
                 <span className="mt-1 block text-[clamp(1.75rem,8vw,2.5rem)] font-semibold leading-none tracking-[-0.02em] text-white">
-                  {project.name}
+                  {project.short ?? project.name}
                 </span>
               </span>
             </Link>

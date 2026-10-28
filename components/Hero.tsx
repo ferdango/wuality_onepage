@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "@/components/ui/Img";
 import {
   motion,
   useMotionTemplate,
@@ -10,6 +9,7 @@ import {
 } from "motion/react";
 import { useRef } from "react";
 import BrandPattern, { type Piece } from "./ui/BrandPattern";
+import LockScreen from "./ui/LockScreen";
 import { hero } from "@/lib/content";
 
 /** Parte del recorrido que ocupa la subida inicial del teléfono. */
@@ -77,7 +77,7 @@ export default function Hero() {
   const width = useMotionTemplate`calc(var(--dev-w) + (100vw - var(--dev-w)) * ${grow})`;
   const height = useMotionTemplate`calc(var(--dev-h) + (100svh - var(--dev-h)) * ${grow})`;
 
-  // El marco y las esquinas se reducen a cero: el chasis desaparece y queda el video.
+  // El marco y las esquinas se reducen a cero: el chasis desaparece y queda el fondo de pantalla.
   const bezelK = useTransform(main, [0, 0.42], [1, 0]);
   const padding = useMotionTemplate`calc(var(--bezel) * ${bezelK})`;
   const radiusK = useTransform(main, [0, 0.58], [1, 0]);
@@ -89,19 +89,17 @@ export default function Hero() {
 
   // Los detalles del dispositivo se van antes que el marco, para que no se estiren.
   const chrome = useMotionTemplate`${useTransform(main, [0, 0.12], [1, 0])}`;
-  const chip = useMotionTemplate`${useTransform(main, [0, 0.22], [1, 0])}`;
   const headOpacity = useMotionTemplate`${useTransform(scrollYProgress, [0, RISE * 0.8], [1, 0])}`;
   const headShift = useMotionTemplate`${useTransform(scrollYProgress, [0, RISE * 0.8], [0, -80])}`;
   const wordOpacity = useMotionTemplate`${useTransform(main, [0.55, 0.72], [0, 1])}`;
   const wordShift = useMotionTemplate`${useTransform(main, [0.55, 0.85], [12, 0])}`;
 
   const scrollVars = reduced
-    ? { "--rise": 0, "--to-centre": 0, "--chrome": 1, "--chip": 1, "--head-op": 1, "--head-y": 0, "--word-op": 1, "--word-x": 0 }
+    ? { "--rise": 0, "--to-centre": 0, "--chrome": 1, "--head-op": 1, "--head-y": 0, "--word-op": 1, "--word-x": 0 }
     : {
         "--rise": rise,
         "--to-centre": toCentre,
         "--chrome": chrome,
-        "--chip": chip,
         "--head-op": headOpacity,
         "--head-y": headShift,
         "--word-op": wordOpacity,
@@ -222,31 +220,14 @@ export default function Hero() {
             }
             className="relative h-full w-full overflow-hidden bg-black"
           >
-            <Image
-              src={hero.media}
-              alt="Dos teléfonos mostrando interfaces diseñadas por Wuality"
-              fill
-              priority
-              sizes="100vw"
-              className="object-cover"
-            />
+            {/* Pantalla de bloqueo del manual de marca */}
+            <LockScreen />
 
             {/* Isla dinámica */}
             <span
               className="absolute left-1/2 top-[calc(var(--dev-h)*0.0126)] h-[calc(var(--dev-h)*0.0412)] w-[calc(var(--dev-w)*0.318)] -translate-x-1/2 rounded-full bg-black opacity-[var(--chrome)]"
               aria-hidden
             />
-
-            {/* Marca sobre la pantalla */}
-            <div className="absolute left-1/2 top-[calc(var(--dev-h)*0.075)] flex h-[calc(var(--dev-h)*0.058)] w-[calc(var(--dev-w)*0.16)] -translate-x-1/2 items-center justify-center rounded-[calc(var(--dev-w)*0.045)] bg-white/85 opacity-[var(--chip)] backdrop-blur-md">
-              <Image
-                src="/media/brand/wuality-simbolo-red.png"
-                alt="Wuality"
-                width={80}
-                height={40}
-                className="h-[calc(var(--dev-h)*0.034)] w-auto"
-              />
-            </div>
 
             {/* Indicador de inicio */}
             <span

@@ -19,7 +19,6 @@ export const languages = [
 
 export const hero = {
   headline: "Somos Wuality, tu Partner en Transformación Digital",
-  media: "/media/work/hero-phones.jpg",
   words: ["Innovamos", "Conectamos"],
 };
 
@@ -59,7 +58,206 @@ export const services = [
  * llegar cada proyecto en "Nuestros proyectos". Los titulares salen de los
  * propios capítulos de cada caso, no de métricas nuevas.
  */
+/**
+ * Cartera. Los nueve primeros son los casos del Dossier Comercial 2026 (casos 01
+ * a 09), en su orden y con sus textos: titular, descripción, sector, alcance y
+ * web salen tal cual del dossier. Sus imágenes son capturas de las webs en
+ * vivo (Grupo Tinbet, Sunqu, Tuku), del Figma de Eusebio Arróniz o del propio
+ * dossier, y su logotipo es la placa de color de la página "Clientes": por eso
+ * llevan `badge` y su `bg` es exactamente el color de esa placa.
+ */
 export const projects = [
+  {
+    slug: "grupo-tinbet",
+    headline: "Un sitio corporativo a la altura de un grupo multisector",
+    accent: "#cdee8f",
+    name: "Grupo Tinbet",
+    logo: "/media/logos/grupo-tinbet.png",
+    badge: true,
+    shot: "/media/work/proj-grupo-tinbet.jpg",
+    bg: "#062a1e",
+    sector: "Holding corporativo",
+    site: "grupotinbet.pe",
+    tags: ["Branding", "Diseño Web", "Desarrollo Web"],
+    chapters: [
+      {
+        title: "Branding",
+        body: "Sistema de identidad para un holding peruano que integra iGaming, construcción e inversión: símbolo, logotipo, paleta multisector y aplicaciones corporativas.",
+      },
+      {
+        title: "Diseño y desarrollo web",
+        body: "Un sitio que conecta las tres verticales del grupo —entretenimiento, inversiones y seguridad— con secciones de obras por impuestos, principios, personas y talento, y noticias.",
+      },
+    ],
+  },
+  {
+    slug: "afiliados-tinbet",
+    headline: "Una landing que convierte audiencias en socios comerciales",
+    accent: "#a9e8c4",
+    name: "Afiliados Tinbet",
+    logo: "/media/logos/afiliados-tinbet.png",
+    badge: true,
+    shot: "/media/work/proj-afiliados-tinbet.jpg",
+    bg: "#151716",
+    sector: "Gaming & entretenimiento",
+    site: "afiliadostinbet.pe",
+    tags: ["UX/UI", "Copy de conversión", "Desarrollo Web"],
+    chapters: [
+      {
+        title: "UX/UI y desarrollo web",
+        body: "Diseño y desarrollo del sitio del programa de afiliados: propuesta de valor clara (Rev Share hasta 50% y CPA hasta S/ 600), comisiones escalonadas, panel de afiliados y programa de influencers.",
+      },
+    ],
+  },
+  {
+    slug: "peruana-en-rusia",
+    headline: "Del sueño de estudiar afuera a una postulación guiada",
+    accent: "#bcd8ff",
+    name: "Peruana en Rusia",
+    logo: "/media/logos/peruana-en-rusia.png",
+    badge: true,
+    shot: "/media/work/proj-peruana-en-rusia.jpg",
+    bg: "#007afc",
+    sector: "Educación internacional",
+    site: "peruanaenrusia.com",
+    tags: ["Branding", "Diseño Web", "Piezas digitales"],
+    chapters: [
+      {
+        title: "Branding",
+        body: "Identidad para una asesoría de becas en Rusia. El símbolo nace de las líneas de cebra: el cruce seguro hacia una nueva etapa. Incluye versión compacta Pe·Ru, recursos 3D y aplicaciones.",
+      },
+      {
+        title: "Diseño y desarrollo web",
+        body: "Sitio para captar postulantes a becas: video de presentación, acompañamiento paso a paso, casos de éxito y universidades, más piezas digitales para campañas.",
+      },
+    ],
+  },
+  {
+    slug: "sunqu-journeys",
+    headline: "El Perú no es un destino. Es una relación",
+    accent: "#e6e0b4",
+    name: "Sunqu Journeys",
+    logo: "/media/logos/sunqu-journeys.png",
+    badge: true,
+    shot: "/media/work/proj-sunqu-journeys.jpg",
+    bg: "#6f6a45",
+    sector: "Turismo experiencial",
+    // sunqujourneys.com (el del dossier) aún no responde: se enlaza la web publicada.
+    site: "ferdango.github.io/sunqu_onepage",
+    tags: ["Branding", "Estrategia", "Desarrollo Web"],
+    chapters: [
+      {
+        title: "Branding",
+        body: "Marca para una agencia de viajes experienciales. El símbolo fusiona corazón, GPS y avión con formas rectas inspiradas en la iconografía peruana; el patrón andino da vida a flota, merchandising y redes.",
+      },
+      {
+        title: "Diseño y desarrollo web",
+        body: "Experiencia web con storytelling de marca y un selector de journeys por emoción —la historia, el sabor, la gente— para viajes a medida con anfitriones locales.",
+      },
+    ],
+  },
+  {
+    slug: "tuku-travel",
+    headline: "Tours que se descubren, se entienden y se reservan",
+    accent: "#f6c5d3",
+    name: "Tuku Travel",
+    logo: "/media/logos/tuku-travel.png",
+    badge: true,
+    shot: "/media/work/proj-tuku-travel.jpg",
+    bg: "#c62f5c",
+    sector: "Turismo",
+    site: "tukutravel.com",
+    tags: ["Diseño Web", "Desarrollo Web", "E-commerce de tours"],
+    chapters: [
+      {
+        title: "Diseño y desarrollo web",
+        body: "Fichas de tour con galería, destacados, itinerario día a día, servicios incluidos y precio por adulto con reserva en línea; además, destinos e itinerarios por tipo de experiencia.",
+      },
+    ],
+  },
+  {
+    slug: "kingbuilder",
+    headline: "Catálogo técnico que vende autoridad",
+    accent: "#e8dcc2",
+    name: "KingBuilder",
+    logo: "/media/logos/kingbuilder.png",
+    badge: true,
+    shot: "/media/work/proj-kingbuilder.jpg",
+    bg: "#1c1c1c",
+    sector: "Construcción y minería",
+    // kingbuilder.pe (el del dossier) aún no responde, así que el caso va sin enlace.
+    tags: ["Branding", "Diseño Web", "Desarrollo Web"],
+    chapters: [
+      {
+        title: "Branding",
+        body: "Identidad para una constructora de tecnología minera: una K de líneas paralelas que expresa estructura e ingeniería, paleta de negro estructural, blanco arena, arena cobre y marrón monolito, y un sistema impreso y digital.",
+      },
+      {
+        title: "Diseño y desarrollo web",
+        body: "Sitio corporativo con seis líneas de solución, productos destacados con fichas técnicas, forma de trabajo de principio a fin, entornos de aplicación y una ruta clara de cotización.",
+      },
+    ],
+  },
+  {
+    slug: "tec-seg",
+    headline: "Una marca que se ve en la obra, en la calle y en digital",
+    accent: "#ffe08a",
+    name: "TEC & SEG",
+    logo: "/media/logos/tec-seg.png",
+    badge: true,
+    shot: "/media/work/proj-tec-seg.jpg",
+    bg: "#fcb203",
+    sector: "Seguridad para construcción",
+    tags: ["Branding", "Aplicaciones", "Look & feel web"],
+    chapters: [
+      {
+        title: "Branding",
+        body: "Marca para una empresa de seguridad especializada en obras de construcción pública y privada. Un escudo con un felino vigilante resume protección, disciplina y confianza.",
+      },
+      {
+        title: "Aplicaciones",
+        body: "Sistema de aplicaciones: flota vehicular, uniformes, papelería corporativa, credenciales y un look & feel web responsive para presentar servicios de seguridad física, custodia, seguridad electrónica y consultoría.",
+      },
+    ],
+  },
+  {
+    slug: "iep-eusebio-arroniz",
+    headline: "Una web escolar pensada para las familias",
+    accent: "#f9cdd8",
+    name: "IEP Eusebio Arróniz",
+    // En la lista del slider el nombre completo no cabe en una línea.
+    short: "Eusebio Arróniz",
+    logo: "/media/logos/iep-eusebio-arroniz.png",
+    badge: true,
+    shot: "/media/work/proj-iep-eusebio-arroniz.jpg",
+    bg: "#ffffff",
+    sector: "Educación escolar",
+    tags: ["UX/UI", "Arquitectura de información", "Prototipo"],
+    chapters: [
+      {
+        title: "UX/UI web",
+        body: "Diseño UX/UI del sitio institucional en Figma: admisión, metodologías por nivel —inicial, primaria y secundaria—, comunicados, testimonios, preguntas frecuentes y libro de reclamaciones, en versión desktop y mobile.",
+      },
+    ],
+  },
+  {
+    slug: "zenity",
+    headline: "Conecta tus finanzas en un solo lugar",
+    accent: "#cdd6ff",
+    name: "Zenity",
+    logo: "/media/logos/zenity.png",
+    badge: true,
+    shot: "/media/work/proj-zenity.jpg",
+    bg: "#0f1216",
+    sector: "Fintech",
+    tags: ["Product Design", "UX/UI app", "Design system"],
+    chapters: [
+      {
+        title: "Product design",
+        body: "App para negocios que reúne cuentas, tarjetas y conexiones API en un balance consolidado, con ingresos y egresos por cuenta, resúmenes diarios generados con IA y un asistente conversacional.",
+      },
+    ],
+  },
   {
     slug: "jockey-plaza",
     headline: "Tres toques hasta cualquier tienda del centro comercial",

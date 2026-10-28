@@ -66,9 +66,13 @@ function HeadlineBlock({ project }: { project: Project }) {
           {project.headline}
         </p>
         <div className="flex flex-wrap items-end justify-between gap-6">
-          <div className="relative h-[clamp(28px,3vw,56px)] w-[clamp(120px,14vw,260px)]">
-            <Image src={project.logo} alt={project.name} fill sizes="260px" className="object-contain object-left" />
-          </div>
+          {project.badge ? (
+            <Image src={project.logo} alt={project.name} className="h-[clamp(40px,4vw,76px)] w-auto rounded-[clamp(8px,0.7vw,14px)]" />
+          ) : (
+            <div className="relative h-[clamp(28px,3vw,56px)] w-[clamp(120px,14vw,260px)]">
+              <Image src={project.logo} alt={project.name} fill sizes="260px" className="object-contain object-left" />
+            </div>
+          )}
           <ul className="flex flex-wrap gap-2">
             {project.tags.map((t) => (
               <li key={t} className="rounded-full bg-ink/10 px-4 py-1.5 text-[clamp(12px,0.83vw,16px)] font-medium">
@@ -149,16 +153,40 @@ export default function CaseStudyPage({ project, next }: { project: Project; nex
           </div>
           <div>
             <Label>Cliente</Label>
-            {/* Sobre el color del proyecto: tres de los cuatro logotipos son oscuros y no se leían sobre la página. */}
-            <div
-              className="mt-4 inline-flex rounded-xl px-4 py-3"
-              style={{ backgroundColor: project.bg }}
-            >
-              <div className="relative h-[clamp(22px,1.9vw,32px)] w-[clamp(100px,9vw,160px)]">
-                <Image src={project.logo} alt={project.name} fill sizes="160px" className="object-contain" />
+            {project.badge ? (
+              // La placa del dossier ya es el logotipo sobre su color.
+              <Image src={project.logo} alt={project.name} className="mt-4 h-[clamp(44px,3.6vw,64px)] w-auto rounded-xl" />
+            ) : (
+              /* Sobre el color del proyecto: tres de los cuatro logotipos son oscuros y no se leían sobre la página. */
+              <div
+                className="mt-4 inline-flex rounded-xl px-4 py-3"
+                style={{ backgroundColor: project.bg }}
+              >
+                <div className="relative h-[clamp(22px,1.9vw,32px)] w-[clamp(100px,9vw,160px)]">
+                  <Image src={project.logo} alt={project.name} fill sizes="160px" className="object-contain" />
+                </div>
               </div>
-            </div>
+            )}
           </div>
+          {project.sector && (
+            <div>
+              <Label>Sector</Label>
+              <p className="mt-4 text-[clamp(1rem,1.05vw,1.25rem)] text-bone">{project.sector}</p>
+            </div>
+          )}
+          {project.site && (
+            <div>
+              <Label>Web</Label>
+              <a
+                href={`https://${project.site}/`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-4 inline-block text-[clamp(1rem,1.05vw,1.25rem)] text-bone underline decoration-bone/30 underline-offset-4 transition-colors duration-300 hover:text-blue hover:decoration-blue"
+              >
+                {project.site} ↗
+              </a>
+            </div>
+          )}
         </div>
       </Reveal>
 
