@@ -6,6 +6,7 @@
  * La base es el Figma "Wuality Web" (página "UI Desktop", frames 9:2 desktop y
  * 1573:153 mobile); servicios, modelos y casos salen del Dossier Comercial 2026.
  */
+import { posts } from "./blog";
 
 export type NavItem = { label: string; short: string; href: string };
 
@@ -33,22 +34,26 @@ export const services = [
   {
     title: "Brand Identity",
     items: "Cultura / Comunicación visual / Identidad / Propuesta de valor",
-    image: "/media/work/services-nike.jpg",
+    image: "/media/work/services-brand.jpg",
+    alt: "Identidades creadas por Wuality: símbolo de Grupo Tinbet, polo de Sunqu Journeys, emblema de KingBuilder, escudo y camioneta de TEC & SEG y marca de Peruana en Rusia",
   },
   {
     title: "Create Digital Products",
     items: "UX/UI / Product management / Front-end / Back-end / Apps",
-    image: "/media/work/proj-nu.jpg",
+    image: "/media/work/services-products.jpg",
+    alt: "Webs móviles diseñadas por Wuality para Tuku Travel, Peruana en Rusia, Grupo Tinbet, Sunqu Journeys y KingBuilder",
   },
   {
     title: "Strategy & AI-Driven Insights",
     items: "Accesibilidad / Customer journey / Research / Tendencias",
-    image: "/media/work/proj-backus.jpg",
+    image: "/media/work/services-strategy.jpg",
+    alt: "Pantallas de Zenity, el prototipo fintech de Wuality: balance consolidado, ingresos y egresos por cuenta y un asistente con IA que explica el balance",
   },
   {
     title: "Paid Media & SEO",
     items: "SEM / SEO / Paid social / Display / Video / Native",
-    image: "/media/work/proj-civitatis.png",
+    image: "/media/work/services-paid.jpg",
+    alt: "Campañas de Wuality: panel publicitario y evento de Peruana en Rusia, evento de Grupo Tinbet y posts para redes de Grupo Tinbet, Sunqu Journeys y Peruana en Rusia",
   },
 ];
 
@@ -508,114 +513,16 @@ export const meeting = {
   mailEndpoint: "https://formsubmit.co/ajax/hola@wuality.agency",
 };
 
-/**
- * Cuerpo del artículo tal cual viene en el Figma (frame "Single Article Text").
- * Es copia de maqueta, como el lorem ipsum del FAQ: los cinco posts comparten
- * el mismo cuerpo hasta que haya textos reales.
- */
-export type ArticleBlock = { type: "p" | "h2"; text: string };
+export type { ArticleBlock, BlogItem } from "./blog";
 
-const articleDemoBody: ArticleBlock[] = [
-  {
-    type: "p",
-    text: "Sin lugar a dudas, el fraude financiero es una práctica que amenaza las organizaciones bancarias desde hace décadas y, sin embargo, evoluciona constantemente obligando a las empresas a desarrollarse con ellas para fortalecer las vulnerabilidades, procesos e, incluso la fuerza humana para sobrellevar estos riesgos.",
-  },
-  {
-    type: "p",
-    text: "Ahora bien, si no sabes a detalle qué es el fraude financiero, cómo funciona o cuáles son los principales tipos, ¡este es el post para ti!",
-  },
-  { type: "h2", text: "Autofraude" },
-  {
-    type: "p",
-    text: "Ocurre cuando el propio cliente simula haber sido víctima de una estafa para obtener beneficios indebidos, como reembolsos o cancelaciones de deuda.",
-  },
-  {
-    type: "p",
-    text: "Es una práctica fraudulenta que perjudica a las instituciones financieras y suele ser difícil de detectar sin un sistema de monitoreo avanzado.",
-  },
-];
-
-const articleAuthor = { name: "José Quinteros", avatar: "/media/people/a1.jpg" };
-
-const articleLead =
-  "Conoce cómo el fraude financiero impacta a personas y empresas y cómo un sistema tecnológico puede mitigar este riesgo efectivamente en tu negocio.";
-
+/** Un artículo por cada caso de la cartera: los textos están en lib/blog.ts. */
 export const blog = {
   title: "Lo que necesitas saber para llegar más lejos",
-  /**
-   * `type` decide qué maqueta del Figma se usa al abrir el post: los "video"
-   * llevan el icono de YouTube en la tarjeta del home y abren "Single Article
-   * Video"; el resto abre "Single Article Text".
-   */
-  items: [
-    {
-      slug: "lo-que-necesitas-saber-para-llegar-mas-lejos",
-      type: "note",
-      date: "7 de mayo del 2025",
-      title: "Lo que necesitas saber para llegar más lejos",
-      image: "/media/work/blog-office.jpg",
-      cta: "Leer nota",
-      category: "Transformación Digital",
-      author: articleAuthor,
-      publishedAt: "04/07/2023",
-      lead: articleLead,
-      body: articleDemoBody,
-    },
-    {
-      slug: "ep1-conoce-a-tinbet",
-      type: "video",
-      date: "7 de mayo del 2025",
-      title: "EP1: Conoce a Tinbet",
-      image: "/media/work/blog-podcast.jpg",
-      category: "VideoBlogs",
-      author: articleAuthor,
-      publishedAt: "04/07/2023",
-      video: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-    },
-    {
-      slug: "diseno-de-producto-del-insight-al-release",
-      type: "note",
-      date: "7 de mayo del 2025",
-      title: "Diseño de producto: del insight al release",
-      image: "/media/work/blog-office.jpg",
-      cta: "Leer nota",
-      category: "Transformación Digital",
-      author: articleAuthor,
-      publishedAt: "04/07/2023",
-      lead: articleLead,
-      body: articleDemoBody,
-    },
-    {
-      slug: "ep2-metricas-que-si-importan",
-      type: "video",
-      date: "7 de mayo del 2025",
-      title: "EP2: Métricas que sí importan",
-      image: "/media/work/blog-podcast.jpg",
-      category: "VideoBlogs",
-      author: articleAuthor,
-      publishedAt: "04/07/2023",
-      video: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-    },
-    {
-      slug: "como-medimos-el-impacto-de-un-rediseno",
-      type: "note",
-      date: "7 de mayo del 2025",
-      title: "Cómo medimos el impacto de un rediseño",
-      image: "/media/work/blog-office.jpg",
-      cta: "Leer nota",
-      category: "Transformación Digital",
-      author: articleAuthor,
-      publishedAt: "04/07/2023",
-      lead: articleLead,
-      body: articleDemoBody,
-    },
-  ],
+  items: posts,
   share: "Compartir",
   next: "Siguiente artículo",
   related: "Más ideas para ti",
 };
-
-export type BlogItem = (typeof blog.items)[number];
 
 export const footer = {
   name: "Wuality: Agencia de Innovación & Tecnología",

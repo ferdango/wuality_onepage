@@ -7,7 +7,7 @@ import BlogRail from "@/components/BlogRail";
 import JsonLd from "@/components/JsonLd";
 import LangProvider from "@/components/LangProvider";
 import { getContent, localePath, type Lang } from "@/lib/i18n";
-import { articleGraph, blogDescription, blogImage, isoDate, pageMeta } from "@/lib/seo";
+import { articleGraph, articleProject, blogDescription, blogImage, isoDate, pageMeta } from "@/lib/seo";
 
 /** Los posts tienen el mismo slug en los dos idiomas. */
 export const articleParams = () => getContent("es").blog.items.map((item) => ({ slug: item.slug }));
@@ -15,6 +15,7 @@ export const articleParams = () => getContent("es").blog.items.map((item) => ({ 
 export function articleMetadata(slug: string, lang: Lang): Metadata {
   const item = getContent(lang).blog.items.find((i) => i.slug === slug);
   if (!item) return {};
+  const project = articleProject(item, lang);
   return pageMeta({
     lang,
     title: item.title,
@@ -26,7 +27,7 @@ export function articleMetadata(slug: string, lang: Lang): Metadata {
       publishedTime: isoDate(item.publishedAt),
       authors: [item.author.name],
       section: item.category,
-      tags: [item.category],
+      tags: [item.category, ...(project ? [project.name] : [])],
     },
   });
 }

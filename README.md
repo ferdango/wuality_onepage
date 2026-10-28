@@ -58,7 +58,8 @@ resultante es idéntico al original sin formato.
 - **Textos:** `lib/content.ts` es el diccionario español y define la forma;
   `lib/content.en.ts` es el inglés y TypeScript obliga a que tenga los mismos
   campos. Imágenes, colores y enlaces se heredan del español. Los textos de
-  interfaz (botones, etiquetas, avisos) están en `ui`.
+  interfaz (botones, etiquetas, avisos) están en `ui`. Los artículos del blog
+  van aparte, en `lib/blog.ts` y `lib/blog.en.ts` (ver más abajo).
 - **Componentes:** los de cliente leen el idioma con `useContent()`
   (`components/LangProvider.tsx`); los de servidor reciben `lang`.
 - **Selector:** lleva a la misma página en el otro idioma (y a la misma
@@ -170,11 +171,31 @@ propósito: en algunas máquinas la familia resuelve a su variante oblicua.
 | Modelos | Las dos tarjetas se apilan al bajar: cada una queda fija un poco más abajo que la anterior y la de atrás se encoge y se oscurece |
 | FAQ | Acordeón de apertura única con icono +/− y altura animada |
 | Agenda una reunión | Sección de 90vh. Flujo de 2 pasos: elección de plataforma (Meet/Zoom) → "Continuar" → formulario con selector de prefijo internacional, validación y estado de confirmación |
-| Blog | Carrusel con tarjetas de nota y de video |
+| Blog | Carrusel con un artículo por caso de la cartera; admite también tarjetas de video |
 | Flotantes | El botón de WhatsApp enlaza directo al chat de `+51 966 461 384` (número en `lib/content.ts`); el globo del diseño aparece al pasar el cursor, solo donde hay hover real. Botón de cookies con banner; la decisión se guarda en `localStorage` |
 
 Todo respeta `prefers-reduced-motion`: las animaciones de entrada y las ligadas al
 scroll se desactivan y el contenido se muestra en su estado final.
+
+## Blog
+
+Hay un artículo por cada caso de la cartera, firmado por "Equipo Wuality".
+
+- **Textos:** título, entradilla y categoría en `lib/blog.ts` (español) y
+  `lib/blog.en.ts` (inglés, indexado por el mismo slug); el cuerpo, en
+  `lib/articles.es.ts` y `lib/articles.en.ts`. El cuerpo va aparte porque el
+  diccionario viaja al navegador en todas las páginas y sólo la página del
+  artículo (de servidor) lo necesita. Si a un post le falta la traducción o el
+  cuerpo, el build falla. Sólo cuentan lo que es público de cada caso: nada de
+  cifras internas ni de contenido que en el propio proyecto aún es de ejemplo.
+- **Imágenes:** `public/media/blog/<slug>.jpg` (se ve a 16:11 en la tarjeta y a
+  768:420 en el artículo, así que lo importante va al centro) y su recorte de
+  1200×630 para redes en `public/og/<slug>.jpg`.
+- **Enlaces:** el campo `project` une el artículo con su caso: el artículo
+  termina con "Ver el caso de…" y sus datos estructurados apuntan al caso.
+- **Nuevo artículo:** añade el post y su cuerpo en los dos idiomas, su imagen y
+  su recorte para redes. La fecha (`publishedAt`, día/mes/año) genera la de la
+  tarjeta en cada idioma.
 
 ## Detalles de implementación que conviene conocer
 
@@ -240,8 +261,6 @@ cabe en el ancho del campo, y las opciones sí llevan color.
 Cosas que el Figma deja como placeholder y conviene reemplazar antes de publicar:
 
 - **FAQ**: las tres preguntas y respuestas son *lorem ipsum* en el diseño.
-- **Blog**: las imágenes de los episodios son capturas de terceros usadas como
-  referencia visual. Sustituir por material propio.
 - **Reviews**: en el Figma las cuatro tarjetas repiten el mismo testimonio; aquí se
   completaron con variantes coherentes. Reemplazar por los reales.
 - **Chat**: el texto del modal dice "Tinbet" en el diseño; se respetó literal.

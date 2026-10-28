@@ -2,7 +2,9 @@ import Link from "next/link";
 import Image from "@/components/ui/Img";
 import Reveal from "./ui/Reveal";
 import type { BlogItem } from "@/lib/content";
-import { blogPath, fill, getContent, type Content, type Lang } from "@/lib/i18n";
+import { blogPath, fill, getContent, projectPath, type Content, type Lang } from "@/lib/i18n";
+import { articleProject } from "@/lib/seo";
+import { articleBody } from "@/lib/articles";
 
 /**
  * Columna de lectura. El gutter va por fuera del ancho máximo —de ahí el
@@ -108,6 +110,7 @@ function ShareRail({ t }: { t: Content }) {
 
 export default function Article({ item, next, lang }: { item: BlogItem; next: BlogItem; lang: Lang }) {
   const t = getContent(lang);
+  const project = articleProject(item, lang);
   if (item.type === "video") {
     return (
       <article className="pb-0 pt-[calc(var(--header-h)+clamp(32px,5.3vw,80px))]">
@@ -180,7 +183,7 @@ export default function Article({ item, next, lang }: { item: BlogItem; next: Bl
           <div
             className={`flex w-full flex-col gap-6 ${T.body} leading-[1.5] text-[rgba(247,255,247,0.8)]`}
           >
-            {item.body?.map((block, i) =>
+            {articleBody(item.slug, lang).map((block, i) =>
               block.type === "h2" ? (
                 <h2 key={i} className={`${T.h2} font-bold leading-tight text-[#f7fff7]`}>
                   {block.text}
@@ -191,19 +194,30 @@ export default function Article({ item, next, lang }: { item: BlogItem; next: Bl
             )}
           </div>
 
-          <Link
-            href={blogPath(lang, next.slug)}
-            className="group flex h-12 items-center justify-center gap-3 rounded-lg border border-bone px-4 py-3 text-[0.875rem] font-bold text-bone transition-colors duration-400 hover:bg-bone/10"
-          >
-            {t.blog.next}
-            <Image
-              src="/media/ui/next-line.svg"
-              alt=""
-              width={16}
-              height={16}
-              className="size-4 transition-transform duration-400 ease-wuality group-hover:translate-x-1"
-            />
-          </Link>
+          <div className="flex flex-wrap justify-end gap-3">
+            {/* El caso de la cartera del que habla el artículo. */}
+            {project && (
+              <Link
+                href={projectPath(lang, project.slug)}
+                className="flex h-12 items-center justify-center rounded-lg border border-bone/40 px-4 py-3 text-[0.875rem] font-bold text-bone transition-colors duration-400 hover:border-bone hover:bg-bone/10"
+              >
+                {fill(t.ui.projects.open, { name: project.name })}
+              </Link>
+            )}
+            <Link
+              href={blogPath(lang, next.slug)}
+              className="group flex h-12 items-center justify-center gap-3 rounded-lg border border-bone px-4 py-3 text-[0.875rem] font-bold text-bone transition-colors duration-400 hover:bg-bone/10"
+            >
+              {t.blog.next}
+              <Image
+                src="/media/ui/next-line.svg"
+                alt=""
+                width={16}
+                height={16}
+                className="size-4 transition-transform duration-400 ease-wuality group-hover:translate-x-1"
+              />
+            </Link>
+          </div>
         </div>
       </div>
     </article>

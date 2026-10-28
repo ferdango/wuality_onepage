@@ -8,7 +8,8 @@
  * "Imagine. Create. Develop. Together.") quedan igual en los dos idiomas.
  */
 import * as es from "./content";
-import type { ArticleBlock, NavItem } from "./content";
+import type { NavItem } from "./content";
+import { categoryEn, dateEn, postTexts } from "./blog.en";
 
 /** Copia los elementos del español sustituyendo sólo los campos de texto. */
 function withTexts<T extends object>(base: readonly T[], texts: Partial<T>[]): T[] {
@@ -33,10 +34,22 @@ export const hero = {
 };
 
 export const services = withTexts(es.services, [
-  { items: "Culture / Visual communication / Identity / Value proposition" },
-  { items: "UX/UI / Product management / Front-end / Back-end / Apps" },
-  { items: "Accessibility / Customer journey / Research / Trends" },
-  { items: "SEM / SEO / Paid social / Display / Video / Native" },
+  {
+    items: "Culture / Visual communication / Identity / Value proposition",
+    alt: "Identities created by Wuality: the Grupo Tinbet symbol, a Sunqu Journeys T-shirt, the KingBuilder emblem, the TEC & SEG shield and pickup, and the Peruana en Rusia logo",
+  },
+  {
+    items: "UX/UI / Product management / Front-end / Back-end / Apps",
+    alt: "Mobile websites designed by Wuality for Tuku Travel, Peruana en Rusia, Grupo Tinbet, Sunqu Journeys and KingBuilder",
+  },
+  {
+    items: "Accessibility / Customer journey / Research / Trends",
+    alt: "Screens from Zenity, Wuality's fintech prototype: a consolidated balance, income and expenses per account, and an AI assistant that explains the balance",
+  },
+  {
+    items: "SEM / SEO / Paid social / Display / Video / Native",
+    alt: "Wuality campaigns: a Peruana en Rusia billboard and event, a Grupo Tinbet event, and social posts for Grupo Tinbet, Sunqu Journeys and Peruana en Rusia",
+  },
 ]);
 
 export const projects = withTexts(es.projects, [
@@ -294,47 +307,20 @@ export const meeting = {
   subtitle: "Choose a platform for our first meeting",
 };
 
-const articleLead =
-  "Learn how financial fraud affects people and businesses, and how a technology system can effectively mitigate this risk in your business.";
-
-const articleBody: ArticleBlock[] = [
-  {
-    type: "p",
-    text: "Without a doubt, financial fraud is a practice that has threatened banking organizations for decades, and yet it keeps evolving, forcing companies to evolve with it to strengthen their vulnerabilities, processes and even the human workforce to handle these risks.",
-  },
-  {
-    type: "p",
-    text: "Now, if you don't know in detail what financial fraud is, how it works or what its main types are, this post is for you!",
-  },
-  { type: "h2", text: "Self-fraud" },
-  {
-    type: "p",
-    text: "It happens when customers themselves pretend to have been victims of a scam to obtain undue benefits, such as refunds or debt cancellations.",
-  },
-  {
-    type: "p",
-    text: "It is a fraudulent practice that harms financial institutions and is usually hard to detect without an advanced monitoring system.",
-  },
-];
-
-const blogTexts: Record<string, { title: string }> = {
-  "lo-que-necesitas-saber-para-llegar-mas-lejos": { title: "What you need to know to go further" },
-  "ep1-conoce-a-tinbet": { title: "EP1: Meet Tinbet" },
-  "diseno-de-producto-del-insight-al-release": { title: "Product design: from insight to release" },
-  "ep2-metricas-que-si-importan": { title: "EP2: Metrics that actually matter" },
-  "como-medimos-el-impacto-de-un-rediseno": { title: "How we measure the impact of a redesign" },
-};
-
+/** Cada post del español con sus textos en inglés (lib/blog.en.ts); imagen, autor y fecha se heredan. */
 export const blog = {
   title: "What you need to know to go further",
-  items: es.blog.items.map((item) => ({
-    ...item,
-    ...blogTexts[item.slug],
-    date: "May 7, 2025",
-    category: item.category === "VideoBlogs" ? "VideoBlogs" : "Digital Transformation",
-    ...("cta" in item && { cta: "Read article" }),
-    ...("lead" in item && { lead: articleLead, body: articleBody }),
-  })) as typeof es.blog.items,
+  items: es.blog.items.map((item) => {
+    const texts = postTexts[item.slug];
+    if (!texts) throw new Error(`content.en: falta la traducción del post ${item.slug}`);
+    return {
+      ...item,
+      ...texts,
+      date: dateEn(item.publishedAt),
+      category: categoryEn[item.category] ?? item.category,
+      ...(item.cta && { cta: "Read article" }),
+    };
+  }),
   share: "Share",
   next: "Next article",
   related: "More ideas for you",

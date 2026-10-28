@@ -146,7 +146,7 @@ export default function Services() {
                 <Image
                   key={s.title}
                   src={s.image}
-                  alt={i === active ? s.title : ""}
+                  alt={i === active ? s.alt : ""}
                   fill
                   sizes="50vw"
                   className="object-cover"
@@ -182,7 +182,7 @@ export default function Services() {
                 <Image
                   key={s.title}
                   src={s.image}
-                  alt={i === active ? s.title : ""}
+                  alt={i === active ? s.alt : ""}
                   fill
                   sizes="100vw"
                   className="object-cover"

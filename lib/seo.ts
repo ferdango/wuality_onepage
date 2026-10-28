@@ -286,10 +286,16 @@ export function blogDescription(item: BlogItem, lang: Lang) {
   );
 }
 
+/** Caso de la cartera del que habla un artículo, si lo hay. */
+export function articleProject(item: BlogItem, lang: Lang) {
+  return item.project ? getContent(lang).projects.find((p) => p.slug === item.project) : undefined;
+}
+
 export function articleGraph(item: BlogItem, lang: Lang) {
   const { blog } = getContent(lang);
   const url = abs(blogPath(lang, item.slug));
   const home = localePath(lang, "/");
+  const project = articleProject(item, lang);
   return {
     "@context": "https://schema.org",
     "@graph": [
@@ -304,7 +310,18 @@ export function articleGraph(item: BlogItem, lang: Lang) {
         datePublished: isoDate(item.publishedAt),
         inLanguage: siteText[lang].language,
         articleSection: item.category,
-        author: { "@type": "Person", name: item.author.name },
+        keywords: [...new Set([item.category, project?.name, ...(project?.tags ?? [])].filter(Boolean))].join(", "),
+        // Los firma el equipo, así que el autor es la propia organización.
+        author: { "@id": ORG_ID },
+        // El caso de la cartera (su página publica ese mismo @id en projectGraph).
+        ...(project && {
+          about: {
+            "@type": "CreativeWork",
+            "@id": `${abs(projectPath(lang, project.slug))}#caso`,
+            name: `${project.name}: ${project.headline}`,
+            url: abs(projectPath(lang, project.slug)),
+          },
+        }),
         publisher: { "@id": ORG_ID },
         isPartOf: { "@type": "Blog", name: blog.title, url: abs(`${home}#blog`) },
       },
