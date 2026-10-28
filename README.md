@@ -49,6 +49,27 @@ entre etiquetas y añade al `<head>` una línea que los retira mientras el
 navegador lee la página. En cada build comprueba con `parse5` que el documento
 resultante es idéntico al original sin formato.
 
+## SEO
+
+Todo sale de `lib/seo.ts`:
+
+- **URL pública:** `site.url` (por defecto GitHub Pages). Para publicar en otro
+  dominio, por ejemplo wuality.agency, basta con definir `NEXT_PUBLIC_SITE_URL`
+  en el build: canonicals, `og:url`, sitemap y datos estructurados se rehacen
+  solos.
+- **Metadatos por página** con `pageMeta()`: título (plantilla `%s | Wuality`),
+  descripción, canonical, Open Graph y Twitter. Las imágenes para compartir
+  (1200×630) están en `public/og/`.
+- **Datos estructurados** (JSON-LD): organización, sitio, cartera y preguntas
+  frecuentes en la home; ficha del caso y migas en cada proyecto; artículo y
+  migas en cada post.
+- `sitemap.xml`, `robots.txt` y `manifest.webmanifest` se generan en el build
+  (`app/sitemap.ts`, `app/robots.ts`, `app/manifest.ts`). En GitHub Pages el
+  sitio cuelga de `/wuality_onepage` y los buscadores sólo leen el robots.txt de
+  la raíz del dominio, así que el sitemap hay que darlo de alta a mano en Search
+  Console. Para verificar la propiedad, define
+  `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` con el código que da Search Console.
+
 ## Estructura
 
 ```
@@ -60,6 +81,7 @@ components/         una sección por archivo + ui/ con primitivos
 lib/content.ts      todo el copy y las rutas de assets (single source of truth)
 public/media/       assets exportados del Figma (brand, ui, work, logos, people)
 scripts/            posproceso del build (HTML tabulado) y servidor de ./out
+lib/seo.ts          URL pública, metadatos por página y datos estructurados
 ```
 
 "Últimos posts" (`components/SocialPosts.tsx`) muestra las publicaciones de

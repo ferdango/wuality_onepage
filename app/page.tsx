@@ -13,10 +13,15 @@ import Meeting from "@/components/Meeting";
 import Blog from "@/components/Blog";
 import Footer from "@/components/Footer";
 import FloatingActions from "@/components/FloatingActions";
+import JsonLd from "@/components/JsonLd";
+import { homeGraph, pageMeta, site } from "@/lib/seo";
+
+export const metadata = pageMeta({ description: site.description, path: "/" });
 
 export default function Page() {
   return (
     <>
+      <JsonLd data={homeGraph()} />
       <Header />
       <main>
         <Hero />

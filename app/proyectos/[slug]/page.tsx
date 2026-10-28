@@ -4,7 +4,9 @@ import Footer from "@/components/Footer";
 import FloatingActions from "@/components/FloatingActions";
 import CaseStudyPage from "@/components/CaseStudyPage";
 import Meeting from "@/components/Meeting";
+import JsonLd from "@/components/JsonLd";
 import { projects } from "@/lib/content";
+import { pageMeta, projectDescription, projectGraph, projectTitle } from "@/lib/seo";
 
 type Params = { slug: string };
 
@@ -16,11 +18,14 @@ export function generateStaticParams(): Params[] {
 export function generateMetadata({ params }: { params: Params }): Metadata {
   const project = projects.find((p) => p.slug === params.slug);
   if (!project) return {};
-  return {
-    title: `${project.name} — Wuality`,
-    description: project.headline,
-    openGraph: { title: project.name, images: [project.shot], type: "article" },
-  };
+  return pageMeta({
+    title: projectTitle(project),
+    description: projectDescription(project),
+    path: `/proyectos/${project.slug}/`,
+    image: { url: `/og/${project.slug}.jpg`, width: 1200, height: 630, alt: `${project.name}: ${project.headline}` },
+    type: "article",
+    article: { authors: ["Wuality"], section: "Proyectos", tags: [...project.tags] },
+  });
 }
 
 export default function ProjectPage({ params }: { params: Params }) {
@@ -31,6 +36,7 @@ export default function ProjectPage({ params }: { params: Params }) {
 
   return (
     <>
+      <JsonLd data={projectGraph(project)} />
       {/* En una ruta interna los anclajes del menú tienen que volver al home. */}
       <Header linkBase="/" />
       <main>

@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Chau_Philomene_One, Figtree } from "next/font/google";
 import "./globals.css";
+import { site } from "@/lib/seo";
 
 /**
  * El diseño usa Charlie Display (tipografía licenciada de Atlassian, no disponible
@@ -23,16 +24,30 @@ const chau = Chau_Philomene_One({
   display: "swap",
 });
 
+/**
+ * Metadatos comunes. Cada página define los suyos con `pageMeta` (canonical,
+ * descripción, Open Graph y Twitter); aquí van la base de las URL absolutas, la
+ * plantilla de título y lo que no cambia entre páginas.
+ */
 export const metadata: Metadata = {
-  title: "Wuality — Tu Partner en Transformación Digital",
-  description:
-    "Wuality: Agencia de Innovación & Tecnología. Creamos experiencias digitales, impulsamos marcas.",
-  openGraph: {
-    title: "Wuality — Tu Partner en Transformación Digital",
-    description: "Creamos experiencias digitales, impulsamos marcas.",
-    type: "website",
-    locale: "es_PE",
+  metadataBase: new URL(site.url),
+  title: { default: site.title, template: "%s | Wuality" },
+  description: site.description,
+  applicationName: site.name,
+  authors: [{ name: site.name, url: site.url }],
+  creator: site.name,
+  publisher: site.name,
+  category: "technology",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1, "max-video-preview": -1 },
   },
+  // Que iOS no convierta en enlaces números y correos que no lo son.
+  formatDetection: { telephone: false, email: false, address: false },
+  ...(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION && {
+    verification: { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION },
+  }),
 };
 
 export const viewport: Viewport = {

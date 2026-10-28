@@ -1,4 +1,5 @@
 import Image from "@/components/ui/Img";
+import { FIGURE_SIZE } from "@/lib/figures";
 
 export type Piece = {
   /** Nombre del archivo en /media/brand/figuras, sin extensión. */
@@ -51,8 +52,7 @@ export default function BrandPattern({
           key={i}
           src={`/media/brand/figuras/${p.fig}.png`}
           alt=""
-          width={420}
-          height={420}
+          {...FIGURE_SIZE[p.fig]}
           className="absolute max-w-none"
           style={{
             left: `${p.x}%`,

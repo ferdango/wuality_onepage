@@ -3,6 +3,7 @@
 import Image from "@/components/ui/Img";
 import { useReducedMotion } from "motion/react";
 import { useCallback, useEffect, useRef } from "react";
+import { FIGURE_SIZE } from "@/lib/figures";
 
 /**
  * Normaliza un incremento de ángulo al rango (-180, 180]. Sin esto, cruzar el
@@ -216,8 +217,7 @@ export default function MethodCycle({
           key={n.fig}
           src={`/media/brand/figuras/${n.fig}.png`}
           alt=""
-          width={380}
-          height={380}
+          {...FIGURE_SIZE[n.fig]}
           draggable={false}
           className="pointer-events-none absolute max-w-none transition-[opacity,scale] duration-700 ease-wuality"
           style={{

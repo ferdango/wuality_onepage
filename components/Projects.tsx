@@ -21,7 +21,8 @@ const N = projects.length;
 
 /**
  * Scroll que consume cada proyecto mientras el panel está anclado. Eran 70 con
- * cuatro proyectos; con los trece de la cartera el panel se hacía eterno.
+ * los cuatro de muestra del Figma; con los nueve de la cartera el panel se
+ * hacía eterno.
  */
 const STEP_SVH = 50;
 
@@ -285,14 +286,8 @@ function ProjectCard({
           {project.headline}
         </span>
         <span className="flex items-end justify-between gap-4">
-          {project.badge ? (
-            // Placa de color del dossier: el logotipo ya trae su fondo de marca.
-            <Image src={project.logo} alt={project.name} className="h-[clamp(30px,2.6vw,50px)] w-auto rounded-[clamp(6px,0.5vw,10px)]" />
-          ) : (
-            <span className="relative h-[clamp(20px,1.7vw,32px)] w-[clamp(90px,8vw,150px)]">
-              <Image src={project.logo} alt={project.name} fill sizes="150px" className="object-contain object-left" />
-            </span>
-          )}
+          {/* Placa de color del dossier: el logotipo ya trae su fondo de marca. */}
+          <Image src={project.logo} alt={project.name} className="h-[clamp(30px,2.6vw,50px)] w-auto rounded-[clamp(6px,0.5vw,10px)]" />
           <Chip label={project.tags[0]} tone="dark" />
         </span>
       </span>

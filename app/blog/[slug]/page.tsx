@@ -4,7 +4,9 @@ import Footer from "@/components/Footer";
 import FloatingActions from "@/components/FloatingActions";
 import Article from "@/components/Article";
 import BlogRail from "@/components/BlogRail";
+import JsonLd from "@/components/JsonLd";
 import { blog } from "@/lib/content";
+import { articleGraph, blogDescription, blogImage, isoDate, pageMeta } from "@/lib/seo";
 
 type Params = { slug: string };
 
@@ -16,11 +18,19 @@ export function generateStaticParams(): Params[] {
 export function generateMetadata({ params }: { params: Params }): Metadata {
   const item = blog.items.find((i) => i.slug === params.slug);
   if (!item) return {};
-  return {
-    title: `${item.title} — Wuality`,
-    description: "lead" in item ? item.lead : item.title,
-    openGraph: { title: item.title, images: [item.image], type: "article" },
-  };
+  return pageMeta({
+    title: item.title,
+    description: blogDescription(item),
+    path: `/blog/${item.slug}/`,
+    image: blogImage(item),
+    type: "article",
+    article: {
+      publishedTime: isoDate(item.publishedAt),
+      authors: [item.author.name],
+      section: item.category,
+      tags: [item.category],
+    },
+  });
 }
 
 export default function ArticlePage({ params }: { params: Params }) {
@@ -41,6 +51,7 @@ export default function ArticlePage({ params }: { params: Params }) {
 
   return (
     <>
+      <JsonLd data={articleGraph(item)} />
       {/* En una ruta interna los anclajes del menú tienen que volver al home. */}
       <Header linkBase="/" />
       <main>

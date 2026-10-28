@@ -3,7 +3,11 @@ import Link from "next/link";
 import Logo from "@/components/ui/Logo";
 
 export const metadata: Metadata = {
-  title: "Página no encontrada — Wuality",
+  title: "Página no encontrada",
+  description: "La página que buscas no existe o ya no está disponible en Wuality.",
+  // Next ya añade un noindex al 404, pero el layout pide index: sin esto, el
+  // HTML llevaría las dos órdenes a la vez.
+  robots: { index: false, follow: true },
 };
 
 /**

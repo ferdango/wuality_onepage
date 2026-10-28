@@ -46,25 +46,16 @@ export const services = [
 ];
 
 /**
- * Cada proyecto alimenta su tarjeta en "Nuestros proyectos" y el detalle que se
- * abre debajo al hacer clic.
+ * Cartera: los nueve casos del Dossier Comercial 2026 (casos 01 a 09), en su
+ * orden y con sus textos: titular, descripción, sector, alcance y web salen
+ * tal cual del dossier. Cada uno alimenta su tarjeta en "Nuestros proyectos"
+ * (`headline` y `accent` son la tarjeta de color que se revela sobre la foto)
+ * y su página de caso.
  *
- * OJO: los textos de `chapters` son de relleno. El Figma solo trae un caso de
- * estudio (Meltwater en desktop, "Starbucks LLC" en mobile) y tampoco coincide
- * con estos cuatro clientes, así que hay que sustituirlos por los reales.
- */
-/**
- * `headline` y `accent` son la tarjeta de color que se revela sobre la foto al
- * llegar cada proyecto en "Nuestros proyectos". Los titulares salen de los
- * propios capítulos de cada caso, no de métricas nuevas.
- */
-/**
- * Cartera. Los nueve primeros son los casos del Dossier Comercial 2026 (casos 01
- * a 09), en su orden y con sus textos: titular, descripción, sector, alcance y
- * web salen tal cual del dossier. Sus imágenes son capturas de las webs en
- * vivo (Grupo Tinbet, Sunqu, Tuku), del Figma de Eusebio Arróniz o del propio
- * dossier, y su logotipo es la placa de color de la página "Clientes": por eso
- * llevan `badge` y su `bg` es exactamente el color de esa placa.
+ * Imágenes: capturas de las webs en vivo (Grupo Tinbet, Sunqu, Tuku), del
+ * Figma de Eusebio Arróniz o del propio dossier. El logotipo es la placa de
+ * color de la página "Clientes" del dossier, así que `bg` es exactamente el
+ * color de esa placa.
  */
 export const projects = [
   {
@@ -73,7 +64,6 @@ export const projects = [
     accent: "#cdee8f",
     name: "Grupo Tinbet",
     logo: "/media/logos/grupo-tinbet.png",
-    badge: true,
     shot: "/media/work/proj-grupo-tinbet.jpg",
     bg: "#062a1e",
     sector: "Holding corporativo",
@@ -96,7 +86,6 @@ export const projects = [
     accent: "#a9e8c4",
     name: "Afiliados Tinbet",
     logo: "/media/logos/afiliados-tinbet.png",
-    badge: true,
     shot: "/media/work/proj-afiliados-tinbet.jpg",
     bg: "#151716",
     sector: "Gaming & entretenimiento",
@@ -115,7 +104,6 @@ export const projects = [
     accent: "#bcd8ff",
     name: "Peruana en Rusia",
     logo: "/media/logos/peruana-en-rusia.png",
-    badge: true,
     shot: "/media/work/proj-peruana-en-rusia.jpg",
     bg: "#007afc",
     sector: "Educación internacional",
@@ -138,7 +126,6 @@ export const projects = [
     accent: "#e6e0b4",
     name: "Sunqu Journeys",
     logo: "/media/logos/sunqu-journeys.png",
-    badge: true,
     shot: "/media/work/proj-sunqu-journeys.jpg",
     bg: "#6f6a45",
     sector: "Turismo experiencial",
@@ -162,7 +149,6 @@ export const projects = [
     accent: "#f6c5d3",
     name: "Tuku Travel",
     logo: "/media/logos/tuku-travel.png",
-    badge: true,
     shot: "/media/work/proj-tuku-travel.jpg",
     bg: "#c62f5c",
     sector: "Turismo",
@@ -181,7 +167,6 @@ export const projects = [
     accent: "#e8dcc2",
     name: "KingBuilder",
     logo: "/media/logos/kingbuilder.png",
-    badge: true,
     shot: "/media/work/proj-kingbuilder.jpg",
     bg: "#1c1c1c",
     sector: "Construcción y minería",
@@ -204,7 +189,6 @@ export const projects = [
     accent: "#ffe08a",
     name: "TEC & SEG",
     logo: "/media/logos/tec-seg.png",
-    badge: true,
     shot: "/media/work/proj-tec-seg.jpg",
     bg: "#fcb203",
     sector: "Seguridad para construcción",
@@ -228,7 +212,6 @@ export const projects = [
     // En la lista del slider el nombre completo no cabe en una línea.
     short: "Eusebio Arróniz",
     logo: "/media/logos/iep-eusebio-arroniz.png",
-    badge: true,
     shot: "/media/work/proj-iep-eusebio-arroniz.jpg",
     bg: "#ffffff",
     sector: "Educación escolar",
@@ -246,7 +229,6 @@ export const projects = [
     accent: "#cdd6ff",
     name: "Zenity",
     logo: "/media/logos/zenity.png",
-    badge: true,
     shot: "/media/work/proj-zenity.jpg",
     bg: "#0f1216",
     sector: "Fintech",
@@ -255,103 +237,6 @@ export const projects = [
       {
         title: "Product design",
         body: "App para negocios que reúne cuentas, tarjetas y conexiones API en un balance consolidado, con ingresos y egresos por cuenta, resúmenes diarios generados con IA y un asistente conversacional.",
-      },
-    ],
-  },
-  {
-    slug: "jockey-plaza",
-    headline: "Tres toques hasta cualquier tienda del centro comercial",
-    accent: "#f2cdb5",
-    name: "Jockey Plaza",
-    logo: "/media/logos/jockeyplaza.png",
-    shot: "/media/work/proj-jockeyplaza.jpg",
-    bg: "#7f756b",
-    tags: ["Diseño Web", "Desarrollo Web", "Branding"],
-    chapters: [
-      {
-        title: "Branding",
-        body: "Trasladamos la experiencia del centro comercial a una identidad digital propia: un sistema visual cálido y editorial que funciona igual en una ficha de tienda que en una campaña de temporada.",
-      },
-      {
-        title: "Desarrollo Web",
-        body: "App y sitio comparten una misma capa de contenido, de modo que catálogo, horarios y promociones se publican una sola vez y llegan a todos los canales sin duplicar trabajo.",
-      },
-      {
-        title: "Diseño Web",
-        body: "Rediseñamos la navegación alrededor de lo que la gente realmente busca —qué hay cerca, qué está abierto, qué está en oferta— y redujimos a tres toques el camino hasta una tienda.",
-      },
-    ],
-  },
-  {
-    slug: "civitatis",
-    headline: "Una ficha de actividad que resuelve las dudas antes de reservar",
-    // Menta y no el naranja de su fondo: con el mismo color la tarjeta no se distinguía de la foto.
-    accent: "#b9f0d8",
-    name: "Civitatis",
-    logo: "/media/logos/civitatis.png",
-    shot: "/media/work/proj-civitatis.png",
-    bg: "#f78832",
-    tags: ["Diseño Web", "Producto", "UX Research"],
-    chapters: [
-      {
-        title: "UX Research",
-        body: "Acompañamos a viajeros reales durante la reserva para entender dónde se caían. La fricción no estaba en el precio, sino en no saber qué incluía cada actividad.",
-      },
-      {
-        title: "Producto",
-        body: "Reordenamos la ficha de actividad para responder primero las dudas que frenaban la compra: qué incluye, cuánto dura y qué pasa si llueve.",
-      },
-      {
-        title: "Diseño Web",
-        body: "Un sistema de componentes que soporta miles de actividades en varios idiomas sin que la página pierda ritmo ni personalidad.",
-      },
-    ],
-  },
-  {
-    slug: "nu",
-    headline: "De semanas a días para lanzar una pantalla nueva",
-    accent: "#c7b5f4",
-    name: "Nu",
-    logo: "/media/logos/nu.png",
-    shot: "/media/work/proj-nu.jpg",
-    bg: "#e0e0e0",
-    tags: ["Producto", "UX-UI", "Design System"],
-    chapters: [
-      {
-        title: "UX-UI",
-        body: "Diseñamos el panel de finanzas para que la primera pantalla responda la pregunta que todos se hacen al abrir la app: cuánto tengo y en qué se me fue.",
-      },
-      {
-        title: "Design System",
-        body: "Una librería de componentes accesibles y tipada, compartida entre equipos, que bajó de semanas a días el tiempo de lanzar una pantalla nueva.",
-      },
-      {
-        title: "Producto",
-        body: "Iteramos sobre datos de uso real: cada cambio salió a un porcentaje de usuarios antes de convertirse en la experiencia por defecto.",
-      },
-    ],
-  },
-  {
-    slug: "backus",
-    headline: "Pedidos sin señal para el equipo de campo",
-    accent: "#94c5f2",
-    name: "Backus",
-    logo: "/media/logos/backus.png",
-    shot: "/media/work/proj-backus.jpg",
-    bg: "#cdc8dc",
-    tags: ["Desarrollo Web", "Estrategia", "Data"],
-    chapters: [
-      {
-        title: "Estrategia",
-        body: "Mapeamos el recorrido completo del punto de venta para decidir qué debía resolver la herramienta y qué no. Menos funciones, mejor ejecutadas.",
-      },
-      {
-        title: "Desarrollo Web",
-        body: "Una plataforma que funciona con conexión intermitente: el equipo de campo registra pedidos sin señal y todo se sincroniza al recuperarla.",
-      },
-      {
-        title: "Data",
-        body: "Tableros que muestran cobertura y rotación por zona, de modo que las decisiones comerciales dejan de depender de la hoja de cálculo de cada quien.",
       },
     ],
   },

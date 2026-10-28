@@ -6,6 +6,7 @@ import { useRef, useState } from "react";
 import MethodCycle from "./ui/MethodCycle";
 import SectionTitle from "./ui/SectionTitle";
 import { methodology } from "@/lib/content";
+import { FIGURE_SIZE } from "@/lib/figures";
 
 type Card = (typeof methodology)[number];
 
@@ -36,8 +37,7 @@ function MethodCard({ card, active = true }: { card: Card; active?: boolean }) {
       <Image
         src={`/media/brand/figuras/${card.fig}.png`}
         alt=""
-        width={380}
-        height={380}
+        {...FIGURE_SIZE[card.fig]}
         className="absolute -top-[clamp(18px,1.5vw,28px)] left-[clamp(10px,1vw,18px)] h-auto w-[clamp(44px,3.6vw,68px)]"
       />
       <p
