@@ -87,7 +87,7 @@ function FollowButton({ profile }: { profile: Profile }) {
       href={profile.href}
       target="_blank"
       rel="noopener noreferrer"
-      className="group flex w-fit items-center gap-4 rounded-full border border-bone/30 px-7 py-3.5 text-[length:var(--fs-sm)] font-semibold text-bone transition-colors duration-300 hover:border-blue hover:text-blue"
+      className="group flex w-fit items-center gap-4 rounded-full border border-bone/30 px-7 py-3.5 text-[length:var(--fs-sm)] font-semibold text-bone transition-colors duration-300 hover:border-blue hover:text-sky"
     >
       {profile.cta}
       <Arrow className="size-5 transition-transform duration-400 group-hover:translate-x-1" />
@@ -312,7 +312,7 @@ function PostsRail({ posts, accepted }: { posts: Post[]; accepted: boolean }) {
               onClick={() => step(dir)}
               disabled={dir < 0 ? edges.start : edges.end}
               aria-label={dir < 0 ? ui.social.prev : ui.social.next}
-              className="grid size-12 place-items-center rounded-full border border-bone/30 text-bone transition-colors duration-300 hover:border-blue hover:text-blue disabled:pointer-events-none disabled:opacity-30"
+              className="grid size-12 place-items-center rounded-full border border-bone/30 text-bone transition-colors duration-300 hover:border-blue hover:text-sky disabled:pointer-events-none disabled:opacity-30"
             >
               <Arrow className={`size-5 ${dir < 0 ? "rotate-180" : ""}`} />
             </button>
@@ -340,7 +340,7 @@ export default function SocialPosts() {
                   href={p.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 rounded-full border border-bone/30 px-5 py-2.5 text-[length:var(--fs-xs)] font-semibold text-bone transition-colors duration-300 hover:border-blue hover:text-blue"
+                  className="flex items-center gap-2 rounded-full border border-bone/30 px-5 py-2.5 text-[length:var(--fs-xs)] font-semibold text-bone transition-colors duration-300 hover:border-blue hover:text-sky"
                 >
                   <Image src={p.icon} alt="" width={32} height={32} className="size-5" />
                   {p.handle}

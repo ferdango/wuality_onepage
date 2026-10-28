@@ -65,7 +65,7 @@ export function BlogCard({ item }: { item: BlogItem }) {
         </h3>
         <Link
           href={href}
-          className="mt-4 w-fit rounded-full border border-bone/30 px-6 py-2.5 text-[clamp(12px,0.8333vw,16px)] font-semibold text-bone transition-colors duration-300 hover:border-blue hover:text-blue"
+          className="mt-4 w-fit rounded-full border border-bone/30 px-6 py-2.5 text-[clamp(12px,0.8333vw,16px)] font-semibold text-bone transition-colors duration-300 hover:border-blue hover:text-sky"
         >
           {item.cta}
         </Link>

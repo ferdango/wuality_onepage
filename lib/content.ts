@@ -380,7 +380,8 @@ export const models = {
       title: "Partners Model",
       body: "Nos integramos como tu equipo digital extendido: un roadmap continuo con prioridades que se ajustan a tu negocio.",
       cta: "Descubre más",
-      bg: "#007afc",
+      // Azul más profundo que el de marca: el texto blanco pasa de 3,6:1 a 5,4:1.
+      bg: "#0066d6",
       image: "/media/work/models-team.jpg",
     },
     {
@@ -535,7 +536,8 @@ export const footer = {
    * experiencias digitales, impulsamos marcas.") con sólo dos palabras en color.
    */
   claim: [
-    { text: "Imagine", color: "#007afc" },
+    // El azul de texto (--color-sky), no el de marca: sobre el pie oscuro éste no llega a 4,5:1.
+    { text: "Imagine", color: "#3d9bff" },
     { text: ".", color: "#7c8282" },
     { text: " " },
     { text: "Create", color: "#fbbd1d" },
@@ -557,7 +559,7 @@ export const footer = {
 };
 
 export const chat = {
-  question: "¿Alguna pregunta sobre Tinbet para empresas?",
+  question: "¿Tienes un proyecto en mente? Conversemos.",
   cta: "Iniciar chat",
   /** Número de atención. `href` se deriva de aquí: wa.me solo acepta dígitos. */
   phone: "+51 966 461 384",
@@ -565,7 +567,12 @@ export const chat = {
 };
 
 export const cookies = {
-  body: "Si aceptas las cookies, las usaremos para mejorar y personalizar tu experiencia y para permitir que nuestros partners te muestren anuncios personalizados de PayPal cuando visites otros sitios web.",
+  /**
+   * Describe lo que hace la web de verdad: guarda la decisión en el navegador
+   * y, sólo si se acepta, carga los posts de TikTok e Instagram de "Últimos
+   * posts", que traen sus propias cookies. No hay analítica ni publicidad.
+   */
+  body: "Usamos el almacenamiento de tu navegador para que la web funcione y recuerde tu elección. Si aceptas, también cargaremos las publicaciones de TikTok e Instagram, que pueden usar sus propias cookies.",
   link: "Administrar las cookies y obtener más información",
   accept: "Aceptar",
   reject: "Rechazar",

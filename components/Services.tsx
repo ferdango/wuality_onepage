@@ -45,7 +45,7 @@ function Cta() {
   return (
     <a
       href="#contacto"
-      className="group flex items-center gap-4 rounded-full border border-bone/30 px-8 py-4 text-[length:var(--fs-sm)] font-semibold text-bone transition-colors duration-300 hover:border-blue hover:text-blue"
+      className="group flex items-center gap-4 rounded-full border border-bone/30 px-8 py-4 text-[length:var(--fs-sm)] font-semibold text-bone transition-colors duration-300 hover:border-blue hover:text-sky"
     >
       {ui.services.cta}
       <svg viewBox="0 0 24 24" className="size-5 transition-transform duration-400 group-hover:translate-x-1" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
@@ -193,7 +193,7 @@ export default function Services() {
 
             <a
               href="#contacto"
-              className="block shrink-0 bg-[#0b1a2e] py-4 text-center text-[length:var(--fs-body)] font-bold text-blue transition-colors duration-300 active:bg-[#10233c]"
+              className="block shrink-0 bg-[#0b1a2e] py-4 text-center text-[length:var(--fs-body)] font-bold text-sky transition-colors duration-300 active:bg-[#10233c]"
             >
               {ui.services.cta}
             </a>
@@ -204,7 +204,7 @@ export default function Services() {
                 <li
                   key={s.title}
                   className="h-1.5 rounded-full transition-all duration-500 ease-wuality"
-                  style={{ width: i === active ? 28 : 6, backgroundColor: i === active ? "#f4f4f4" : "#2a3335" }}
+                  style={{ width: i === active ? 28 : 6, backgroundColor: i === active ? "#f4f4f4" : "#5b6466" }}
                 />
               ))}
             </ul>

@@ -279,7 +279,7 @@ export default function Meeting() {
               <button
                 type="button"
                 onClick={onContinue}
-                className="flex items-center justify-center rounded-[32px] border border-[#616083] bg-surface py-5 text-[length:var(--fs-xs)] font-bold text-bone transition-colors duration-300 hover:border-blue hover:bg-blue/10 hover:text-blue"
+                className="flex items-center justify-center rounded-[32px] border border-[#616083] bg-surface py-5 text-[length:var(--fs-xs)] font-bold text-bone transition-colors duration-300 hover:border-blue hover:bg-blue/10 hover:text-sky"
               >
                 {t.continue}
               </button>
@@ -451,7 +451,7 @@ export default function Meeting() {
               <button
                 type="submit"
                 disabled={sending}
-                className="h-[65px] w-full rounded-xl bg-blue/15 text-[length:var(--fs-xs)] font-bold text-blue transition-colors duration-300 hover:bg-blue/25 disabled:cursor-wait disabled:opacity-60"
+                className="h-[65px] w-full rounded-xl bg-blue/15 text-[length:var(--fs-xs)] font-bold text-sky transition-colors duration-300 hover:bg-blue/25 disabled:cursor-wait disabled:opacity-60"
               >
                 {sending ? t.sending : isMeet ? t.submitMeet : t.submitZoom}
               </button>
@@ -485,7 +485,7 @@ export default function Meeting() {
                 href={meeting.bookingUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[length:var(--fs-xs)] font-bold text-blue hover:underline"
+                className="text-[length:var(--fs-xs)] font-bold text-sky hover:underline"
               >
                 {t.bookingOpen}
               </a>
@@ -513,7 +513,7 @@ export default function Meeting() {
                     href={sent.calendar}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-6 inline-flex rounded-xl bg-blue/15 px-6 py-3 text-[length:var(--fs-xs)] font-bold text-blue transition-colors duration-300 hover:bg-blue/25"
+                    className="mt-6 inline-flex rounded-xl bg-blue/15 px-6 py-3 text-[length:var(--fs-xs)] font-bold text-sky transition-colors duration-300 hover:bg-blue/25"
                   >
                     {t.openCalendar}
                   </a>
@@ -533,7 +533,7 @@ export default function Meeting() {
                   setSent(null);
                   setStep("platform");
                 }}
-                className="mt-6 block w-full text-[length:var(--fs-xs)] font-bold text-blue hover:underline"
+                className="mt-6 block w-full text-[length:var(--fs-xs)] font-bold text-sky hover:underline"
               >
                 {t.again}
               </button>

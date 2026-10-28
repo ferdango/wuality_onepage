@@ -335,12 +335,12 @@ export const footer = {
 
 export const chat = {
   ...es.chat,
-  question: "Any questions about Tinbet for business?",
+  question: "Have a project in mind? Let's talk.",
   cta: "Start chat",
 };
 
 export const cookies = {
-  body: "If you accept cookies, we'll use them to improve and personalize your experience and to let our partners show you personalized PayPal ads when you visit other websites.",
+  body: "We use your browser's storage so the site works and remembers your choice. If you accept, we'll also load the TikTok and Instagram posts, which may use their own cookies.",
   link: "Manage cookies and learn more",
   accept: "Accept",
   reject: "Reject",

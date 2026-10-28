@@ -60,7 +60,7 @@ export default function Faq() {
                           <span className="text-[length:var(--fs-body)] text-ash">{faq.cta.label}</span>
                           <a
                             href="#contacto"
-                            className="rounded-xl bg-blue/15 px-6 py-3 text-[length:var(--fs-xs)] font-bold text-blue transition-colors duration-300 hover:bg-blue/25"
+                            className="rounded-xl bg-blue/15 px-6 py-3 text-[length:var(--fs-xs)] font-bold text-sky transition-colors duration-300 hover:bg-blue/25"
                           >
                             {faq.cta.button}
                           </a>

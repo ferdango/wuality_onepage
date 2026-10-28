@@ -40,7 +40,7 @@ export default function NotFound() {
         <div className="mt-[clamp(28px,2.9vw,56px)] flex flex-wrap justify-center gap-3">
           <Link
             href="/"
-            className="group flex w-fit items-center gap-4 rounded-full border border-bone/30 px-8 py-4 text-[length:var(--fs-sm)] font-semibold text-bone transition-colors duration-300 hover:border-blue hover:text-blue"
+            className="group flex w-fit items-center gap-4 rounded-full border border-bone/30 px-8 py-4 text-[length:var(--fs-sm)] font-semibold text-bone transition-colors duration-300 hover:border-blue hover:text-sky"
           >
             Volver al inicio
             <svg viewBox="0 0 24 24" className="size-5 transition-transform duration-400 group-hover:translate-x-1" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
@@ -50,7 +50,7 @@ export default function NotFound() {
           <Link
             href="/en/"
             lang="en"
-            className="flex w-fit items-center rounded-full px-6 py-4 text-[length:var(--fs-sm)] font-semibold text-ash transition-colors duration-300 hover:text-blue"
+            className="flex w-fit items-center rounded-full px-6 py-4 text-[length:var(--fs-sm)] font-semibold text-ash transition-colors duration-300 hover:text-sky"
           >
             Back to home
           </Link>

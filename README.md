@@ -177,9 +177,16 @@ propósito: en algunas máquinas la familia resuelve a su variante oblicua.
 Todo respeta `prefers-reduced-motion`: las animaciones de entrada y las ligadas al
 scroll se desactivan y el contenido se muestra en su estado final.
 
+Contraste y áreas táctiles (WCAG 2.2 AA): el azul de marca (`--color-blue`) da
+4,3:1 sobre la tinta, así que el texto azul usa `--color-sky` (`#3d9bff`, 6,1:1)
+y el de marca queda para fondos y bordes. La tarjeta "Partners Model" va en
+`#0066d6` para que el texto blanco llegue a 5,4:1. Los puntos de los carruseles
+se ven de 8px pero responden en 24px, y los inactivos van en `#5b6466` (3,3:1).
+
 ## Blog
 
-Hay un artículo por cada caso de la cartera, firmado por "Equipo Wuality".
+Hay un artículo por cada caso de la cartera, firmado por "Equipo Wuality". Se
+muestran del más reciente al más antiguo según su fecha (`publishedAt`).
 
 - **Textos:** título, entradilla y categoría en `lib/blog.ts` (español) y
   `lib/blog.en.ts` (inglés, indexado por el mismo slug); el cuerpo, en
@@ -263,7 +270,6 @@ Cosas que el Figma deja como placeholder y conviene reemplazar antes de publicar
 - **FAQ**: las tres preguntas y respuestas son *lorem ipsum* en el diseño.
 - **Reviews**: en el Figma las cuatro tarjetas repiten el mismo testimonio; aquí se
   completaron con variantes coherentes. Reemplazar por los reales.
-- **Chat**: el texto del modal dice "Tinbet" en el diseño; se respetó literal.
 - **Casos de estudio**: el Figma trae un solo caso ("Meltwater" en desktop,
   "Starbucks LLC" en mobile) y no corresponde a ninguno de los cuatro proyectos
   del carrusel. Como cada tarjeta ahora abre su propio caso, escribí un texto de

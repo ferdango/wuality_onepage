@@ -165,7 +165,7 @@ export default function CaseStudyPage({ project, next, lang }: { project: Projec
                 href={`https://${project.site}/`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-4 inline-block text-[clamp(1rem,1.05vw,1.25rem)] text-bone underline decoration-bone/30 underline-offset-4 transition-colors duration-300 hover:text-blue hover:decoration-blue"
+                className="mt-4 inline-block text-[clamp(1rem,1.05vw,1.25rem)] text-bone underline decoration-bone/30 underline-offset-4 transition-colors duration-300 hover:text-sky hover:decoration-blue"
               >
                 {project.site} ↗
               </a>

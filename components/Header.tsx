@@ -141,7 +141,7 @@ export default function Header({ linkBase = "" }: { linkBase?: string }) {
                     transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
                     className="absolute right-0 top-[calc(100%+18px)] w-[252px] rounded-3xl bg-card/95 p-4 shadow-2xl shadow-black/50 backdrop-blur-xl"
                   >
-                    <li className="px-3 pb-3 text-[15px] font-bold text-blue">{ui.header.language}</li>
+                    <li className="px-3 pb-3 text-[15px] font-bold text-sky">{ui.header.language}</li>
                     {languages.map((l) => {
                       const selected = l.lang === lang;
                       return (

@@ -11,6 +11,12 @@
   --color-muted: #7c8282;
   --color-red: #ff1a30;
   --color-blue: #007afc;
+  /**
+   * Azul para texto sobre fondo oscuro. El de marca da 4,3:1 sobre la tinta
+   * (por debajo del 4,5:1 de WCAG AA en texto normal); éste da 6,1:1. El de
+   * marca se queda para fondos, bordes y piezas gráficas.
+   */
+  --color-sky: #3d9bff;
   --color-yellow: #fbbd1d;
   --color-mint: #4fe0a0;
   --color-forest: #12604a;

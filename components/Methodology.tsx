@@ -150,7 +150,7 @@ export default function Methodology() {
                   className="h-1.5 rounded-full transition-all duration-500 ease-wuality"
                   style={{
                     width: i === step ? 28 : 6,
-                    backgroundColor: i === step ? methodology[cardIndex].titleColor : "#2a3335",
+                    backgroundColor: i === step ? methodology[cardIndex].titleColor : "#5b6466",
                   }}
                 />
               ))}
