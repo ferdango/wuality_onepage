@@ -146,6 +146,28 @@ aprobadas) · Modelos · **Nuestra historia** (banda celeste, "Built in Lima,
 Peru.") · Últimos posts · FAQ · Agenda · Blog · pie con mapa del sitio y la
 frase gigante.
 
+### Vídeo del hero
+
+`public/media/video/wuality-hero.mp4` (1920×1080) y `wuality-hero-vertical.mp4`
+(1080×1920, para pantallas más altas que anchas): 8 s en bucle, H.264, sin
+audio, menos de 2 MB cada uno. Cuenta la gran idea visual del manifiesto,
+Complejo → Simple: las formas de color del manual giran en espiral hacia The
+Wuality Point (la esfera roja del Brandbook), que las absorbe y late. Los `.jpg`
+del mismo nombre son su primer cuadro y hacen de póster.
+
+La fuente está en `scripts/hero-video/` (`index.html` es la animación, una
+función del tiempo con los recursos de `public/media/brand`). Para regenerarlo,
+con Chrome abierto con `--remote-debugging-port=9222`:
+
+```
+node scripts/hero-video/render.mjs /tmp/hero 30 8
+swiftc -O scripts/hero-video/encode.swift -o /tmp/encode
+/tmp/encode /tmp/hero public/media/video/wuality-hero.mp4 30 2500000
+```
+
+Para el vertical, pasa a `render.mjs` el encuadre
+`"w=1080&h=1920&px=0.5&py=0.3&ps=560&sx=0.62&sy=1.15"` y codifícalo a 2200000.
+
 ### Fotografía
 
 Las fotos genéricas (`public/media/stock/`) son de Unsplash, con su licencia
@@ -201,7 +223,7 @@ propósito: en algunas máquinas la familia resuelve a su variante oblicua.
 | Títulos | El punto rojo rebota en bucle como una pelota, con achatamiento al tocar suelo (`.dotted::after`) |
 | Idioma | Dropdown "Idioma y región" con las tres opciones del diseño, cierre por clic fuera y Escape |
 | Menú | Overlay a pantalla completa, entrada escalonada, hover blanco/gris, cierre con Escape y bloqueo de scroll |
-| Hero | Rótulo y titular del manifiesto, que entra palabra por palabra y se desvanece mientras el iPhone sube. El teléfono arranca con su base un 30% fuera de pantalla y sube entero; ya arriba, se expande a full-bleed —perdiendo marco, isla dinámica y botones— y revela "Complejo" / "Simple." desde lados opuestos: la gran idea visual del manifiesto |
+| Hero | Estructura del de ustwo: vídeo de marca a sangre (8 s en bucle, apaisado o vertical según la pantalla) y titular enorme en mayúsculas abajo a la izquierda, que entra palabra por palabra. Botón para pausar el vídeo; con "reducir movimiento" se queda en el póster |
 | Qué hacemos | Banda clara: declaración, detalle y llamada a la acción; foto de equipo con The Wuality Point; la idea Complejo → Simple; tira de logos de clientes en monocromo |
 | Lo que hacemos | Lista sincronizada con la imagen (hover/clic/foco), botón circular animado con `layoutId`; en mobile, carrusel con dots y CTA |
 | Nuestros proyectos | Carrusel con swipe, arrastre, teclado y dots. Avanza solo cada 5s y el detalle de abajo sigue al proyecto en curso; al hacer clic, además, lleva la vista hasta él |

@@ -32,7 +32,6 @@ export const languages = es.languages;
 export const hero = {
   eyebrow: es.hero.eyebrow,
   headline: "We make the complex simple.",
-  words: ["Complex", "Simple."],
 };
 
 export const intro = {
@@ -432,7 +431,7 @@ export const cookies = {
 export const ui: typeof es.ui = {
   header: { home: "Wuality — home", openMenu: "Open menu", language: "Language and region", skip: "Skip to content", cta: "Let's talk" },
   menu: { label: "Main menu", close: "Close menu" },
-  hero: { screen: "Lock screen with the Wuality brand wallpaper", date: "Tuesday, 31 July" },
+  hero: { pause: "Pause the video", play: "Play the video" },
   services: { title: "What we do", cta: "Get in touch" },
   projects: { title: "Our work", open: "See the {name} case" },
   partners: { title: "Digital partners", label: "Wuality's digital partners" },

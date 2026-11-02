@@ -28,14 +28,13 @@ export const languages: { lang: "es" | "en"; code: string; name: string; region:
 
 /**
  * Voz y mensajes del Brand Manifesto 2026: descriptor "Technology & Innovation
- * Studio", eslogan "Convertimos lo complejo en simple" y la gran idea visual,
- * Complejo → Simple, que es lo que aparece al expandirse la pantalla.
+ * Studio" y eslogan "Convertimos lo complejo en simple". La gran idea visual,
+ * Complejo → Simple, la cuenta el vídeo de marca del hero.
  */
 export const hero = {
   /** En móvil sólo va la primera parte: las dos juntas ocupaban dos líneas sobre el titular. */
   eyebrow: ["Technology & Innovation Studio", "Built in Lima, Peru"],
   headline: "Convertimos lo complejo en simple.",
-  words: ["Complejo", "Simple."],
 };
 
 /** "Qué hacemos": la presentación corporativa que sigue al hero (Brand Manifesto 2026). */
@@ -695,7 +694,7 @@ export const cookies = {
 export const ui = {
   header: { home: "Wuality — inicio", openMenu: "Abrir menú", language: "Idioma y región", skip: "Saltar al contenido", cta: "Hablemos" },
   menu: { label: "Menú principal", close: "Cerrar menú" },
-  hero: { screen: "Pantalla de bloqueo con el fondo de marca de Wuality", date: "martes, 31 de julio" },
+  hero: { pause: "Pausar el vídeo", play: "Reproducir el vídeo" },
   services: { title: "Lo que hacemos", cta: "Consulta aquí" },
   projects: { title: "Nuestros proyectos", open: "Ver el caso de {name}" },
   partners: { title: "Partners digitales", label: "Partners digitales de Wuality" },
