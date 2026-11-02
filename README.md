@@ -111,19 +111,57 @@ presenta las dos cuentas con su botón de seguir.
 
 ## Sistema de diseño
 
-Todo sale del Figma, no hay valores inventados:
+La marca sale del **Brandbook 2026** (`01. Manual de marca/1_Wuality_Manual.pdf`,
+colores en las págs. 26-27) y del **Brand Manifesto 2026**: descriptor
+"Technology & Innovation Studio", eslogan "Convertimos lo complejo en simple",
+la metodología *The Wuality Way* y una voz clara y directa, sin jerga. Los
+neutros oscuros del fondo vienen del Figma.
 
 | Token | Valor | Uso |
 |---|---|---|
-| `--color-ink` | `#05080A` | fondo de página |
-| `--color-surface` | `#060B0D` | fondo de tarjetas y footer |
-| `--color-card` | `#1B1E1E` | tiles (logo del footer) |
-| `--color-red` | `#FF1A30` | marca, punto de los títulos, barra de progreso |
-| `--color-blue` | `#007AFC` | acentos, botones, "Partners Model" |
-| `--color-yellow` | `#FBBD1D` | servicio activo, nombre en reviews |
-| `--color-bone` | `#F4F4F4` | texto principal |
-| `--color-ash` | `#C6CACA` | texto secundario |
+| `--color-ink` | `#05080A` | fondo de página, texto sobre fondos claros |
+| `--color-surface` | `#060B0D` | fondo de tarjetas |
+| `--color-card` | `#1B1E1E` | tiles |
+| `--color-red` | `#F42530` | The Wuality Point: punto de los títulos y rótulos, barra de progreso |
+| `--color-magenta` | `#FF49DD` | halos y degradés |
+| `--color-blue` / `--color-sky` | `#48BBED` | celeste del manual: acentos, enlaces y la banda "Nuestra historia" (9,2:1 sobre la tinta) |
+| `--color-yellow` | `#FFED00` | servicio activo, testimonios |
+| `--color-paper` | `#F0F6F6` | bandas claras corporativas ("Qué hacemos") |
+| `--color-navy` / `--color-plum` | `#0E2837` / `#3C092F` | tarjetas de los dos modelos |
+| `--color-graphite` | `#434A4C` | texto secundario sobre `paper` (8,3:1) |
+| `--color-bone` | `#F4F4F4` | texto principal sobre oscuro |
+| `--color-ash` | `#C6CACA` | texto secundario sobre oscuro |
 | `--color-muted` | `#7C8282` | texto desactivado, bordes |
+
+### Ritmo de la portada
+
+Inspirado en los grandes estudios (ustwo como referencia principal; también
+IDEO, Huge, Globant, DEPT): bandas claras y corporativas entre las piezas
+oscuras e interactivas de la marca.
+
+Hero (Complejo → Simple) · **Qué hacemos** (claro: declaración, foto, la idea
+Complejo → Simple y logos de clientes) · Lo que hacemos · Nuestros proyectos ·
+**The Wuality Way** (los 5 pasos del manifiesto) · Partners · Reseñas (si hay
+aprobadas) · Modelos · **Nuestra historia** (banda celeste, "Built in Lima,
+Peru.") · Últimos posts · FAQ · Agenda · Blog · pie con mapa del sitio y la
+frase gigante.
+
+### Fotografía
+
+Las fotos genéricas (`public/media/stock/`) son de Unsplash, con su licencia
+(uso comercial gratuito, sin atribución obligatoria). Siguen la pauta del
+manual —personas en su entorno de trabajo, poses naturales— con un "detalle
+degradé" de marca en una esquina. No hay retratos sueltos: una persona de
+banco de imágenes presentada como parte del equipo sería engañosa; cuando haya
+fotos del equipo real, conviene reemplazarlas.
+
+| Archivo | Unsplash |
+|---|---|
+| `equipo-laptop.jpg` | unsplash.com/photos/Y32qbykD69g |
+| `taller-ideas.jpg` | unsplash.com/photos/Imk2h0pyOvo |
+| `equipo-extendido.jpg` | unsplash.com/photos/Of_m3hMsoAA |
+| `planificacion.jpg` | unsplash.com/photos/cD6KxGylYo4 |
+| `equipo-celebra.jpg` | unsplash.com/photos/jPLvaZ06uy0 |
 
 ### Escala fluida
 
@@ -163,20 +201,23 @@ propósito: en algunas máquinas la familia resuelve a su variante oblicua.
 | Títulos | El punto rojo rebota en bucle como una pelota, con achatamiento al tocar suelo (`.dotted::after`) |
 | Idioma | Dropdown "Idioma y región" con las tres opciones del diseño, cierre por clic fuera y Escape |
 | Menú | Overlay a pantalla completa, entrada escalonada, hover blanco/gris, cierre con Escape y bloqueo de scroll |
-| Hero | Titular que entra palabra por palabra y se desvanece mientras el iPhone sube. El teléfono arranca con su base un 30% fuera de pantalla y sube entero; ya arriba, se expande a full-bleed —perdiendo marco, isla dinámica y botones— y revela "Innovamos" / "Conectamos" desde lados opuestos |
+| Hero | Rótulo y titular del manifiesto, que entra palabra por palabra y se desvanece mientras el iPhone sube. El teléfono arranca con su base un 30% fuera de pantalla y sube entero; ya arriba, se expande a full-bleed —perdiendo marco, isla dinámica y botones— y revela "Complejo" / "Simple." desde lados opuestos: la gran idea visual del manifiesto |
+| Qué hacemos | Banda clara: declaración, detalle y llamada a la acción; foto de equipo con The Wuality Point; la idea Complejo → Simple; tira de logos de clientes en monocromo |
 | Lo que hacemos | Lista sincronizada con la imagen (hover/clic/foco), botón circular animado con `layoutId`; en mobile, carrusel con dots y CTA |
 | Nuestros proyectos | Carrusel con swipe, arrastre, teclado y dots. Avanza solo cada 5s y el detalle de abajo sigue al proyecto en curso; al hacer clic, además, lleva la vista hasta él |
 | Todos los carruseles | Bucle infinito con avance automático, que se pausa al pasar el cursor, al enfocar, al tocar o si la pestaña no está visible. Arrastre con mouse vía `useDragScroll`: desactiva el snap durante el gesto, lo restaura al soltar y suprime el click posterior para que soltar sobre una tarjeta no la active |
 | Caso de estudio | Muestra el proyecto elegido arriba: al hacer clic en una tarjeta se ancla aquí y el contenido cambia con una transición. Acordeón de capítulos con altura animada |
 | Partners | Slider en bucle que avanza solo, de uno en uno (`components/ui/LoopSlider.tsx`, con `transform`: igual en todos los navegadores). Se pausa con el cursor, con el foco, con la pestaña oculta y con su botón de pausa; con "reducir movimiento" no avanza solo |
-| Metodología | Diagrama con tarjetas que entran escalonadas; en mobile, carrusel |
+| The Wuality Way | Los 5 pasos del manifiesto (Understand → Simplify → Build → Measure → Evolve), sin anclar el scroll. Mientras la sección está a la vista, The Wuality Point recorre la línea de paso en paso y enciende el paso en curso; con "reducir movimiento" se ven todos iguales |
 | Reviews | Riel de testimonios de quienes dirigen las marcas de la cartera: ficha de la marca (logo sobre su color) y cita en amarillo. Sólo se publican los aprobados (ver abajo) |
-| Clientes | Retícula de 2 columnas en móvil y 4 en desktop, sin scroll lateral, con las marcas de la cartera primero. Los logos van en escala de grises y recuperan su color al pasar el cursor o al mantener pulsado |
+| Nuestra historia | Banda celeste con el origen y la ambición de la marca ("Built in Lima, Peru.") y una foto de equipo |
 | Two models | Las dos líneas entran desde lados opuestos con el scroll, al tamaño del Figma (220px sobre el lienzo de 1920) |
 | Modelos | Las dos tarjetas se apilan al bajar: cada una queda fija un poco más abajo que la anterior y la de atrás se encoge y se oscurece |
 | FAQ | Acordeón de apertura única con icono +/− y altura animada |
 | Agenda una reunión | Sección de 90vh. Flujo de 2 pasos: elección de plataforma (Meet/Zoom) → "Continuar" → formulario con selector de prefijo internacional, validación y estado de confirmación |
 | Blog | Carrusel con un artículo por caso de la cartera; admite también tarjetas de video |
+| Pie | Firma y eslogan, mapa del sitio (los anclajes van al home del idioma), contacto, legal y la frase gigante "Built in Lima, Peru." |
+| Header | Además del menú, el botón "Hablemos" fijo en desktop |
 | Flotantes | El botón de WhatsApp enlaza directo al chat de `+51 966 461 384` (número en `lib/content.ts`); el globo del diseño aparece al pasar el cursor, solo donde hay hover real. Botón de cookies con banner mientras no hay decisión; después se oculta y "Cookies" en el pie reabre el aviso. La decisión se guarda en `localStorage` |
 
 Todo respeta `prefers-reduced-motion`: las animaciones de entrada y las ligadas al

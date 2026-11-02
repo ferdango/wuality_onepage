@@ -1,69 +1,46 @@
 import Link from "next/link";
 import Image from "@/components/ui/Img";
-import BrandPattern, { type Piece } from "./ui/BrandPattern";
 import Reveal from "./ui/Reveal";
 import CookieSettingsButton from "./CookieSettingsButton";
-import { fill, getContent, privacyPath, type Lang } from "@/lib/i18n";
+import { fill, getContent, localePath, privacyPath, type Lang } from "@/lib/i18n";
 
 /**
- * Las figuras viven sólo en los 108px del padding inferior, no por todo el
- * footer. Es una franja muy ancha y muy baja, así que van pequeñas y el tope de
- * alto (`cap`, en % del alto de la franja) es lo que manda sobre el ancho.
+ * Pie corporativo, en la línea de los grandes estudios: firma y eslogan, mapa
+ * del sitio, contacto directo y la parte legal; cierra con una frase gigante de
+ * la marca ("Built in Lima, Peru.", del Brand Manifesto 2026) cortada por el
+ * borde, como los saludos de ciudades del pie de ustwo.
+ *
+ * Los anclajes del mapa van al home del idioma, así funcionan también desde un
+ * caso, un artículo o la política de privacidad.
  */
-const FOOTER_PATTERN: Piece[] = [
-  { fig: "cinta-calida", x: 8, y: 50, w: 9, cap: 72, rotate: -14, opacity: 0.5 },
-  { fig: "esfera-amarilla", x: 20, y: 42, w: 5, cap: 52, opacity: 0.45 },
-  { fig: "gota-azul", x: 32, y: 58, w: 7, cap: 60, rotate: 12, opacity: 0.4 },
-  { fig: "esfera-roja", x: 45, y: 44, w: 5, cap: 50, opacity: 0.45 },
-  { fig: "cinta-magenta", x: 57, y: 56, w: 8, cap: 66, rotate: 16, opacity: 0.4 },
-  { fig: "gota-azul", x: 70, y: 42, w: 6, cap: 54, rotate: -10, opacity: 0.4 },
-  { fig: "esfera-amarilla", x: 81, y: 58, w: 5, cap: 52, opacity: 0.45 },
-  { fig: "cinta-fria", x: 92, y: 48, w: 9, cap: 72, rotate: 10, opacity: 0.5 },
-];
-
 export default function Footer({ lang }: { lang: Lang }) {
-  const { footer, company } = getContent(lang);
+  const { footer, company, chat } = getContent(lang);
+  const home = localePath(lang, "/");
+  const heading = "text-[0.75rem] font-semibold uppercase tracking-[0.16em] text-muted";
+  const link = "text-[length:var(--fs-sm)] text-ash transition-colors duration-300 hover:text-bone";
+
   return (
-    <footer className="relative overflow-hidden bg-surface pb-[108px]">
-      <BrandPattern className="top-auto h-[108px]" pieces={FOOTER_PATTERN} />
-
-      <div className="shell relative flex flex-col items-center gap-[clamp(28px,2.5vw,48px)] text-center lg:flex-row lg:items-end lg:justify-between lg:text-left">
-        <Reveal className="flex flex-col items-center gap-[clamp(20px,1.875vw,36px)] lg:items-start">
-          {/**
-           * Bloqueo vertical de la marca (01. Logotipo / 02. Vertical), sin
-           * ficha detrás: el símbolo suelto se confundía con las esferas rojas
-           * del patrón, y con el logotipo debajo se lee como firma.
-           */}
+    <footer className="relative overflow-hidden bg-ink text-bone">
+      <div className="shell mx-auto grid max-w-[1760px] gap-[clamp(36px,4vw,72px)] pb-[clamp(36px,4vw,64px)] pt-[calc(var(--section-y)*1.5)] sm:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr_1.3fr]">
+        <Reveal className="flex flex-col items-start gap-[clamp(20px,1.875vw,32px)] sm:col-span-2 lg:col-span-1">
           <Image
-            src="/media/brand/wuality-vertical.png"
+            src="/media/brand/wuality-horizontal-red.png"
             alt="Wuality"
-            width={460}
+            width={1300}
             height={400}
-            className="h-auto w-[clamp(104px,8.4vw,164px)]"
+            className="h-auto w-[clamp(132px,10vw,190px)]"
           />
-
-          <div className="max-w-[529px]">
-            <p className="text-[length:var(--fs-body)] font-bold tracking-[0.06em] text-bone">{footer.name}</p>
-            {/* En negrita: son cuatro palabras sueltas y a peso normal el color se diluía. */}
-            <p className="mt-4 text-[length:var(--fs-sm)] font-bold tracking-[0.06em] text-ash">
-              {footer.claim.map((c, i) => (
-                <span key={i} style={c.color ? { color: c.color } : undefined}>
-                  {c.text}
-                </span>
-              ))}
-            </p>
-          </div>
-        </Reveal>
-
-        <Reveal delay={0.1}>
-          <ul className="flex items-center gap-[clamp(16px,1.46vw,28px)]">
+          <p className="max-w-[18ch] text-[length:clamp(1.375rem,1rem_+_1.2vw,2.25rem)] font-medium leading-[1.15] tracking-[-0.02em]">
+            {footer.slogan}
+          </p>
+          <ul className="flex items-center gap-3">
             {footer.socials.map((s) => (
               <li key={s.name}>
                 <a
                   href={s.href}
                   aria-label={s.name}
                   {...(s.href.startsWith("http") && { target: "_blank", rel: "noopener noreferrer" })}
-                  className="flex size-[clamp(48px,4.17vw,80px)] items-center justify-center rounded-full border border-muted transition-colors duration-400 hover:border-bone hover:bg-card"
+                  className="flex size-12 items-center justify-center rounded-full border border-line transition-colors duration-400 hover:border-bone hover:bg-card"
                 >
                   <Image src={s.icon} alt="" width={32} height={32} className="size-[40%]" />
                 </a>
@@ -71,23 +48,62 @@ export default function Footer({ lang }: { lang: Lang }) {
             ))}
           </ul>
         </Reveal>
+
+        {footer.columns.map((col, i) => (
+          <Reveal key={col.title} delay={0.05 * (i + 1)}>
+            <nav aria-label={col.title}>
+              <h2 className={heading}>{col.title}</h2>
+              <ul className="mt-5 flex flex-col gap-3">
+                {col.links.map((l) => (
+                  <li key={l.href}>
+                    <Link href={`${home}${l.href}`} className={link}>
+                      {l.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </Reveal>
+        ))}
+
+        <Reveal delay={0.15}>
+          <h2 className={heading}>{footer.contactTitle}</h2>
+          <ul className="mt-5 flex flex-col gap-3">
+            <li>
+              <a href={`mailto:${footer.email}`} className={`${link} text-bone`}>
+                {footer.email}
+              </a>
+            </li>
+            <li>
+              <a href={chat.href} target="_blank" rel="noopener noreferrer" className={link}>
+                WhatsApp {chat.phone}
+              </a>
+            </li>
+            <li className="text-[length:var(--fs-sm)] text-ash">{footer.city}</li>
+          </ul>
+        </Reveal>
       </div>
 
-      <div className="shell relative mt-[clamp(28px,2.1vw,40px)] flex flex-col-reverse items-center gap-4 text-center lg:flex-row lg:justify-between lg:text-left">
-        <p className="text-[length:var(--fs-xs)] text-muted">{fill(footer.legal, { year: new Date().getFullYear(), ruc: company.ruc })}</p>
-        <div className="flex flex-wrap items-center justify-center gap-[clamp(16px,1.46vw,28px)] text-[length:var(--fs-xs)]">
-          <a href={`mailto:${footer.email}`} className="text-bone transition-opacity duration-300 hover:opacity-70">
-            {footer.email}
-          </a>
-          <CookieSettingsButton
-            label={footer.cookies}
-            className="text-muted transition-colors duration-300 hover:text-bone"
-          />
+      <div className="shell mx-auto flex max-w-[1760px] flex-col-reverse gap-4 border-t border-line py-6 sm:flex-row sm:items-center sm:justify-between">
+        <p className="text-[length:var(--fs-xs)] text-muted">
+          {fill(footer.legal, { year: new Date().getFullYear(), ruc: company.ruc })}
+        </p>
+        <div className="flex flex-wrap items-center gap-[clamp(16px,1.46vw,28px)] text-[length:var(--fs-xs)]">
+          <CookieSettingsButton label={footer.cookies} className="text-muted transition-colors duration-300 hover:text-bone" />
           <Link href={privacyPath(lang)} className="text-muted transition-colors duration-300 hover:text-bone">
             {footer.privacy}
           </Link>
         </div>
       </div>
+
+      {/* Firma gigante, decorativa: el texto ya está en el eslogan y en "Nuestra historia". */}
+      <p
+        aria-hidden
+        className="select-none whitespace-nowrap px-[var(--gutter)] pb-[clamp(8px,1vw,20px)] text-[length:clamp(2.5rem,9.4vw,13.5rem)] font-bold leading-[0.9] tracking-[-0.045em] text-bone"
+      >
+        {footer.sign.replace(/\.$/, "")}
+        <span className="ml-[0.06em] inline-block size-[0.2em] rounded-full bg-red align-baseline" />
+      </p>
     </footer>
   );
 }

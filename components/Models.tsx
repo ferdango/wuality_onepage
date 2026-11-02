@@ -178,7 +178,7 @@ export default function Models() {
                 <div className="relative aspect-[616/380] w-full lg:aspect-auto lg:h-full">
                   <Image
                     src={card.image}
-                    alt={card.title}
+                    alt={card.alt}
                     fill
                     sizes="(max-width: 1024px) 100vw, 50vw"
                     className="object-cover"

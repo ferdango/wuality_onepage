@@ -18,9 +18,10 @@ function withTexts<T extends object>(base: readonly T[], texts: Partial<T>[]): T
 }
 
 const navItems: NavItem[] = [
-  { label: "About Wuality", short: "About", href: "#edu" },
-  { label: "Work", short: "Work", href: "#work" },
   { label: "Services", short: "Services", href: "#services" },
+  { label: "Work", short: "Work", href: "#work" },
+  { label: "Method", short: "Method", href: "#metodo" },
+  { label: "About", short: "About", href: "#nosotros" },
   { label: "Reviews", short: "Reviews", href: "#reviews" },
   { label: "Blog", short: "Blog", href: "#blog" },
 ];
@@ -29,8 +30,54 @@ const navItems: NavItem[] = [
 export const languages = es.languages;
 
 export const hero = {
-  headline: "We are Wuality, your Digital Transformation Partner",
-  words: ["We innovate", "We connect"],
+  eyebrow: es.hero.eyebrow,
+  headline: "We make the complex simple.",
+  words: ["Complex", "Simple."],
+};
+
+export const intro = {
+  ...es.intro,
+  eyebrow: "What we do",
+  statement: "We connect strategy, design and technology to build solutions people can understand, use and grow.",
+  body: "Technology moves fast, but moving forward doesn't always mean adding more. First we understand; then we remove what isn't needed. We don't build technology to impress: we build it to solve.",
+  cta: "Book a meeting",
+  alt: "A team working together around a computer",
+  idea: {
+    title: "Complex → Simple",
+    items: [
+      { from: "15 tools", to: "1 system" },
+      { from: "50 messages", to: "1 workflow" },
+      { from: "7 steps", to: "2 steps" },
+    ],
+  },
+  logos: "Brands that trust Wuality",
+};
+
+export const way = {
+  ...es.way,
+  title: "How we think. How we build.",
+  lead: "Five steps to go from a complex problem to a simple solution that works and keeps improving.",
+  steps: withTexts(es.way.steps, [
+    { title: "Understand before building.", body: "We research the problem, the people, the context and the business." },
+    { title: "Remove what isn't needed.", body: "We cut friction, steps and complexity until we find clarity." },
+    { title: "Build what matters.", body: "We turn strategy and design into useful, scalable solutions." },
+    { title: "Measure real impact.", body: "We look at efficiency, growth, conversion, usage and the value created." },
+    { title: "Never stop improving.", body: "We learn, iterate and evolve continuously." },
+  ]),
+  alt: "A team organizing ideas with sticky notes on a glass wall",
+};
+
+export const story = {
+  ...es.story,
+  eyebrow: "Our story",
+  body: [
+    "Wuality was born in Peru with a Latin American and global outlook.",
+    "Doing more with less. Adapting fast. Solving with creativity. Turning complexity into progress.",
+    "That isn't a trend. It's the way we build.",
+  ],
+  beliefLabel: "What we believe",
+  ambitionLabel: "Where we're headed",
+  alt: "A team celebrating a win at the office",
 };
 
 export const services = withTexts(es.services, [
@@ -176,26 +223,6 @@ export const projects = withTexts(es.projects, [
 
 export const partners = es.partners;
 
-export const methodology = withTexts(es.methodology, [
-  {
-    title: "User-centric design",
-    body: "We put your users at the center of everything we create.",
-  },
-  {
-    tag: "Ceremonies, Meetings",
-    title: "Constant feedback",
-    body: "Your feedback is the engine of what we create.",
-  },
-  {
-    title: "Agile management",
-    body: "With our agile management, we turn uncertainty into fast, visible results.",
-  },
-  {
-    title: "Continuous improvement",
-    body: "The digital world evolves, and your product should stay at the cutting edge too.",
-  },
-]);
-
 /** Testimonios en inglés, por caso (ver los borradores en content.ts). */
 const testimonialsEn: Record<string, { role: string; quote: string }> = {
   "grupo-tinbet": {
@@ -266,10 +293,12 @@ export const models = {
     {
       body: "We become your extended digital team: an ongoing roadmap with priorities that adapt to your business.",
       cta: "Learn more",
+      alt: "A team reviewing a project together on a computer",
     },
     {
       body: "A defined scope, with schedule, deliverables and investment agreed from the start.",
       cta: "Learn more",
+      alt: "Two people planning tasks on a whiteboard",
     },
   ]),
 };
@@ -361,7 +390,27 @@ export const company = es.company;
 
 export const footer = {
   ...es.footer,
-  name: "Wuality: Innovation & Technology Agency",
+  slogan: "We make the complex simple.",
+  columns: [
+    {
+      title: "Studio",
+      links: [
+        { label: "What we do", href: "#que-hacemos" },
+        { label: "The Wuality Way", href: "#metodo" },
+        { label: "About", href: "#nosotros" },
+      ],
+    },
+    {
+      title: "Work",
+      links: [
+        { label: "Services", href: "#services" },
+        { label: "Work", href: "#work" },
+        { label: "Blog", href: "#blog" },
+      ],
+    },
+  ],
+  contactTitle: "Contact",
+  city: "Lima, Peru",
   legal: "Wuality Agency © {year} · RUC {ruc} · All rights reserved",
   cookies: "Cookies",
   privacy: "Privacy",
@@ -381,16 +430,12 @@ export const cookies = {
 };
 
 export const ui: typeof es.ui = {
-  header: { home: "Wuality — home", openMenu: "Open menu", language: "Language and region", skip: "Skip to content" },
+  header: { home: "Wuality — home", openMenu: "Open menu", language: "Language and region", skip: "Skip to content", cta: "Let's talk" },
   menu: { label: "Main menu", close: "Close menu" },
   hero: { screen: "Lock screen with the Wuality brand wallpaper", date: "Tuesday, 31 July" },
   services: { title: "What we do", cta: "Get in touch" },
   projects: { title: "Our work", open: "See the {name} case" },
   partners: { title: "Digital partners", label: "Wuality's digital partners" },
-  methodology: {
-    title: "How do we do it?",
-    cycle: "Wuality's iterative work cycle. Drag it or use the arrow keys to rotate it.",
-  },
   reviews: { label: "Client reviews" },
   blog: {
     label: "Wuality articles and episodes",

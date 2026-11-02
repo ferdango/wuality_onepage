@@ -1,7 +1,10 @@
 @import "tailwindcss";
 
 @theme {
-  /* Paleta extraída del Figma (Wuality Web) */
+  /**
+   * Paleta del Brandbook 2026 (01. Manual de marca, págs. 26-27), con los
+   * neutros oscuros del Figma para el fondo del sitio.
+   */
   --color-ink: #05080a;
   --color-surface: #060b0d;
   --color-card: #1b1e1e;
@@ -9,15 +12,25 @@
   --color-bone: #f4f4f4;
   --color-ash: #c6caca;
   --color-muted: #7c8282;
-  --color-red: #ff1a30;
-  --color-blue: #007afc;
-  /**
-   * Azul para texto sobre fondo oscuro. El de marca da 4,3:1 sobre la tinta
-   * (por debajo del 4,5:1 de WCAG AA en texto normal); éste da 6,1:1. El de
-   * marca se queda para fondos, bordes y piezas gráficas.
-   */
-  --color-sky: #3d9bff;
-  --color-yellow: #fbbd1d;
+
+  /* Primarios: rojo (The Wuality Point), magenta, celeste y amarillo. */
+  --color-red: #f42530;
+  --color-magenta: #ff49dd;
+  /** Celeste del manual. Sobre la tinta da 9,2:1: vale también para texto. */
+  --color-blue: #48bbed;
+  --color-sky: #48bbed;
+  --color-yellow: #ffed00;
+
+  /* Secundarios: fondos de las bandas corporativas y de las tarjetas. */
+  --color-paper: #f0f6f6;
+  --color-navy: #0e2837;
+  --color-plum: #3c092f;
+  --color-wine: #750611;
+  --color-sand: #c5c3b0;
+  --color-steel: #8f9396;
+  /** Texto secundario sobre `paper`: 8,3:1 (el gris del manual, #8f9396, se queda en 2,8:1). */
+  --color-graphite: #434a4c;
+
   --color-mint: #4fe0a0;
   --color-forest: #12604a;
 
@@ -243,34 +256,3 @@
   }
 }
 
-/**
- * Flotación continua de las tarjetas de metodología. Sólo de 1280px en
- * adelante: por debajo las tarjetas van en carrusel o demasiado apretadas
- * contra el diagrama, y el vaivén estorbaría más que otra cosa.
- *
- * Se anima la propiedad `translate`, no `transform`: la entrada de cada tarjeta
- * la controla Motion escribiendo `transform` en el elemento de fuera, así que
- * usando propiedades distintas las dos animaciones conviven sin pisarse.
- */
-@keyframes method-float {
-  0%,
-  100% {
-    translate: 0 0;
-  }
-  50% {
-    translate: 0 -14px;
-  }
-}
-
-@media (min-width: 1280px) {
-  .method-float {
-    animation: method-float 6s ease-in-out infinite;
-    will-change: translate;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .method-float {
-    animation: none;
-  }
-}

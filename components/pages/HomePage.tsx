@@ -3,10 +3,11 @@ import Hero from "@/components/Hero";
 import Services from "@/components/Services";
 import Projects from "@/components/Projects";
 import Partners from "@/components/Partners";
-import Methodology from "@/components/Methodology";
+import Intro from "@/components/Intro";
+import WualityWay from "@/components/WualityWay";
 import Reviews from "@/components/Reviews";
-import Clients from "@/components/Clients";
 import Models from "@/components/Models";
+import Story from "@/components/Story";
 import SocialPosts from "@/components/SocialPosts";
 import Faq from "@/components/Faq";
 import Meeting from "@/components/Meeting";
@@ -27,14 +28,20 @@ export default function HomePage({ lang }: { lang: Lang }) {
       <JsonLd data={homeGraph(lang)} />
       <Header />
       <main id="main" tabIndex={-1} className="outline-none">
+        {/**
+         * Ritmo de los grandes estudios (ustwo, Huge, Globant): bandas claras
+         * corporativas (Qué hacemos, Nuestra historia) entre las piezas
+         * oscuras e interactivas de la marca.
+         */}
         <Hero />
+        <Intro />
         <Services />
         <Projects />
+        <WualityWay />
         <Partners />
-        <Methodology />
         <Reviews />
-        <Clients />
         <Models />
+        <Story />
         <SocialPosts />
         <Faq />
         <Meeting />

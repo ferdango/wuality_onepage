@@ -119,6 +119,14 @@ export default function Header({ linkBase = "" }: { linkBase?: string }) {
               })}
             </nav>
 
+            {/* Llamada a la acción fija (desktop): en móvil ya está el botón de WhatsApp. */}
+            <Link
+              href={`${linkBase}#contacto`}
+              className="hidden rounded-full bg-bone px-5 py-2.5 text-[length:var(--fs-xs)] font-semibold text-ink transition-colors duration-300 hover:bg-white lg:inline-flex"
+            >
+              {ui.header.cta}
+            </Link>
+
             {/* Selector de idioma y región */}
             <div ref={langRef} className="relative">
               <button

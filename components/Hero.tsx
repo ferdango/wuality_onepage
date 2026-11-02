@@ -151,9 +151,16 @@ export default function Hero() {
         <BrandPattern className="md:hidden" pieces={HERO_MOBILE} />
         <BrandPattern className="hidden md:block" pieces={HERO_DESKTOP} />
 
-        {/* Titular */}
+        {/* Rótulo y titular: se van juntos durante la subida del teléfono. */}
+        <p
+          className="shell absolute inset-x-0 top-[calc(var(--header-h)+clamp(10px,1.4vw,28px))] z-10 mx-auto max-w-[1600px] text-center text-[0.75rem] font-semibold uppercase tracking-[0.18em] text-ash sm:text-[0.8125rem]"
+          style={{ opacity: "var(--head-op)", translate: "0 calc(var(--head-y) * 1px)" }}
+        >
+          {hero.eyebrow[0]}
+          <span className="hidden sm:inline"> · {hero.eyebrow[1]}</span>
+        </p>
         <h1
-          className="shell h-display absolute inset-x-0 top-[calc(var(--header-h)+clamp(28px,3.4vw,66px))] z-10 mx-auto max-w-[1600px] text-center text-bone"
+          className="shell h-display absolute inset-x-0 top-[calc(var(--header-h)+clamp(40px,4.6vw,88px))] z-10 mx-auto max-w-[1600px] text-balance text-center text-bone"
           style={{ opacity: "var(--head-op)", translate: "0 calc(var(--head-y) * 1px)" }}
         >
           {words.map((w, i) => (

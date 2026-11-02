@@ -12,9 +12,10 @@ export type NavItem = { label: string; short: string; href: string };
 
 /** Menú completo; `nav` (más abajo) quita las secciones que no se publican. */
 const navItems: NavItem[] = [
-  { label: "Sobre Wuality", short: "Nosotros", href: "#edu" },
-  { label: "Proyectos", short: "Proyectos", href: "#work" },
   { label: "Servicios", short: "Servicios", href: "#services" },
+  { label: "Proyectos", short: "Proyectos", href: "#work" },
+  { label: "Método", short: "Método", href: "#metodo" },
+  { label: "Nosotros", short: "Nosotros", href: "#nosotros" },
   { label: "Reseñas", short: "Reseñas", href: "#reviews" },
   { label: "Blog", short: "Blog", href: "#blog" },
 ];
@@ -25,9 +26,70 @@ export const languages: { lang: "es" | "en"; code: string; name: string; region:
   { lang: "en", code: "EN", name: "English", region: "USA", flag: "/media/ui/flag-us.svg" },
 ];
 
+/**
+ * Voz y mensajes del Brand Manifesto 2026: descriptor "Technology & Innovation
+ * Studio", eslogan "Convertimos lo complejo en simple" y la gran idea visual,
+ * Complejo → Simple, que es lo que aparece al expandirse la pantalla.
+ */
 export const hero = {
-  headline: "Somos Wuality, tu Partner en Transformación Digital",
-  words: ["Innovamos", "Conectamos"],
+  /** En móvil sólo va la primera parte: las dos juntas ocupaban dos líneas sobre el titular. */
+  eyebrow: ["Technology & Innovation Studio", "Built in Lima, Peru"],
+  headline: "Convertimos lo complejo en simple.",
+  words: ["Complejo", "Simple."],
+};
+
+/** "Qué hacemos": la presentación corporativa que sigue al hero (Brand Manifesto 2026). */
+export const intro = {
+  eyebrow: "Qué hacemos",
+  statement:
+    "Conectamos estrategia, diseño y tecnología para construir soluciones que las personas puedan entender, usar y hacer crecer.",
+  body: "La tecnología avanza rápido, pero avanzar no siempre significa agregar más. Primero entendemos; después eliminamos lo innecesario. No construimos tecnología para impresionar: la construimos para resolver.",
+  cta: "Agenda una reunión",
+  image: "/media/stock/equipo-laptop.jpg",
+  alt: "Equipo trabajando junto alrededor de una computadora",
+  /** "La gran idea visual" del manifiesto: la identidad muestra transformación, no decoración. */
+  idea: {
+    title: "Complejo → Simple",
+    items: [
+      { from: "15 herramientas", to: "1 sistema" },
+      { from: "50 mensajes", to: "1 flujo de trabajo" },
+      { from: "7 pasos", to: "2 pasos" },
+    ],
+  },
+  logos: "Marcas que confían en Wuality",
+};
+
+/** "The Wuality Way": la metodología del Brand Manifesto 2026, en sus cinco pasos. */
+export const way = {
+  eyebrow: "The Wuality Way",
+  title: "Cómo pensamos. Cómo construimos.",
+  lead: "Cinco pasos para ir de un problema complejo a una solución simple que funcione y siga mejorando.",
+  steps: [
+    { key: "Understand", title: "Entender antes de construir.", body: "Investigamos el problema, las personas, el contexto y el negocio." },
+    { key: "Simplify", title: "Eliminar lo innecesario.", body: "Reducimos fricción, pasos y complejidad hasta encontrar claridad." },
+    { key: "Build", title: "Construir lo que importa.", body: "Transformamos estrategia y diseño en soluciones útiles y escalables." },
+    { key: "Measure", title: "Medir impacto real.", body: "Observamos eficiencia, crecimiento, conversión, uso y valor generado." },
+    { key: "Evolve", title: "Nunca dejar de mejorar.", body: "Aprendemos, iteramos y evolucionamos de forma continua." },
+  ],
+  image: "/media/stock/taller-ideas.jpg",
+  alt: "Equipo ordenando ideas con notas adhesivas en una pared de vidrio",
+};
+
+/** "Nuestra historia": origen y ambición (Brand Manifesto 2026, "Built in Lima, Peru"). */
+export const story = {
+  eyebrow: "Nuestra historia",
+  title: "Built in Lima, Peru.",
+  body: [
+    "Wuality nace en Perú con una mirada latinoamericana y global.",
+    "Hacer más con menos. Adaptarnos rápido. Resolver con creatividad. Convertir complejidad en progreso.",
+    "Eso no es una tendencia. Es nuestra manera de construir.",
+  ],
+  beliefLabel: "Lo que creemos",
+  belief: "Technology should simplify progress.",
+  ambitionLabel: "Hacia dónde vamos",
+  ambition: "Building technology from Latin America for the world.",
+  image: "/media/stock/equipo-celebra.jpg",
+  alt: "Equipo celebrando un logro en la oficina",
 };
 
 /** Nombres de servicio en inglés también en español, como en el dossier; el detalle va traducido. */
@@ -268,51 +330,6 @@ export const partners = [
   { name: "Spotify Advertising Certified Partner", logo: "/media/logos/p-spotify.png", w: 698, h: 186 },
 ];
 
-export const methodology = [
-  {
-    tag: "Design Thinking",
-    fig: "esfera-amarilla",
-    tagColor: "#fbbd1d",
-    tagText: "#05080a",
-    title: "Diseño centrado en el usuario",
-    titleColor: "#fbbd1d",
-    body: "Ponemos a tus usuarios en el centro de todo lo que creamos",
-    pos: { top: "15%", left: "13%" },
-  },
-  {
-    tag: "Ceremonias, Reuniones",
-    fig: "esfera-roja",
-    tagColor: "#ff1a30",
-    tagText: "#ffffff",
-    title: "Feedback constante",
-    titleColor: "#ff1a30",
-    body: "Tu opinión es el motor de nuestra creación.",
-    pos: { top: "15%", right: "13%" },
-  },
-  {
-    tag: "Scrum & Lean UX",
-    fig: "gota-azul",
-    tagColor: "#2ea6ff",
-    tagText: "#05080a",
-    title: "Gestión ágil",
-    titleColor: "#2ea6ff",
-    body: "Con nuestra gestión ágil, transformamos la incertidumbre en resultados rápidos y visibles.",
-    pos: { bottom: "7%", left: "13%" },
-  },
-  {
-    tag: "Kaizen",
-    fig: "cinta-magenta",
-    // Magenta y no verde: la paleta de figuras de la marca no tiene verde, y el
-    // nodo del diagrama tiene que coincidir con el color de su tarjeta.
-    tagColor: "#a33099",
-    tagText: "#ffffff",
-    title: "Mejora continua",
-    titleColor: "#d85fc9",
-    body: "El mundo digital evoluciona, y tu producto también debería mantenerse a la vanguardia.",
-    pos: { bottom: "11%", right: "13%" },
-  },
-];
-
 /**
  * Testimonios de quienes dirigen las marcas de la cartera, uno por caso.
  *
@@ -431,7 +448,8 @@ export const clients = [
   { name: "IEP Eusebio Arróniz", logo: "/media/logos/c-eusebio.svg" },
   { name: "Entel", logo: "/media/logos/c-entel.svg" },
   { name: "Fishbox", logo: "/media/logos/c-fishbox.svg" },
-  { name: "Sodel", logo: "/media/logos/c-sodel.svg" },
+  // Texto calado sobre una forma: en la tira clara va en grises, no en negro (se vería una mancha).
+  { name: "Sodel", logo: "/media/logos/c-sodel.svg", badge: true },
   { name: "Chargy Power", logo: "/media/logos/c-chargy.svg" },
   { name: "Protein Food", logo: "/media/logos/c-proteinfood.svg" },
   { name: "Plan International", logo: "/media/logos/c-plan.svg" },
@@ -454,16 +472,19 @@ export const models = {
       title: "Partners Model",
       body: "Nos integramos como tu equipo digital extendido: un roadmap continuo con prioridades que se ajustan a tu negocio.",
       cta: "Descubre más",
-      // Azul más profundo que el de marca: el texto blanco pasa de 3,6:1 a 5,4:1.
-      bg: "#0066d6",
-      image: "/media/work/models-team.jpg",
+      // Azul noche del manual (secundario): el texto blanco da 15:1.
+      bg: "#0e2837",
+      image: "/media/stock/equipo-extendido.jpg",
+      alt: "Equipo revisando juntos un proyecto en una computadora",
     },
     {
       title: "Project-based Model",
       body: "Un alcance definido, con cronograma, entregables e inversión cerrados desde el inicio.",
       cta: "Descubre más",
-      bg: "#095c50",
-      image: "/media/work/models-team.jpg",
+      // Ciruela del manual (secundario).
+      bg: "#3c092f",
+      image: "/media/stock/planificacion.jpg",
+      alt: "Dos personas planificando tareas en una pizarra",
     },
   ],
 };
@@ -610,28 +631,31 @@ export const company = {
 };
 
 export const footer = {
-  name: "Wuality: Agencia de Innovación & Tecnología",
-  /**
-   * Un color de marca por palabra, en el orden de la paleta del manual: azul,
-   * amarillo, magenta y rojo. Los puntos van en gris para que no compitan y se
-   * lean como separadores, no como parte de la palabra.
-   *
-   * El mismo en todos los tamaños: antes en desktop iba otra frase ("Creamos
-   * experiencias digitales, impulsamos marcas.") con sólo dos palabras en color.
-   */
-  claim: [
-    // El azul de texto (--color-sky), no el de marca: sobre el pie oscuro éste no llega a 4,5:1.
-    { text: "Imagine", color: "#3d9bff" },
-    { text: ".", color: "#7c8282" },
-    { text: " " },
-    { text: "Create", color: "#fbbd1d" },
-    { text: ".", color: "#7c8282" },
-    { text: " " },
-    { text: "Develop", color: "#d85fc9" },
-    { text: ".", color: "#7c8282" },
-    { text: " " },
-    { text: "Together", color: "#ff1a30" },
+  name: "Wuality — Technology & Innovation Studio",
+  slogan: "Convertimos lo complejo en simple.",
+  /** Frase gigante del cierre, como los saludos de ciudades del pie de ustwo. */
+  sign: "Built in Lima, Peru.",
+  /** Mapa del sitio: los anclajes van al home del idioma (ver Footer). */
+  columns: [
+    {
+      title: "Estudio",
+      links: [
+        { label: "Qué hacemos", href: "#que-hacemos" },
+        { label: "The Wuality Way", href: "#metodo" },
+        { label: "Nosotros", href: "#nosotros" },
+      ],
+    },
+    {
+      title: "Trabajo",
+      links: [
+        { label: "Servicios", href: "#services" },
+        { label: "Proyectos", href: "#work" },
+        { label: "Blog", href: "#blog" },
+      ],
+    },
   ],
+  contactTitle: "Contacto",
+  city: "Lima, Perú",
   email: "hola@wuality.agency",
   /** `{year}` es el año del build: así el pie no se queda atrás. */
   legal: "Wuality Agency © {year} · RUC {ruc} · Todos los derechos reservados",
@@ -639,7 +663,7 @@ export const footer = {
   privacy: "Privacidad",
   socials: [
     { name: "Instagram", icon: "/media/ui/instagram.svg", href: "https://www.instagram.com/wualityagency/" },
-    { name: "Mail", icon: "/media/ui/mail.svg", href: "#" },
+    { name: "Mail", icon: "/media/ui/mail.svg", href: "mailto:hola@wuality.agency" },
     { name: "TikTok", icon: "/media/ui/tiktok.svg", href: "https://www.tiktok.com/@wualityagency" },
   ],
 };
@@ -669,16 +693,12 @@ export const cookies = {
  * sección. `{nombre}` se rellena con `fill()` (lib/i18n.ts).
  */
 export const ui = {
-  header: { home: "Wuality — inicio", openMenu: "Abrir menú", language: "Idioma y región", skip: "Saltar al contenido" },
+  header: { home: "Wuality — inicio", openMenu: "Abrir menú", language: "Idioma y región", skip: "Saltar al contenido", cta: "Hablemos" },
   menu: { label: "Menú principal", close: "Cerrar menú" },
   hero: { screen: "Pantalla de bloqueo con el fondo de marca de Wuality", date: "martes, 31 de julio" },
   services: { title: "Lo que hacemos", cta: "Consulta aquí" },
   projects: { title: "Nuestros proyectos", open: "Ver el caso de {name}" },
   partners: { title: "Partners digitales", label: "Partners digitales de Wuality" },
-  methodology: {
-    title: "¿Cómo lo logramos?",
-    cycle: "Ciclo de trabajo iterativo de Wuality. Arrástralo o usa las flechas para girarlo.",
-  },
   reviews: { label: "Opiniones de clientes" },
   blog: {
     label: "Artículos y episodios de Wuality",

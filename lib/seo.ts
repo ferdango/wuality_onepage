@@ -18,15 +18,15 @@ export const site = {
   url: (process.env.NEXT_PUBLIC_SITE_URL ?? "https://ferdango.github.io/wuality_onepage").replace(/\/+$/, ""),
   name: "Wuality",
   legalName: company.legalName,
-  /** Lema de marca (manual de identidad y dossier comercial). */
-  slogan: "Innovación que conecta",
-  title: "Wuality — Agencia de transformación digital en Lima, Perú",
+  /** Eslogan del Brand Manifesto 2026 (arquitectura de marca). */
+  slogan: "Convertimos lo complejo en simple.",
+  title: "Wuality — Technology & Innovation Studio en Lima, Perú",
   description:
-    "Agencia de innovación y tecnología en Lima, Perú: branding, diseño UX/UI, desarrollo web y de apps, estrategia con IA, SEO y paid media. Agenda una reunión.",
+    "Estudio de tecnología e innovación en Lima, Perú. Convertimos lo complejo en simple: branding, UX/UI, desarrollo web y de apps, IA, SEO y paid media.",
   email: footer.email,
   phone: chat.phone,
   logo: "/media/brand/wuality-horizontal-red.png",
-  ogImage: { url: "/og/wuality.jpg", width: 1200, height: 630, alt: "Wuality — Innovación que conecta" },
+  ogImage: { url: "/og/wuality.jpg", width: 1200, height: 630, alt: "Wuality — Convertimos lo complejo en simple" },
   sameAs: social.profiles.map((p) => p.href),
 } as const;
 
@@ -37,15 +37,15 @@ export const siteText: Record<Lang, { title: string; description: string; locale
     description: site.description,
     locale: "es_PE",
     language: "es-PE",
-    ogAlt: "Wuality — Innovación que conecta",
+    ogAlt: "Wuality — Convertimos lo complejo en simple",
   },
   en: {
-    title: "Wuality — Digital transformation agency in Lima, Peru",
+    title: "Wuality — Technology & Innovation Studio in Lima, Peru",
     description:
-      "Innovation and technology agency in Lima, Peru: branding, UX/UI design, web and app development, AI-driven strategy, SEO and paid media. Book a meeting.",
+      "Technology and innovation studio in Lima, Peru. We make the complex simple: branding, UX/UI, web and app development, AI, SEO and paid media.",
     locale: "en_US",
     language: "en",
-    ogAlt: "Wuality — Innovation that connects",
+    ogAlt: "Wuality — We make the complex simple",
   },
 };
 

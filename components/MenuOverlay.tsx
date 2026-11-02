@@ -7,7 +7,7 @@ import { withBase } from "@/lib/href";
 import { useContent } from "./LangProvider";
 
 /** Orden del menú overlay en el Figma (distinto al del header), por ancla: el texto cambia con el idioma. */
-const menuOrder = ["#edu", "#services", "#work", "#reviews", "#blog"];
+const menuOrder = ["#services", "#work", "#metodo", "#nosotros", "#reviews", "#blog"];
 
 export default function MenuOverlay({
   open,
