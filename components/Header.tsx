@@ -193,12 +193,13 @@ export default function Header({ linkBase = "" }: { linkBase?: string }) {
               </AnimatePresence>
             </div>
 
+            {/* Sólo en móvil y tablet: en desktop el menú ya está entero en la barra. */}
             <button
               type="button"
               onClick={() => setMenuOpen(true)}
               aria-label={ui.header.openMenu}
               aria-expanded={menuOpen}
-              className="group flex size-[clamp(40px,2.917vw,56px)] items-center justify-center rounded-full border border-bone/60 transition-colors duration-300 hover:border-red hover:bg-red"
+              className="group flex size-[clamp(40px,2.917vw,56px)] items-center justify-center rounded-full border border-bone/60 transition-colors duration-300 hover:border-red hover:bg-red lg:hidden"
             >
               <span className="flex w-[45%] flex-col gap-[3px]">
                 <span className="h-[2px] w-full rounded-full bg-bone transition-transform duration-300 group-hover:translate-x-[2px]" />
