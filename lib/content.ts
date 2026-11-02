@@ -91,29 +91,43 @@ export const story = {
   alt: "Equipo celebrando un logro en la oficina",
 };
 
-/** Nombres de servicio en inglés también en español, como en el dossier; el detalle va traducido. */
+/**
+ * Nombres de servicio en inglés también en español, como en el dossier; el
+ * detalle va traducido. Siguiendo el benchmark (ustwo, Huge, Globant, DEPT):
+ * cada servicio dice en una frase qué resuelve (`lead`), lista sus capacidades
+ * (`tags`) y enlaza a los casos reales de la cartera que lo prueban (`cases`,
+ * slugs de `projects`).
+ */
 export const services = [
   {
     title: "Brand Identity",
-    items: "Cultura / Comunicación visual / Identidad / Propuesta de valor",
+    lead: "Marcas claras que se reconocen en todas partes: estrategia, símbolo, sistema visual y aplicaciones listas para usar.",
+    tags: ["Cultura", "Comunicación visual", "Identidad", "Propuesta de valor"],
+    cases: ["grupo-tinbet", "sunqu-journeys", "kingbuilder", "tec-seg", "peruana-en-rusia"],
     image: "/media/work/services-brand.jpg",
     alt: "Identidades creadas por Wuality: símbolo de Grupo Tinbet, polo de Sunqu Journeys, emblema de KingBuilder, escudo y camioneta de TEC & SEG y marca de Peruana en Rusia",
   },
   {
     title: "Create Digital Products",
-    items: "UX/UI / Product management / Front-end / Back-end / Apps",
+    lead: "Webs, apps y plataformas que las personas entienden y usan, del research al código.",
+    tags: ["UX/UI", "Product management", "Front-end", "Back-end", "Apps"],
+    cases: ["afiliados-tinbet", "tuku-travel", "iep-eusebio-arroniz", "zenity"],
     image: "/media/work/services-products.jpg",
     alt: "Webs móviles diseñadas por Wuality para Tuku Travel, Peruana en Rusia, Grupo Tinbet, Sunqu Journeys y KingBuilder",
   },
   {
     title: "Strategy & AI-Driven Insights",
-    items: "Accesibilidad / Customer journey / Research / Tendencias",
+    lead: "Investigamos a tus usuarios y tus datos para decidir dónde simplificar, con IA cuando suma de verdad.",
+    tags: ["Accesibilidad", "Customer journey", "Research", "Tendencias"],
+    cases: ["zenity", "sunqu-journeys"],
     image: "/media/work/services-strategy.jpg",
     alt: "Pantallas de Zenity, el prototipo fintech de Wuality: balance consolidado, ingresos y egresos por cuenta y un asistente con IA que explica el balance",
   },
   {
     title: "Paid Media & SEO",
-    items: "SEM / SEO / Paid social / Display / Video / Native",
+    lead: "Que te encuentren las personas correctas: posicionamiento orgánico y campañas en buscadores, redes, display y video.",
+    tags: ["SEM", "SEO", "Paid social", "Display", "Video", "Native"],
+    cases: ["peruana-en-rusia", "afiliados-tinbet"],
     image: "/media/work/services-paid.jpg",
     alt: "Campañas de Wuality: panel publicitario y evento de Peruana en Rusia, evento de Grupo Tinbet y posts para redes de Grupo Tinbet, Sunqu Journeys y Peruana en Rusia",
   },
@@ -682,7 +696,13 @@ export const ui = {
   header: { home: "Wuality — inicio", openMenu: "Abrir menú", language: "Idioma y región", skip: "Saltar al contenido", cta: "Hablemos" },
   menu: { label: "Menú principal", close: "Cerrar menú" },
   hero: { pause: "Pausar el vídeo", play: "Reproducir el vídeo" },
-  services: { title: "Lo que hacemos", cta: "Consulta aquí" },
+  services: {
+    eyebrow: "Servicios",
+    title: "Cuatro capacidades. Un mismo equipo.",
+    lead: "Estrategia, diseño y tecnología trabajando juntas, para que cada proyecto llegue de lo complejo a lo simple.",
+    cases: "Casos",
+    cta: "Cuéntanos tu proyecto",
+  },
   projects: { title: "Nuestros proyectos", open: "Ver el caso de {name}" },
   reviews: { label: "Opiniones de clientes" },
   blog: {

@@ -81,19 +81,23 @@ export const story = {
 
 export const services = withTexts(es.services, [
   {
-    items: "Culture / Visual communication / Identity / Value proposition",
+    lead: "Clear brands people recognize anywhere: strategy, symbol, visual system and ready-to-use applications.",
+    tags: ["Culture", "Visual communication", "Identity", "Value proposition"],
     alt: "Identities created by Wuality: the Grupo Tinbet symbol, a Sunqu Journeys T-shirt, the KingBuilder emblem, the TEC & SEG shield and pickup, and the Peruana en Rusia logo",
   },
   {
-    items: "UX/UI / Product management / Front-end / Back-end / Apps",
+    lead: "Websites, apps and platforms people understand and use, from research to code.",
+    tags: ["UX/UI", "Product management", "Front-end", "Back-end", "Apps"],
     alt: "Mobile websites designed by Wuality for Tuku Travel, Peruana en Rusia, Grupo Tinbet, Sunqu Journeys and KingBuilder",
   },
   {
-    items: "Accessibility / Customer journey / Research / Trends",
+    lead: "We research your users and your data to decide where to simplify, with AI where it truly adds value.",
+    tags: ["Accessibility", "Customer journey", "Research", "Trends"],
     alt: "Screens from Zenity, Wuality's fintech prototype: a consolidated balance, income and expenses per account, and an AI assistant that explains the balance",
   },
   {
-    items: "SEM / SEO / Paid social / Display / Video / Native",
+    lead: "Get found by the right people: organic search and campaigns across search, social, display and video.",
+    tags: ["SEM", "SEO", "Paid social", "Display", "Video", "Native"],
     alt: "Wuality campaigns: a Peruana en Rusia billboard and event, a Grupo Tinbet event, and social posts for Grupo Tinbet, Sunqu Journeys and Peruana en Rusia",
   },
 ]);
@@ -431,7 +435,13 @@ export const ui: typeof es.ui = {
   header: { home: "Wuality — home", openMenu: "Open menu", language: "Language and region", skip: "Skip to content", cta: "Let's talk" },
   menu: { label: "Main menu", close: "Close menu" },
   hero: { pause: "Pause the video", play: "Play the video" },
-  services: { title: "What we do", cta: "Get in touch" },
+  services: {
+    eyebrow: "Services",
+    title: "Four capabilities. One team.",
+    lead: "Strategy, design and technology working together, so every project goes from complex to simple.",
+    cases: "Work",
+    cta: "Tell us about your project",
+  },
   projects: { title: "Our work", open: "See the {name} case" },
   reviews: { label: "Client reviews" },
   blog: {
