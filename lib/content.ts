@@ -317,19 +317,6 @@ export const projects = [
 ];
 
 /**
- * Logos de partners en blanco, sobre transparente y sin margen (Atlassian es el
- * SVG oficial). `w` y `h` son su tamaño real: con ellos Partners.tsx iguala el
- * peso visual de logos muy alargados y de logos casi cuadrados.
- */
-export const partners = [
-  { name: "Atlassian", logo: "/media/logos/p-atlassian.svg", w: 532, h: 66 },
-  { name: "Meta Business Partner", logo: "/media/logos/p-meta.png", w: 691, h: 238 },
-  { name: "WordPress VIP Silver Agency Partner", logo: "/media/logos/p-wpvip.png", w: 709, h: 259 },
-  { name: "Google Cloud", logo: "/media/logos/p-googlecloud.png", w: 496, h: 78 },
-  { name: "Spotify Advertising Certified Partner", logo: "/media/logos/p-spotify.png", w: 698, h: 186 },
-];
-
-/**
  * Testimonios de quienes dirigen las marcas de la cartera, uno por caso.
  *
  * Los textos son borradores que redactó Wuality a partir de cada proyecto y
@@ -697,7 +684,6 @@ export const ui = {
   hero: { pause: "Pausar el vídeo", play: "Reproducir el vídeo" },
   services: { title: "Lo que hacemos", cta: "Consulta aquí" },
   projects: { title: "Nuestros proyectos", open: "Ver el caso de {name}" },
-  partners: { title: "Partners digitales", label: "Partners digitales de Wuality" },
   reviews: { label: "Opiniones de clientes" },
   blog: {
     label: "Artículos y episodios de Wuality",
@@ -714,7 +700,7 @@ export const ui = {
     prev: "Posts anteriores",
     next: "Posts siguientes",
   },
-  carousel: { role: "carrusel", slide: "{n} de {total}", goTo: "Ir al slide {n}", pause: "Pausar el carrusel", play: "Reanudar el carrusel" },
+  carousel: { role: "carrusel", slide: "{n} de {total}", goTo: "Ir al slide {n}" },
   caseStudy: { services: "Servicios", client: "Cliente", sector: "Sector", web: "Web", next: "Siguiente caso" },
   meeting: {
     platform: "Plataforma para la reunión",

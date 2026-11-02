@@ -141,7 +141,7 @@ oscuras e interactivas de la marca.
 
 Hero (Complejo → Simple) · **Qué hacemos** (claro: declaración, foto, la idea
 Complejo → Simple y logos de clientes) · Lo que hacemos · Nuestros proyectos ·
-**The Wuality Way** (los 5 pasos del manifiesto) · Partners · Reseñas (si hay
+**The Wuality Way** (los 5 pasos del manifiesto) · Reseñas (si hay
 aprobadas) · Modelos · **Nuestra historia** (banda celeste, "Built in Lima,
 Peru.") · Últimos posts · FAQ · Agenda · Blog · pie con mapa del sitio y la
 frase gigante.
@@ -229,7 +229,6 @@ propósito: en algunas máquinas la familia resuelve a su variante oblicua.
 | Nuestros proyectos | Carrusel con swipe, arrastre, teclado y dots. Avanza solo cada 5s y el detalle de abajo sigue al proyecto en curso; al hacer clic, además, lleva la vista hasta él |
 | Todos los carruseles | Bucle infinito con avance automático, que se pausa al pasar el cursor, al enfocar, al tocar o si la pestaña no está visible. Arrastre con mouse vía `useDragScroll`: desactiva el snap durante el gesto, lo restaura al soltar y suprime el click posterior para que soltar sobre una tarjeta no la active |
 | Caso de estudio | Muestra el proyecto elegido arriba: al hacer clic en una tarjeta se ancla aquí y el contenido cambia con una transición. Acordeón de capítulos con altura animada |
-| Partners | Slider en bucle que avanza solo, de uno en uno (`components/ui/LoopSlider.tsx`, con `transform`: igual en todos los navegadores). Se pausa con el cursor, con el foco, con la pestaña oculta y con su botón de pausa; con "reducir movimiento" no avanza solo |
 | The Wuality Way | Los 5 pasos del manifiesto (Understand → Simplify → Build → Measure → Evolve), sin anclar el scroll. Mientras la sección está a la vista, The Wuality Point recorre la línea de paso en paso y enciende el paso en curso; con "reducir movimiento" se ven todos iguales |
 | Reviews | Riel de testimonios de quienes dirigen las marcas de la cartera: ficha de la marca (logo sobre su color) y cita en amarillo. Sólo se publican los aprobados (ver abajo) |
 | Nuestra historia | Banda celeste con el origen y la ambición de la marca ("Built in Lima, Peru.") y una foto de equipo |

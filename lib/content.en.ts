@@ -220,7 +220,6 @@ export const projects = withTexts(es.projects, [
   },
 ]);
 
-export const partners = es.partners;
 
 /** Testimonios en inglés, por caso (ver los borradores en content.ts). */
 const testimonialsEn: Record<string, { role: string; quote: string }> = {
@@ -434,7 +433,6 @@ export const ui: typeof es.ui = {
   hero: { pause: "Pause the video", play: "Play the video" },
   services: { title: "What we do", cta: "Get in touch" },
   projects: { title: "Our work", open: "See the {name} case" },
-  partners: { title: "Digital partners", label: "Wuality's digital partners" },
   reviews: { label: "Client reviews" },
   blog: {
     label: "Wuality articles and episodes",
@@ -451,7 +449,7 @@ export const ui: typeof es.ui = {
     prev: "Previous posts",
     next: "Next posts",
   },
-  carousel: { role: "carousel", slide: "{n} of {total}", goTo: "Go to slide {n}", pause: "Pause the carousel", play: "Resume the carousel" },
+  carousel: { role: "carousel", slide: "{n} of {total}", goTo: "Go to slide {n}" },
   caseStudy: { services: "Services", client: "Client", sector: "Industry", web: "Website", next: "Next case" },
   meeting: {
     platform: "Meeting platform",

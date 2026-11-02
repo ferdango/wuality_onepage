@@ -2,7 +2,6 @@ import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import Services from "@/components/Services";
 import Projects from "@/components/Projects";
-import Partners from "@/components/Partners";
 import Intro from "@/components/Intro";
 import WualityWay from "@/components/WualityWay";
 import Reviews from "@/components/Reviews";
@@ -38,7 +37,6 @@ export default function HomePage({ lang }: { lang: Lang }) {
         <Services />
         <Projects />
         <WualityWay />
-        <Partners />
         <Reviews />
         <Models />
         <Story />
