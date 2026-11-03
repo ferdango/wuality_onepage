@@ -22,14 +22,6 @@ const wuality = localFont({
   display: "swap",
 });
 
-/** "only one effect" usa esta tipografía en el Figma. */
-const chau = localFont({
-  src: "./fonts/chau-philomene-one-latin.woff2",
-  weight: "400",
-  variable: "--font-chau-raw",
-  display: "swap",
-});
-
 /**
  * Metadatos comunes. Cada página define los suyos con `pageMeta` (canonical,
  * descripción, Open Graph y Twitter); aquí van la base de las URL absolutas, la
@@ -66,7 +58,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="es" className={`${wuality.variable} ${chau.variable}`}>
+    <html lang="es" className={wuality.variable}>
       <body>{children}</body>
     </html>
   );

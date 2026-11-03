@@ -200,15 +200,13 @@ El diseño usa **Charlie Display** (licencia Atlassian, sin webfont pública). L
 carga **Figtree** vía `next/font`, que es la sustituta de proporciones más cercanas
 y garantiza el mismo render en todos los equipos.
 
-La línea "only one effect" usa **Chau Philomene One**, la misma del Figma.
+Va en el repo (`app/fonts/`, subconjunto latino, con su licencia OFL) y se carga
+con `next/font/local`. No se pide a Google Fonts al compilar: Google empezó a
+servir Figtree con URLs que Turbopack no resuelve y el build fallaba.
 
-Las dos van en el repo (`app/fonts/`, subconjunto latino, con sus licencias OFL) y
-se cargan con `next/font/local`. No se piden a Google Fonts al compilar: Google
-empezó a servir Figtree con URLs que Turbopack no resuelve y el build fallaba.
-
-La métrica de Chau Philomene One difiere un poco de la del archivo, así que el
-tamaño del claim se acota además al ancho disponible (`--claim` en `Models.tsx`):
-en desktop da los 220px del Figma y en móvil llena el ancho sin recortarse.
+Es la única tipografía del sitio, como pide el manual (una sola familia, Aeonik,
+para titulares y textos). La Chau Philomene One del Figma, que sólo usaba el
+titular de "Dos modelos", se retiró al rediseñar esa sección.
 
 Para usar la original: deja los `.woff2` en `public/fonts/`, descomenta el bloque
 `@font-face` al final de `app/globals.css` y antepón `"Charlie Display"` en la
@@ -232,8 +230,7 @@ propósito: en algunas máquinas la familia resuelve a su variante oblicua.
 | The Wuality Way | Los 5 pasos del manifiesto (Understand → Simplify → Build → Measure → Evolve), sin anclar el scroll. Mientras la sección está a la vista, The Wuality Point recorre la línea de paso en paso y enciende el paso en curso; con "reducir movimiento" se ven todos iguales |
 | Reviews | Riel de testimonios de quienes dirigen las marcas de la cartera: ficha de la marca (logo sobre su color) y cita en amarillo. Sólo se publican los aprobados (ver abajo) |
 | Nuestra historia | Banda celeste con el origen y la ambición de la marca ("Built in Lima, Peru.") y una foto de equipo |
-| Two models | Las dos líneas entran desde lados opuestos con el scroll, al tamaño del Figma (220px sobre el lienzo de 1920) |
-| Modelos | Las dos tarjetas se apilan al bajar: cada una queda fija un poco más abajo que la anterior y la de atrás se encoge y se oscurece |
+| Modelos de trabajo | Encabezado de banda y las dos opciones lado a lado para compararlas (qué es, para quién, qué incluye y botón a contacto), como las fichas de modelos de Huge o Globant; debajo, lo que comparten. Detrás, las dos esferas que convergen se acercan con el scroll |
 | FAQ | Acordeón de apertura única con icono +/− y altura animada |
 | Agenda una reunión | Sección de 90vh. Flujo de 2 pasos: elección de plataforma (Meet/Zoom) → "Continuar" → formulario con selector de prefijo internacional, validación y estado de confirmación |
 | Blog | Carrusel con un artículo por caso de la cartera; admite también tarjetas de video |
@@ -351,8 +348,8 @@ Cosas que el Figma deja como placeholder y conviene reemplazar antes de publicar
   y `approved: true`. En producción sólo salen los aprobados (sin ninguno, la
   sección y "Reseñas" en el menú no se publican); en `npm run dev` se ven todos,
   marcados como borrador.
-- **Modelos en móvil**: el Figma los muestra como carrusel con dots. Aquí se
-  apilan igual que en desktop, por pedido explícito; si prefieres el carrusel del
-  diseño, es volver a la versión anterior del componente.
+- **Modelos en móvil**: el Figma los muestra como carrusel con dots. Aquí van
+  uno debajo del otro, con el mismo contenido que en desktop, para que se puedan
+  comparar sin deslizar.
 - **Tablet**: el Figma solo define 1920 y 360. El rango 768–1023 se derivó de forma
   responsive a partir de ambos.

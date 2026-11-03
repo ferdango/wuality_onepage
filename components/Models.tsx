@@ -3,195 +3,147 @@
 import Image from "@/components/ui/Img";
 import { motion, useMotionTemplate, useReducedMotion, useScroll, useTransform } from "motion/react";
 import { useRef } from "react";
+import Eyebrow from "./ui/Eyebrow";
+import Reveal from "./ui/Reveal";
 import { useContent } from "./LangProvider";
 
+const number = (i: number) => String(i + 1).padStart(2, "0");
+
+/**
+ * "Modelos de trabajo". Antes era un titular gigante en dos tipografías (la
+ * segunda, Chau Philomene One, venía del Figma y no está en el manual) sobre
+ * mucho vacío, y dos tarjetas que se apilaban con el scroll sin verse nunca
+ * juntas. Ahora, como presentan sus modelos Huge o Globant:
+ *
+ *   - encabezado de banda (rótulo, titular, contexto), como el resto del sitio;
+ *   - las dos opciones lado a lado, para compararlas: qué es, para quién, qué
+ *     incluye y un botón que dice adónde lleva;
+ *   - debajo, lo que comparten los dos, que es el "mismo compromiso".
+ *
+ * Se queda el gesto de marca: las dos esferas que convergen (dos que acaban
+ * siendo uno), detrás del encabezado, acercándose con el scroll.
+ */
 export default function Models() {
   const { models } = useContent();
-  const claimRef = useRef<HTMLDivElement>(null);
-  const stackRef = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLElement>(null);
   const reduced = useReducedMotion();
 
   /**
-   * Los valores ligados al scroll viajan como variables CSS. Enlazarlos a
-   * `opacity` o a transforms hace que Motion los acelere sobre un ViewTimeline
-   * nativo cuyo rango no coincide con el de la librería en JS (misma razón que
-   * en Hero).
+   * Va como variable CSS y no atado a un transform: enlazado directamente,
+   * Motion lo pasa a un ViewTimeline nativo y se congela (ver Hero).
    */
-  const { scrollYProgress: claimProgress } = useScroll({
-    target: claimRef,
-    offset: ["start end", "end start"],
-  });
-  const shift = useMotionTemplate`${useTransform(claimProgress, [0, 0.5], [8, 0])}`;
-
-  /**
-   * "end start" y no "end end": el contenedor puede ser más corto que el
-   * viewport y ese rango se invierte, dejando el progreso saltando entre 0 y 1.
-   * Este mide desde que el contenedor toca el borde superior hasta que lo
-   * abandona, y es correcto sea cual sea su altura.
-   */
-  const { scrollYProgress: stackProgress } = useScroll({
-    target: stackRef,
-    offset: ["start start", "end start"],
-  });
-  const stack = useMotionTemplate`${stackProgress}`;
-
-  const total = models.cards.length;
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "start start"] });
+  const converge = useMotionTemplate`${useTransform(scrollYProgress, [0, 1], [1, 0])}`;
 
   return (
-    <section className="bg-ink pb-[calc(var(--section-y)*1.6)] pt-[calc(var(--section-y)*1.6)]">
-      {/* Claim: 220px en el Figma de 1920, 64px en el de 360 */}
+    <section ref={ref} id="modelos" className="relative overflow-hidden bg-ink py-[calc(var(--section-y)*1.7)] text-bone">
       <motion.div
-        ref={claimRef}
-        /**
-         * Sin `overflow-hidden`: el recorte lo hace ya la capa del gráfico, y
-         * aquí impedía que el bloque creciera cuando el titular no cabe en
-         * 60svh (una ventana ancha y baja, 1920x900, se comía 38px de texto).
-         */
-        className="shell relative flex min-h-[60svh] flex-col items-center justify-center"
-        style={
-          {
-            "--shift": reduced ? 0 : shift,
-            /**
-             * 220px sobre el lienzo de 1920 del Figma, es decir 11.458vw.
-             * El segundo `min` acota el tamaño al ancho disponible con `fit`,
-             * el ancho en em de la línea más larga de cada idioma ("only one
-             * effect" ~6em; "un mismo compromiso" ~9em en Chau Philomene One).
-             * Sin ese tope se sale de pantalla en móvil.
-             */
-            "--claim": `min(clamp(4rem, 11.458vw, 13.75rem), calc((100vw - 2 * var(--gutter)) / ${models.fit}))`,
-          } as React.CSSProperties
-        }
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 h-[clamp(420px,52vw,880px)] overflow-hidden mix-blend-screen [mask-image:linear-gradient(to_bottom,black_40%,transparent)]"
+        style={{ "--k": reduced ? 0 : converge } as React.CSSProperties}
       >
-        {/**
-         * Elemento gráfico de marca: dos esferas que se encuentran. Dice lo
-         * mismo que el titular —dos que acaban siendo uno— así que va detrás
-         * del texto, con el punto de encuentro a la altura del hueco entre las
-         * dos líneas.
-         *
-         * El original viene sobre negro; con `screen` ese negro desaparece y
-         * sólo queda el resplandor rojo, así que no hacen falta máscaras ni se
-         * ven los cantos del encuadre. Se dimensiona para sangrar por los
-         * cuatro lados —de ahí el `max` entre ancho y alto de viewport—: si
-         * cupiera entero se verían dos círculos completos en vez de dos arcos.
-         */}
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 overflow-hidden mix-blend-screen [mask-image:linear-gradient(to_bottom,transparent,black_26%,black_74%,transparent)]"
-        >
-          <Image
-            src="/media/brand/esferas-convergen.jpg"
-            alt=""
-            width={1400}
-            height={1400}
-            className="absolute left-1/2 top-1/2 size-[max(118vw,86svh)] max-w-none -translate-x-1/2 -translate-y-1/2 opacity-30"
-            style={{ scale: "calc(1 + var(--shift) * 0.014)" }}
-          />
-        </div>
-
-        <p
-          className="relative whitespace-nowrap text-center text-[length:var(--claim)] font-bold leading-[1] tracking-[-0.02em] text-bone"
-          style={{ translate: "calc(var(--shift) * 1%) 0" }}
-        >
-          {models.line1}
-        </p>
-        <p
-          className="relative mt-[clamp(2.4375rem,5vw,6rem)] whitespace-nowrap text-center font-chau text-[length:var(--claim)] leading-[1] tracking-[-0.01em] text-bone"
-          style={{ translate: "calc(var(--shift) * -1%) 0" }}
-        >
-          {models.line2}
-        </p>
+        {/* El original viene sobre negro: con `screen` el negro desaparece y queda el resplandor. */}
+        <Image
+          src="/media/brand/esferas-convergen.jpg"
+          alt=""
+          width={1400}
+          height={1400}
+          className="absolute left-1/2 top-[-18%] w-[max(110vw,900px)] max-w-none -translate-x-1/2 opacity-30"
+          style={{ scale: "calc(1 + var(--k) * 0.18)" }}
+        />
       </motion.div>
 
-      {/**
-       * Las tarjetas se apilan: cada una queda fija un poco más abajo que la
-       * anterior, de modo que al bajar la siguiente se monta encima y deja
-       * asomando el borde de la de atrás, que además se encoge y se oscurece.
-       */}
-      <motion.div
-        ref={stackRef}
-        className="shell mt-[clamp(32px,3.3vw,64px)]"
-        style={
-          {
-            "--stack-progress": reduced ? 1 : stack,
-            "--stack-step": "clamp(14px,1.25vw,24px)",
-          } as React.CSSProperties
-        }
-      >
-        {models.cards.map((card, i) => {
-          const isLast = i === total - 1;
-          return (
-            <div
-              key={card.title}
-              className="sticky mx-auto w-full max-w-[1024px] last:mb-0 mb-[clamp(24px,4vw,80px)]"
-              style={
-                {
-                  // 48px de aire bajo el header: pegada arriba se veía apretada.
-                  top: `calc(var(--header-h) + 48px + ${i} * var(--stack-step))`,
-                  zIndex: i + 1,
-                  // 0 mientras la tarjeta manda, 1 cuando ya está cubierta.
-                  "--k": isLast ? "0" : `clamp(0, var(--stack-progress) * ${total} - ${i}, 1)`,
-                } as React.CSSProperties
-              }
-            >
+      <div className="shell relative mx-auto max-w-[1760px]">
+        <div className="grid items-end gap-[clamp(20px,4vw,80px)] lg:grid-cols-[1.2fr_1fr]">
+          <div>
+            <Reveal>
+              <Eyebrow tone="light">{models.eyebrow}</Eyebrow>
+            </Reveal>
+            <Reveal delay={0.05}>
+              <h2 className="h-section mt-[clamp(16px,1.6vw,28px)] max-w-[16ch] text-balance">{models.title}</h2>
+            </Reveal>
+          </div>
+          <Reveal delay={0.1}>
+            <p className="max-w-[46ch] text-[length:var(--fs-body)] leading-relaxed text-ash">{models.lead}</p>
+          </Reveal>
+        </div>
+
+        <div className="mt-[clamp(36px,4.5vw,88px)] grid gap-[clamp(14px,1.5vw,28px)] lg:grid-cols-2">
+          {models.cards.map((card, i) => (
+            <Reveal key={card.title} delay={0.06 * i} className="h-full">
               <article
-                className="grid origin-top overflow-hidden shadow-[0_-24px_60px_-30px_rgba(0,0,0,0.9)] lg:grid-cols-2 xl:h-[520px]"
-                style={
-                  reduced
-                    ? undefined
-                    : {
-                        scale: "calc(1 - var(--k) * 0.05)",
-                        filter: "brightness(calc(1 - var(--k) * 0.35))",
-                      }
-                }
+                className="flex h-full flex-col overflow-hidden rounded-[clamp(16px,1.6vw,32px)]"
+                style={{ backgroundColor: card.bg }}
               >
-                <div
-                  /**
-                   * De 1280px en adelante la tarjeta mide 520px de alto (ver el
-                   * `xl:h-[520px]` del article). Por debajo la altura la marca
-                   * el texto: la proporción 616x380 del Figma se quedaba corta
-                   * con la tarjeta acotada a 1024px y el panel de color asomaba
-                   * por debajo de la foto.
-                   */
-                  className="flex flex-col justify-between gap-[clamp(20px,2.1vw,40px)] px-[clamp(20px,2.1vw,40px)] py-[clamp(36px,3.75vw,72px)] lg:min-h-[clamp(300px,26.4vw,380px)] lg:px-[clamp(24px,2.5vw,48px)] xl:min-h-0"
-                  style={{ backgroundColor: card.bg }}
-                >
-                  <div>
-                    <h3 className="text-[clamp(1.5rem,2.5vw,3rem)] font-bold leading-tight text-white">
-                      {card.title}
-                    </h3>
-                    <p className="mt-[clamp(10px,1.05vw,20px)] max-w-[42ch] text-[length:var(--fs-xs)] leading-relaxed text-white/90">
-                      {card.body}
-                    </p>
-                  </div>
-
-                  <a
-                    href="#contacto"
-                    className="group inline-flex w-fit items-center gap-4 rounded-full border border-white/70 px-[clamp(16px,1.25vw,24px)] py-[clamp(9px,0.83vw,16px)] text-[length:var(--fs-xs)] font-semibold text-white transition-colors duration-400 hover:bg-white/10"
-                  >
-                    {card.cta}
-                    <span className="relative block h-[2px] w-6 overflow-hidden bg-white/60">
-                      <span className="absolute inset-0 -translate-x-full bg-white transition-transform duration-500 ease-wuality group-hover:translate-x-0" />
-                    </span>
-                  </a>
-                </div>
-
-                <div className="relative aspect-[616/380] w-full lg:aspect-auto lg:h-full">
+                <figure className="relative aspect-[16/9] w-full">
                   <Image
                     src={card.image}
                     alt={card.alt}
                     fill
-                    sizes="(max-width: 1024px) 100vw, 50vw"
+                    sizes="(max-width: 1024px) 100vw, 46vw"
                     className="object-cover"
                   />
+                </figure>
+
+                <div className="flex flex-1 flex-col p-[clamp(22px,2.4vw,48px)]">
+                  {/* En blanco translúcido: el rojo sobre el azul noche o la ciruela no llega a 4,5:1. */}
+                  <p className="text-[length:var(--fs-xs)] font-semibold tabular-nums text-white/75">{number(i)}</p>
+                  <h3 className="mt-2 text-[length:clamp(1.625rem,1rem_+_1.8vw,3rem)] font-bold leading-tight tracking-[-0.02em]">
+                    {card.title}
+                  </h3>
+                  <p className="mt-[clamp(10px,1vw,18px)] max-w-[48ch] text-[length:var(--fs-body)] leading-relaxed text-white/90">
+                    {card.body}
+                  </p>
+                  <p className="mt-[clamp(10px,1vw,18px)] max-w-[48ch] text-[length:var(--fs-sm)] leading-relaxed text-white/75">
+                    {card.ideal}
+                  </p>
+
+                  <p className="mt-[clamp(20px,2vw,36px)] text-[0.75rem] font-semibold uppercase tracking-[0.16em] text-white/70">
+                    {models.includes}
+                  </p>
+                  <ul className="mt-3 grid gap-x-6 gap-y-2.5 sm:grid-cols-2">
+                    {card.points.map((point) => (
+                      <li key={point} className="flex items-start gap-2.5 text-[length:var(--fs-sm)] leading-snug">
+                        <svg viewBox="0 0 24 24" aria-hidden className="mt-[0.15em] size-[1.05em] shrink-0 text-sky" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M20 6L9 17l-5-5" />
+                        </svg>
+                        {point}
+                      </li>
+                    ))}
+                  </ul>
+
+                  {/* Abajo del todo, para que los dos botones queden alineados aunque el texto mida distinto. */}
+                  <div className="mt-auto pt-[clamp(24px,2.6vw,48px)]">
+                    <a
+                      href="#contacto"
+                      className="group inline-flex w-fit items-center gap-3 rounded-full bg-bone px-6 py-3 text-[length:var(--fs-xs)] font-semibold text-ink transition-colors duration-300 hover:bg-white"
+                    >
+                      {card.cta}
+                      <svg viewBox="0 0 24 24" aria-hidden className="size-4 transition-transform duration-400 group-hover:translate-x-1" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M4 12h15M13 6l6 6-6 6" />
+                      </svg>
+                    </a>
+                  </div>
                 </div>
               </article>
-            </div>
-          );
-        })}
+            </Reveal>
+          ))}
+        </div>
 
-        {/* Sin este respiro la última tarjeta no tiene recorrido para quedarse fija */}
-        <div className="h-[clamp(120px,32vh,360px)]" aria-hidden />
-      </motion.div>
+        {/* Lo que comparten los dos modelos: el "mismo compromiso" del titular. */}
+        <Reveal delay={0.1}>
+          <div className="mt-[clamp(14px,1.5vw,28px)] rounded-[clamp(16px,1.6vw,32px)] border border-line p-[clamp(22px,2.4vw,48px)]">
+            <Eyebrow tone="light">{models.shared.title}</Eyebrow>
+            <ul className="mt-[clamp(16px,1.6vw,28px)] grid gap-x-[clamp(20px,2.4vw,48px)] gap-y-4 sm:grid-cols-2 lg:grid-cols-4">
+              {models.shared.items.map((item) => (
+                <li key={item} className="border-t border-line pt-4 text-[length:var(--fs-body)] font-semibold leading-snug">
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </Reveal>
+      </div>
     </section>
   );
 }

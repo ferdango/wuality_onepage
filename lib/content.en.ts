@@ -288,21 +288,36 @@ export const clients = es.clients;
 
 /** "Two models / only one effect" es el titular original del Figma en inglés. */
 export const models = {
-  line1: "Two models",
-  line2: "only one effect",
-  fit: 6,
+  ...es.models,
+  eyebrow: "Engagement models",
+  title: "Two models, one commitment.",
+  lead: "Choose how to work with us based on where your business is: a team that evolves with you or a project with a fixed scope.",
+  includes: "Includes",
   cards: withTexts(es.models.cards, [
     {
       body: "We become your extended digital team: an ongoing roadmap with priorities that adapt to your business.",
-      cta: "Learn more",
+      ideal: "For products that keep evolving and need a team that adapts.",
+      points: ["An extended digital team", "An ongoing roadmap, prioritized with you", "Priorities that adapt to your business", "Continuous improvement, sprint by sprint"],
+      cta: "Let's talk about this model",
       alt: "A team reviewing a project together on a computer",
     },
     {
       body: "A defined scope, with schedule, deliverables and investment agreed from the start.",
-      cta: "Learn more",
+      ideal: "For clear goals, when you want to know what, when and how much from day one.",
+      points: ["A defined scope", "A schedule with milestones", "Agreed deliverables", "A fixed investment from the start"],
+      cta: "Let's talk about this model",
       alt: "Two people planning tasks on a whiteboard",
     },
   ]),
+  shared: {
+    title: "In both models",
+    items: [
+      "The same method: The Wuality Way",
+      "Strategy, design and technology in one team",
+      "Visible progress and constant feedback",
+      "We measure real impact",
+    ],
+  },
 };
 
 export const social = {
@@ -433,7 +448,14 @@ export const cookies = {
 
 export const ui: typeof es.ui = {
   header: { home: "Wuality — home", openMenu: "Open menu", language: "Language and region", skip: "Skip to content", cta: "Let's talk" },
-  menu: { label: "Main menu", close: "Close menu" },
+  menu: {
+    label: "Main menu",
+    close: "Close menu",
+    contact: "Contact",
+    language: "Language",
+    follow: "Follow us",
+    current: "You are here",
+  },
   hero: { pause: "Pause the video", play: "Play the video" },
   services: {
     eyebrow: "Services",

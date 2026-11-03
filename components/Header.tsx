@@ -211,7 +211,7 @@ export default function Header({ linkBase = "" }: { linkBase?: string }) {
         </div>
       </header>
 
-      <MenuOverlay open={menuOpen} onClose={() => setMenuOpen(false)} linkBase={linkBase} />
+      <MenuOverlay open={menuOpen} onClose={() => setMenuOpen(false)} linkBase={linkBase} active={active} />
     </>
   );
 }

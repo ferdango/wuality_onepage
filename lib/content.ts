@@ -459,19 +459,29 @@ export const clients = [
 ];
 
 /** Titular y textos del dossier (p. 6, "Dos modelos, un mismo compromiso"). */
+/**
+ * "Modelos de trabajo": cómo contratar a Wuality. Como en las fichas de
+ * modelos de los grandes estudios (Huge, Globant), las dos opciones van lado a
+ * lado para compararlas —qué es, para quién, qué incluye— y debajo, lo que
+ * comparten: ese es el "mismo compromiso".
+ */
 export const models = {
-  line1: "Dos modelos",
-  line2: "un mismo compromiso",
-  /**
-   * Ancho de la línea más larga, en múltiplos del tamaño de letra: el titular
-   * se acota a (ancho útil / fit) para que nunca se salga de la pantalla.
-   */
-  fit: 9,
+  eyebrow: "Modelos de trabajo",
+  title: "Dos modelos, un mismo compromiso.",
+  lead: "Elige cómo trabajar con nosotros según el momento de tu negocio: un equipo que evoluciona contigo o un proyecto con alcance cerrado.",
+  includes: "Incluye",
   cards: [
     {
       title: "Partners Model",
       body: "Nos integramos como tu equipo digital extendido: un roadmap continuo con prioridades que se ajustan a tu negocio.",
-      cta: "Descubre más",
+      ideal: "Para productos que evolucionan todo el tiempo y necesitan un equipo que se adapte.",
+      points: [
+        "Equipo digital extendido",
+        "Roadmap continuo, priorizado contigo",
+        "Prioridades que se ajustan a tu negocio",
+        "Mejora continua, sprint a sprint",
+      ],
+      cta: "Hablemos de este modelo",
       // Azul noche del manual (secundario): el texto blanco da 15:1.
       bg: "#0e2837",
       image: "/media/stock/equipo-extendido.jpg",
@@ -480,13 +490,24 @@ export const models = {
     {
       title: "Project-based Model",
       body: "Un alcance definido, con cronograma, entregables e inversión cerrados desde el inicio.",
-      cta: "Descubre más",
+      ideal: "Para objetivos claros, cuando quieres saber desde el inicio qué, cuándo y cuánto.",
+      points: ["Alcance definido", "Cronograma con hitos", "Entregables acordados", "Inversión cerrada desde el inicio"],
+      cta: "Hablemos de este modelo",
       // Ciruela del manual (secundario).
       bg: "#3c092f",
       image: "/media/stock/planificacion.jpg",
       alt: "Dos personas planificando tareas en una pizarra",
     },
   ],
+  shared: {
+    title: "En los dos modelos",
+    items: [
+      "El mismo método: The Wuality Way",
+      "Estrategia, diseño y tecnología en un solo equipo",
+      "Avances visibles y feedback constante",
+      "Medimos el impacto real",
+    ],
+  },
 };
 
 export type SocialNetwork = "tiktok" | "instagram";
@@ -694,7 +715,14 @@ export const cookies = {
  */
 export const ui = {
   header: { home: "Wuality — inicio", openMenu: "Abrir menú", language: "Idioma y región", skip: "Saltar al contenido", cta: "Hablemos" },
-  menu: { label: "Menú principal", close: "Cerrar menú" },
+  menu: {
+    label: "Menú principal",
+    close: "Cerrar menú",
+    contact: "Contacto",
+    language: "Idioma",
+    follow: "Síguenos",
+    current: "Estás aquí",
+  },
   hero: { pause: "Pausar el vídeo", play: "Reproducir el vídeo" },
   services: {
     eyebrow: "Servicios",
