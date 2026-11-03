@@ -258,6 +258,31 @@ aceptan, sin analítica. Si se añade analítica, píxeles o un CRM, hay que
 actualizarla. Los datos de la empresa (razón social, nombre comercial, RUC)
 están en `company` de `lib/content.ts`.
 
+## Páginas de caso
+
+Cada proyecto de la cartera tiene su página (`/proyectos/<slug>/`, `/en/projects/<slug>/`),
+con la estructura de los casos de ustwo, Huge o Clay: portada → nombre,
+titular, entradilla y ficha (cliente, estado, sector, web, servicios) → tres
+claves del proyecto → el reto y cómo lo resolvimos → galería → capítulos con
+su alcance → la frase de la marca → paleta → cita (si está aprobada) → el
+artículo del blog sobre el caso → siguiente caso → agenda.
+
+- **Contenido:** `lib/cases.es.ts` y `lib/cases.en.ts` (sólo textos; el inglés
+  hereda imágenes, paleta y fondos). Alcance, frases y paletas salen del
+  Dossier Comercial 2026; claves y estado, del dossier, de los artículos y de
+  cada web. Sólo hechos: sin cifras internas ni resultados sin medir. Va
+  aparte del diccionario para que sólo lo cargue la página del caso (de
+  servidor). Si falta un caso o un `alt`, el build falla.
+- **Galería:** `public/media/cases/<slug>/`, capturas del dossier y de las webs
+  publicadas (grupotinbet.pe, afiliadostinbet.pe, peruanaenrusia.com,
+  tukutravel.com y las vistas previas de KingBuilder). Las de escritorio van en
+  un marco de navegador y las de móvil en un teléfono, sobre el color del
+  proyecto (`stage` si el `bg` no sirve, como el blanco de Eusebio Arróniz).
+  Ninguna repite la imagen de la portada.
+- **Portada:** la captura del caso con los bordes fundidos y, detrás, la misma
+  imagen muy desenfocada, para que el fundido siga los colores reales de cada
+  borde.
+
 ## Blog
 
 Hay un artículo por cada caso de la cartera, firmado por "Equipo Wuality". Se
