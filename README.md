@@ -278,10 +278,34 @@ artículo del blog sobre el caso → siguiente caso → agenda.
   tukutravel.com y las vistas previas de KingBuilder). Las de escritorio van en
   un marco de navegador y las de móvil en un teléfono, sobre el color del
   proyecto (`stage` si el `bg` no sirve, como el blanco de Eusebio Arróniz).
-  Ninguna repite la imagen de la portada.
-- **Portada:** la captura del caso con los bordes fundidos y, detrás, la misma
-  imagen muy desenfocada, para que el fundido siga los colores reales de cada
-  borde.
+  No repiten las pantallas de la portada, salvo en Zenity, que amplía dos de las
+  tres.
+- **Portada:** dos mockups trabajados por caso, sin fundidos ni desenfoques:
+  `portada.jpg` (32:15, desktop) y `portada-movil.jpg` (4:5, por debajo de
+  768px, con su propia precarga). Ver "Portadas de los casos".
+
+### Portadas de los casos
+
+Se componen en HTML y se fotografían en Chrome (`scripts/case-mockups/`): la
+web de escritorio en su navegador y la móvil en un teléfono (con barra de
+estado del color con que empieza la web e isla dinámica), sobre el color del
+proyecto. Zenity, que es una app, junta tres pantallas; TEC & SEG, sin web
+publicada, enmarca la marca en la calle.
+
+En las marcas cuyo branding hicimos, alrededor van sus figuras recurrentes,
+sacadas de sus manuales (`brand/<slug>/`): la franja y los triángulos de Grupo
+Tinbet, las cintas en degradé y las estrellas de Peruana en Rusia, los
+diamantes y patrones de Sunqu, la K y las líneas de construcción de
+KingBuilder y el escudo de TEC & SEG.
+
+- `scenes.mjs`: una escena por caso (color, capturas, figuras y su posición en
+  los encuadres de 1600×750 y 400×500). Una figura con `color` usa su PNG
+  como máscara y se pinta de ese color.
+- `src/<slug>/`: capturas de origen (escritorio 1600×1000; móvil 390×844 a 2x,
+  sin barra de estado). La home de Eusebio Arróniz sale de su Figma.
+- Para regenerarlas, con Chrome abierto con `--remote-debugging-port=9222`:
+  `node scripts/case-mockups/render.mjs [slug…]`. Escribe en
+  `public/media/cases/<slug>/` a 1,5x (desktop) y 2,25x (móvil).
 
 ## Blog
 
@@ -298,8 +322,17 @@ muestran del más reciente al más antiguo según su fecha (`publishedAt`).
 - **Imágenes:** `public/media/blog/<slug>.jpg` (se ve a 16:11 en la tarjeta y a
   768:420 en el artículo, así que lo importante va al centro) y su recorte de
   1200×630 para redes en `public/og/<slug>.jpg`.
-- **Enlaces:** el campo `project` une el artículo con su caso: el artículo
-  termina con "Ver el caso de…" y sus datos estructurados apuntan al caso.
+- **Página del artículo** (`components/Article.tsx`, como los artículos de
+  ustwo, Huge o Clay): migas, título, entradilla y firma (autor, fecha y
+  lectura) → portada ancha → columna de lectura de 720px con un índice fijo a
+  la izquierda (las secciones del cuerpo, con ancla) y los botones de
+  compartir; en móvil, el índice se despliega y compartir va al final. La
+  primera frase abre a tamaño de entradilla y la última sección ("Lo que nos
+  llevamos") va destacada en una tarjeta. Cierran las etiquetas, la ficha del
+  autor, el caso relacionado y una llamada a "Hablemos" con el siguiente
+  artículo.
+- **Enlaces:** el campo `project` une el artículo con su caso: la tarjeta del
+  caso relacionado lleva a su página y sus datos estructurados apuntan al caso.
 - **Nuevo artículo:** añade el post y su cuerpo en los dos idiomas, su imagen y
   su recorte para redes. La fecha (`publishedAt`, día/mes/año) genera la de la
   tarjeta en cada idioma.

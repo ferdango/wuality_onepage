@@ -1,10 +1,12 @@
 import Link from "next/link";
+import { preload } from "react-dom";
 import Image from "@/components/ui/Img";
 import Eyebrow from "./ui/Eyebrow";
 import Reveal from "./ui/Reveal";
 import type { projects } from "@/lib/content";
 import { caseDetail, type GalleryItem, type Shot } from "@/lib/cases";
 import { blogPath, getContent, projectPath, type Lang } from "@/lib/i18n";
+import { withBase } from "@/lib/href";
 
 type Project = (typeof projects)[number];
 
@@ -76,6 +78,9 @@ function Phone({ shot, className = "" }: { shot: Shot; className?: string }) {
     </div>
   );
 }
+
+/** Debajo de 768px la portada es la vertical. */
+const MOBILE = "(max-width: 767px)";
 
 function GalleryBlock({ item, stage }: { item: GalleryItem; stage: string }) {
   const span = item.layout === "full" ? "lg:col-span-2" : "";
@@ -159,24 +164,28 @@ export default function CaseStudyPage({ project, next, lang }: { project: Projec
   const split = firstRow(detail.gallery);
   const lead = detail.gallery.slice(0, split);
   const rest = detail.gallery.slice(split);
+  const hero = detail.hero;
+  if (hero) preload(withBase(hero.mobile), { as: "image", fetchPriority: "high", media: MOBILE });
 
   return (
     <article className="pb-[clamp(40px,5vw,96px)] pt-[calc(var(--header-h)+clamp(8px,1vw,16px))]">
       {/* Portada */}
       <Reveal className={WIDE} y={16}>
-        <div className={`relative h-[min(72svh,56vw)] w-full overflow-hidden ${RADIUS} max-md:h-[62svh]`} style={{ backgroundColor: stage }}>
-          {/**
-           * La captura es 4:3 y la portada mucho más apaisada, así que va en su
-           * caja centrada y sus bordes se funden. Detrás, la misma captura muy
-           * desenfocada: el fundido continúa los colores reales de cada borde,
-           * como pasa sola en las webs de fondo liso (Grupo Tinbet), y ya no se
-           * ve una banda lavada cuando el borde es una foto (Eusebio Arróniz).
-           */}
-          <Image src={project.shot} alt="" aria-hidden fill sizes="40vw" className="scale-125 object-cover blur-3xl" />
-          <div className="absolute inset-y-0 left-1/2 aspect-[4/3] h-full -translate-x-1/2 [mask-image:linear-gradient(to_right,transparent,black_16%,black_84%,transparent)]">
-            <Image src={project.shot} alt={project.name} fill priority sizes="(max-width: 768px) 100vw, 60vw" className="object-cover" />
+        {hero ? (
+          /**
+           * Los mockups ya traen su escenario (color, figuras de la marca y
+           * dispositivos): se muestran enteros, a su proporción. El <picture>
+           * da el vertical en móvil y sólo se precarga el de cada pantalla.
+           */
+          <picture className={`relative block aspect-[32/15] w-full overflow-hidden ${RADIUS} max-md:aspect-[4/5]`} style={{ backgroundColor: stage }}>
+            <source media={MOBILE} srcSet={withBase(hero.mobile)} />
+            <Image src={hero.desktop} alt={project.name} fill priority priorityMedia="(min-width: 768px)" sizes="(max-width: 767px) 100vw, 1600px" className="object-cover" />
+          </picture>
+        ) : (
+          <div className={`relative aspect-[32/15] w-full overflow-hidden ${RADIUS} max-md:aspect-[4/5]`} style={{ backgroundColor: stage }}>
+            <Image src={project.shot} alt={project.name} fill priority sizes="(max-width: 767px) 100vw, 1600px" className="object-cover" />
           </div>
-        </div>
+        )}
       </Reveal>
 
       {/* Nombre, titular, entradilla y ficha */}

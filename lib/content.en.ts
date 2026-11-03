@@ -474,6 +474,12 @@ export const ui: typeof es.ui = {
     youtube: "YouTube",
     readingTime: "{min} min read",
     read: "Read: {title}",
+    toc: "In this article",
+    project: "Related project",
+    seeCase: "See the full case",
+    authorBio: "Strategy, design and technology in one team. Here we share how we build each project.",
+    ctaTitle: "Have a similar project?",
+    ctaBody: "Tell us what you want to achieve and we'll map out the path together, from complex to simple.",
   },
   social: {
     rail: "Latest posts on TikTok and Instagram",

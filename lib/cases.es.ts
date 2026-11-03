@@ -12,6 +12,9 @@ const shot = (slug: string, file: string, w: number, h: number, alt: string): Sh
   h,
 });
 
+/** Las dos portadas del caso, compuestas con scripts/case-mockups. */
+const hero = (slug: string) => ({ desktop: `/media/cases/${slug}/portada.jpg`, mobile: `/media/cases/${slug}/portada-movil.jpg` });
+
 export const cases: Record<string, CaseDetail> = {
   "grupo-tinbet": {
     status: "Marca y web publicadas",
@@ -32,6 +35,7 @@ export const cases: Record<string, CaseDetail> = {
     ],
     tagline: "Conectando industrias, creando valor.",
     palette: ["#062a1e", "#02b307", "#4ac809", "#95e819", "#ffb100", "#f741ee"],
+    hero: hero("grupo-tinbet"),
     gallery: [
       { kind: "browser", layout: "full", shot: shot("grupo-tinbet", "obras", 1600, 1000, "La página Obras por impuestos de grupotinbet.pe") },
       { kind: "phone", layout: "half", shot: shot("grupo-tinbet", "movil", 780, 1688, "La sección Obras por impuestos en el móvil") },
@@ -55,6 +59,7 @@ export const cases: Record<string, CaseDetail> = {
     ],
     scope: [["UX/UI", "Copy de conversión", "Desarrollo web", "Responsive"]],
     tagline: "Convierte tu audiencia en ingresos recurrentes.",
+    hero: hero("afiliados-tinbet"),
     gallery: [
       { kind: "browser", layout: "full", shot: shot("afiliados-tinbet", "comisiones", 1600, 1000, "Curva de comisiones por tramo con el indicador del 20% del NGR") },
       { kind: "phone", layout: "half", shot: shot("afiliados-tinbet", "movil", 780, 1688, "Tabla de comisiones escalonadas en el móvil") },
@@ -81,6 +86,7 @@ export const cases: Record<string, CaseDetail> = {
     ],
     tagline: "Tu futuro, sin fronteras.",
     palette: ["#127af6", "#f92335", "#19c3f4", "#f97213", "#12746d", "#f9b716"],
+    hero: hero("peruana-en-rusia"),
     gallery: [
       { kind: "browser", layout: "full", shot: shot("peruana-en-rusia", "universidades", 1600, 1000, "Las universidades asociadas en peruanaenrusia.com, filtradas por ciudad") },
       { kind: "phone", layout: "half", shot: shot("peruana-en-rusia", "movil", 780, 1688, "Las universidades asociadas en el móvil") },
@@ -108,6 +114,7 @@ export const cases: Record<string, CaseDetail> = {
     ],
     tagline: "Viaja al corazón del Perú.",
     palette: ["#6f6a45", "#e05f0f", "#f5aa02", "#4a715b", "#88b012", "#1c1c1c"],
+    hero: hero("sunqu-journeys"),
     gallery: [
       { kind: "browser", layout: "full", shot: shot("sunqu-journeys", "catalogo", 1600, 1000, "Journeys elegidos por emoción: «¿Cómo quieres sentir el Perú?»") },
       { kind: "phone", layout: "half", shot: shot("sunqu-journeys", "movil", 780, 1688, "Formas de viajar con Sunqu en el móvil") },
@@ -130,6 +137,7 @@ export const cases: Record<string, CaseDetail> = {
     ],
     scope: [["UX/UI", "Diseño y desarrollo web", "E-commerce de tours"]],
     tagline: "Viaja y disfruta lo mejor del Perú y del mundo.",
+    hero: hero("tuku-travel"),
     gallery: [
       { kind: "browser", layout: "full", shot: shot("tuku-travel", "web", 1600, 1000, "Ficha del tour Montaña de Colores en tukutravel.com") },
       { kind: "phone", layout: "half", shot: shot("tuku-travel", "movil", 780, 1688, "Ficha de tour con destacados y reserva en el móvil") },
@@ -156,6 +164,7 @@ export const cases: Record<string, CaseDetail> = {
     ],
     tagline: "Sistemas inteligentes, obras indestructibles.",
     palette: ["#1c1c1c", "#ebe4d8", "#dfb17b", "#6e502e"],
+    hero: hero("kingbuilder"),
     gallery: [
       { kind: "browser", layout: "full", shot: shot("kingbuilder", "catalogo", 1600, 1000, "Catálogo de soluciones con filtros por línea, aplicación y modalidad") },
       { kind: "phone", layout: "half", shot: shot("kingbuilder", "movil", 780, 1688, "Ficha técnica del camión cisterna KB-75K en el móvil") },
@@ -183,6 +192,7 @@ export const cases: Record<string, CaseDetail> = {
     ],
     tagline: "Protegemos lo que más valoras.",
     palette: ["#fcb203", "#000000", "#ffffff"],
+    hero: hero("tec-seg"),
     gallery: [
       { kind: "photo", layout: "full", contain: true, bg: "#171b24", shot: shot("tec-seg", "papeleria", 1400, 1400, "Papelería, credenciales y libreta con la marca") },
       { kind: "photo", layout: "half", shot: shot("tec-seg", "isotipo", 1400, 1400, "El isotipo: un escudo con un felino vigilante") },
@@ -208,10 +218,10 @@ export const cases: Record<string, CaseDetail> = {
     palette: ["#1b2b6b", "#ef3f5b", "#ffffff"],
     // El `bg` del proyecto es blanco (la placa de su logo); para portada y galería, su azul.
     stage: "#1b2b6b",
+    hero: hero("iep-eusebio-arroniz"),
     gallery: [
       { kind: "browser", layout: "full", shot: shot("iep-eusebio-arroniz", "web", 1440, 900, "Metodologías de enseñanza por nivel en la web del colegio") },
-      { kind: "phone", layout: "half", shot: shot("iep-eusebio-arroniz", "movil", 720, 1560, "Portada del sitio en el móvil, con acceso directo a Admisiones") },
-      { kind: "browser", layout: "half", shot: shot("iep-eusebio-arroniz", "seccion", 1440, 600, "«Una ruta de aprendizaje»: la propuesta educativa del colegio") },
+      { kind: "browser", layout: "full", shot: shot("iep-eusebio-arroniz", "seccion", 1440, 600, "«Una ruta de aprendizaje»: la propuesta educativa del colegio") },
     ],
   },
 
@@ -230,6 +240,7 @@ export const cases: Record<string, CaseDetail> = {
     ],
     scope: [["Estrategia de producto", "Arquitectura de información", "UX/UI app", "Design system"]],
     palette: ["#0f1216", "#8e6cf0", "#4e8cff", "#26c27a", "#f05a3a"],
+    hero: hero("zenity"),
     gallery: [
       // La portada ya junta las tres pantallas: aquí, dos de ellas en grande.
       { kind: "phone", layout: "half", shot: shot("zenity", "resumen", 720, 1559, "Resumen del balance con el asistente «Explícame este balance»") },

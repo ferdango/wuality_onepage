@@ -11,6 +11,8 @@ type Props = Omit<React.ImgHTMLAttributes<HTMLImageElement>, "src" | "alt" | "wi
   fill?: boolean;
   /** Imagen de la primera pantalla: se precarga y no espera a la carga diferida. */
   priority?: boolean;
+  /** Con `priority`: precarga sólo en las pantallas que cumplan esta media query (p. ej. si en móvil se ve otra imagen). */
+  priorityMedia?: string;
   /** Se acepta para no tocar las llamadas: sin optimizador no hay `srcset` al que aplicarlo. */
   sizes?: string;
 };
@@ -34,6 +36,7 @@ export default function Img({
   alt,
   fill,
   priority,
+  priorityMedia,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars -- se descarta a propósito (ver el tipo).
   sizes,
   className = "",
@@ -44,7 +47,7 @@ export default function Img({
   const resolved = src.startsWith("/") ? `${BASE}${src}` : src;
 
   // Lo mismo que hacía next/image con `priority`: <link rel="preload"> en el <head>.
-  if (priority) preload(resolved, { as: "image", fetchPriority: "high" });
+  if (priority) preload(resolved, { as: "image", fetchPriority: "high", ...(priorityMedia && { media: priorityMedia }) });
 
   return (
     // eslint-disable-next-line @next/next/no-img-element -- next/image no aporta nada sin optimizador (ver arriba).

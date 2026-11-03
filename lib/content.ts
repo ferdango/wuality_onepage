@@ -741,6 +741,12 @@ export const ui = {
     youtube: "YouTube",
     readingTime: "{min} min de lectura",
     read: "Leer: {title}",
+    toc: "En este artículo",
+    project: "Proyecto relacionado",
+    seeCase: "Ver el caso completo",
+    authorBio: "Estrategia, diseño y tecnología en un solo equipo. Aquí contamos cómo construimos cada proyecto.",
+    ctaTitle: "¿Tienes un proyecto parecido?",
+    ctaBody: "Cuéntanos qué quieres lograr y armamos juntos el camino, de lo complejo a lo simple.",
   },
   social: {
     rail: "Últimas publicaciones en TikTok e Instagram",

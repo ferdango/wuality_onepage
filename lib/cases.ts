@@ -45,6 +45,13 @@ export type CaseDetail = {
   palette?: string[];
   /** Fondo de la portada y de la galería, si el `bg` del proyecto no sirve (p. ej. blanco). */
   stage?: string;
+  /**
+   * Portada: dos mockups compuestos con scripts/case-mockups (la web en su
+   * navegador y su teléfono, con las figuras de la marca si hicimos su
+   * branding), apaisado para desktop y vertical para móvil. Sin ellos, la
+   * imagen del proyecto.
+   */
+  hero?: { desktop: string; mobile: string };
   gallery: GalleryItem[];
 };
 

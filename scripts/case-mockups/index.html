@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="es">
+	<head>
+		<meta charset="utf-8" />
+		<title>Portadas de casos</title>
+		<!--
+			Compone la portada de un caso: index.html?slug=<slug>&frame=desktop|mobile.
+			La fotografía render.mjs; las escenas están en scenes.mjs.
+		-->
+		<style>
+			* { box-sizing: border-box; margin: 0; }
+			html, body { background: #000; }
+			#frame { position: relative; overflow: hidden; }
+			.abs { position: absolute; }
+			.shape { position: absolute; transform-origin: center; background-size: 100% 100%; -webkit-mask-size: 100% 100%; mask-size: 100% 100%; }
+
+			.browser { overflow: hidden; background: #202225; box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08), 0 50px 100px -40px rgba(0, 0, 0, 0.6), 0 22px 44px -24px rgba(0, 0, 0, 0.45); }
+			.browser .bar { position: relative; display: flex; align-items: center; }
+			.browser .dot { border-radius: 50%; }
+			.browser .url { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); display: flex; align-items: center; justify-content: center; gap: 0.5em; border-radius: 999px; background: #2e3135; color: #a3a8ae; font: 500 1em/1 -apple-system, "SF Pro Text", "Helvetica Neue", sans-serif; letter-spacing: 0.01em; }
+			.browser img { display: block; width: 100%; object-fit: cover; object-position: top; }
+
+			.phone { background: linear-gradient(145deg, #3a3d42, #16181b 40%, #0c0d0f); box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, 0.12), 0 50px 90px -36px rgba(0, 0, 0, 0.7), 0 20px 40px -22px rgba(0, 0, 0, 0.5); }
+			.phone .screen { position: absolute; overflow: hidden; background: #000; }
+			.phone .screen img { display: block; width: 100%; object-fit: cover; object-position: top; }
+			.phone .island { position: absolute; left: 50%; transform: translateX(-50%); border-radius: 999px; background: #000; }
+			.phone .key { position: absolute; border-radius: 2px; background: #2a2d31; }
+			.status { display: flex; align-items: center; justify-content: space-between; font: 600 1em/1 -apple-system, "SF Pro Text", sans-serif; letter-spacing: -0.01em; }
+			.status svg { display: block; height: 0.72em; width: auto; }
+			.status .icons { display: flex; align-items: center; gap: 0.3em; }
+
+			.photo { overflow: hidden; box-shadow: 0 50px 100px -40px rgba(0, 0, 0, 0.55), 0 22px 44px -24px rgba(0, 0, 0, 0.35); }
+			.photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
+		</style>
+	</head>
+	<body>
+		<div id="frame"></div>
+		<script type="module">
+			import { frames, placement, scenes } from "./scenes.mjs";
+
+			const q = new URLSearchParams(location.search);
+			const scene = scenes[q.get("slug")];
+			const name = q.get("frame") || "desktop";
+			const F = frames[name];
+			const L = { ...placement[name], ...scene.layout?.[name] };
+			const frame = document.getElementById("frame");
+			Object.assign(frame.style, { width: `${F.w}px`, height: `${F.h}px`, background: scene.stage });
+
+			const el = (tag, cls, style = {}, parent = frame) => {
+				const n = document.createElement(tag);
+				if (cls) n.className = cls;
+				Object.assign(n.style, style);
+				parent.appendChild(n);
+				return n;
+			};
+			const px = (v) => `${v}px`;
+			const load = (src) => new Promise((ok, ko) => { const i = new Image(); i.onload = () => ok(i); i.onerror = () => ko(new Error(`No carga ${src}`)); i.src = src; });
+
+			/** Color medio de la franja superior de la captura: el de la barra de estado que la continúa. */
+			function topColor(img) {
+				const c = document.createElement("canvas");
+				c.width = 60; c.height = 4;
+				const ctx = c.getContext("2d");
+				ctx.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight * 0.006, 0, 0, 60, 4);
+				const d = ctx.getImageData(0, 0, 60, 4).data;
+				let r = 0, g = 0, b = 0;
+				for (let i = 0; i < d.length; i += 4) { r += d[i]; g += d[i + 1]; b += d[i + 2]; }
+				const n = d.length / 4;
+				r /= n; g /= n; b /= n;
+				const lum = (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255;
+				return { bg: `rgb(${r | 0}, ${g | 0}, ${b | 0})`, ink: lum > 0.6 ? "#000" : "#fff" };
+			}
+
+			const icons = (ink) => `
+				<svg viewBox="0 0 18 12" fill="${ink}"><rect x="0" y="8" width="3" height="4" rx="0.8"/><rect x="5" y="5.5" width="3" height="6.5" rx="0.8"/><rect x="10" y="3" width="3" height="9" rx="0.8"/><rect x="15" y="0" width="3" height="12" rx="0.8"/></svg>
+				<svg viewBox="0 0 16 12" fill="${ink}"><path d="M8 2.6c2.3 0 4.4.9 6 2.4l1.3-1.4A10.3 10.3 0 0 0 8 .6 10.3 10.3 0 0 0 .7 3.6L2 5a8.3 8.3 0 0 1 6-2.4Zm0 3.6c1.3 0 2.5.5 3.5 1.3l1.3-1.4A7 7 0 0 0 8 4.2a7 7 0 0 0-4.8 1.9l1.3 1.4A5 5 0 0 1 8 6.2Zm0 3.5-2.2-2.3A3.2 3.2 0 0 1 8 6.6c.8 0 1.6.3 2.2.8L8 9.7Z"/></svg>
+				<svg viewBox="0 0 27 12"><rect x="0.5" y="0.5" width="22" height="11" rx="3.2" fill="none" stroke="${ink}" stroke-opacity="0.4"/><rect x="2" y="2" width="19" height="8" rx="2" fill="${ink}"/><path d="M24 4v4c.8-.3 1.4-1.1 1.4-2S24.8 4.3 24 4Z" fill="${ink}" fill-opacity="0.45"/></svg>`;
+
+			function browser({ x, y, w }, img) {
+				const barH = w * 0.034;
+				const win = el("div", "abs browser", { left: px(x), top: px(y), width: px(w), borderRadius: px(w * 0.011) });
+				const bar = el("div", "bar", { height: px(barH), paddingLeft: px(barH * 0.55), gap: px(barH * 0.24) }, win);
+				for (const c of ["#ff5f57", "#febc2e", "#28c840"]) el("span", "dot", { width: px(barH * 0.34), height: px(barH * 0.34), background: c }, bar);
+				const url = el("span", "url", { width: px(w * 0.34), height: px(barH * 0.62), fontSize: px(barH * 0.34) }, bar);
+				url.innerHTML = `<svg viewBox="0 0 10 12" style="height:0.95em" fill="#a3a8ae"><path d="M5 0a3 3 0 0 0-3 3v2H1.5A1.5 1.5 0 0 0 0 6.5v4A1.5 1.5 0 0 0 1.5 12h7a1.5 1.5 0 0 0 1.5-1.5v-4A1.5 1.5 0 0 0 8.5 5H8V3a3 3 0 0 0-3-3Zm-1.6 5V3a1.6 1.6 0 1 1 3.2 0v2Z"/></svg>${scene.url ?? ""}`;
+				const shot = el("img", "", { height: px(w * 0.625) }, win);
+				shot.src = img.src;
+			}
+
+			function phone({ x, y, w, z = 0 }, img) {
+				const b = w * 0.042;
+				const sw = w - 2 * b;
+				const sh = (sw * 844) / 390;
+				const r = w * 0.165;
+				const body = el("div", "abs phone", { left: px(x), top: px(y), width: px(w), height: px(sh + 2 * b), borderRadius: px(r), zIndex: z });
+				// Botones laterales: acción y volumen a la izquierda, encendido a la derecha.
+				for (const [side, top, h] of [["left", 0.17, 0.045], ["left", 0.25, 0.085], ["left", 0.35, 0.085], ["right", 0.27, 0.13]]) {
+					el("span", "key", { [side]: px(-b * 0.32), top: px((sh + 2 * b) * top), width: px(b * 0.5), height: px((sh + 2 * b) * h) }, body);
+				}
+				const screen = el("div", "screen", { left: px(b), top: px(b), width: px(sw), height: px(sh), borderRadius: px(r - b) }, body);
+				let rest = sh;
+				if (scene.bar !== false) {
+					// Barra de estado del color con que empieza la web, como en Safari.
+					const { bg, ink } = topColor(img);
+					const barH = (sh * 50) / 844;
+					const bar = el("div", "status", { height: px(barH), background: bg, color: ink, fontSize: px(sw * 0.044), padding: `0 ${px(sw * 0.075)} 0 ${px(sw * 0.105)}` }, screen);
+					bar.innerHTML = `<span>9:41</span><span class="icons">${icons(ink)}</span>`;
+					rest -= barH;
+				}
+				const shot = el("img", "", { height: px(rest) }, screen);
+				shot.src = img.src;
+				el("span", "island", { top: px(sh * 0.013), width: px(sw * 0.31), height: px(sw * 0.092) }, screen);
+			}
+
+			function shape(s, img) {
+				const h = (s.w * img.naturalHeight) / img.naturalWidth;
+				const n = el("div", "shape", {
+					left: px(s.x), top: px(s.y), width: px(s.w), height: px(h),
+					transform: `rotate(${s.rot ?? 0}deg)${s.flip ? " scaleX(-1)" : ""}`,
+					opacity: s.opacity ?? 1,
+					zIndex: s.front ? 5 : -1,
+				});
+				if (s.color) Object.assign(n.style, { background: s.color, webkitMaskImage: `url(${img.src})`, maskImage: `url(${img.src})` });
+				else n.style.backgroundImage = `url(${img.src})`;
+			}
+
+			window.ready = (async () => {
+				await document.fonts.ready;
+				// El fondo y su luz van en una capa propia, detrás de todo (las figuras de atrás usan z-index -1).
+				frame.style.isolation = "isolate";
+				el("div", "abs", { inset: 0, zIndex: -2, background: `radial-gradient(55% 75% at 50% 55%, ${scene.glow ?? "transparent"}, transparent 75%)` });
+				const g = scene.guides?.[name];
+				if (g) {
+					for (const x of g.xs ?? []) el("span", "abs", { left: px(x), top: 0, bottom: 0, width: "1px", background: scene.guides.color, zIndex: -1 });
+					for (const y of g.ys ?? []) el("span", "abs", { top: px(y), left: 0, right: 0, height: "1px", background: scene.guides.color, zIndex: -1 });
+				}
+				const shapes = scene.shapes?.[name] ?? [];
+				const shapeImgs = await Promise.all(shapes.map((s) => load(s.src)));
+				shapes.forEach((s, i) => shape(s, shapeImgs[i]));
+				if (scene.photo && L.photo) {
+					const img = await load(scene.photo);
+					const { x, y, w } = L.photo;
+					const card = el("div", "abs photo", { left: px(x), top: px(y), width: px(w), height: px((w * img.naturalHeight) / img.naturalWidth), borderRadius: px(w * 0.022) });
+					el("img", "", {}, card).src = img.src;
+				}
+				if (scene.web && L.browser) browser(L.browser, await load(scene.web));
+				const slots = (L.phones ?? []).slice(0, scene.phones.length);
+				const phoneImgs = await Promise.all(slots.map((_, i) => load(scene.phones[i])));
+				slots.forEach((p, i) => phone(p, phoneImgs[i]));
+				await Promise.all([...frame.querySelectorAll("img")].map((i) => i.decode()));
+				return true;
+			})();
+		</script>
+	</body>
+</html>

@@ -195,7 +195,6 @@ export const caseTexts: Record<string, CaseTexts> = {
     tagline: "Mens sana in corpore sano.",
     alts: [
       "Teaching methods by level on the school's website",
-      "The home page on mobile, with a direct link to Admissions",
       "“A learning path”: the school's educational approach",
     ],
   },
